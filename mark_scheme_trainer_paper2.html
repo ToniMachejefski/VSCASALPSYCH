@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9990 Psychology Paper 2 — Mark Scheme Trainer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2550; --navy-mid: #253166;
+    --blue: #2e75b6; --blue-light: #dbeafe;
+    --green: #1e6b47; --green-light: #d6efe2;
+    --red: #b5183a; --red-light: #fae0e6;
+    --amber: #b45309; --amber-light: #fef3c7;
+    --purple: #5b21b6; --purple-light: #ede9fe;
+    --teal: #0e7490; --teal-light: #cffafe;
+    --grey: #f4f5f7; --mgrey: #d1d5db; --lgrey: #e9ecef;
+    --text: #1f2937; --mid: #4b5563; --muted: #6b7280; --white: #ffffff;
+    --sidebar-w: 330px; --radius: 10px; --shadow: 0 2px 12px rgba(26,37,80,0.09);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: #eef0f5; color: var(--text); min-height: 100vh; }
+
+  .topbar { background: var(--navy); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+  .topbar-title { font-family: 'DM Serif Display', serif; font-size: 17px; color: white; }
+  .topbar-sub { font-size: 12px; color: #94a3b8; margin-top: 1px; }
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+  .score-pill { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 50px; padding: 6px 16px; font-size: 13px; font-weight: 500; color: white; white-space: nowrap; }
+  .score-pill span { font-family: 'DM Mono', monospace; color: #7dd3fc; }
+  .ms-toggle-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 6px 12px; color: white; font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; display: none; align-items: center; gap: 6px; transition: background 0.15s; }
+  .ms-toggle-btn:hover { background: rgba(255,255,255,0.18); }
+
+  .progress-wrap { background: rgba(255,255,255,0.07); height: 3px; }
+  .progress-bar { height: 3px; background: linear-gradient(90deg,#3b82f6,#60a5fa); transition: width 0.4s ease; }
+
+  .layout { display: flex; min-height: calc(100vh - 55px); align-items: stretch; }
+
+  .sidebar { width: var(--sidebar-w); flex-shrink: 0; background: var(--white); border-right: 1px solid var(--mgrey); display: flex; flex-direction: column; position: sticky; top: 55px; height: calc(100vh - 55px); overflow-y: auto; transition: transform 0.25s ease; }
+  .sidebar::-webkit-scrollbar { width: 5px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--mgrey); border-radius: 3px; }
+
+  .sidebar-header { background: var(--navy); padding: 14px 18px; position: sticky; top: 0; z-index: 10; }
+  .sidebar-header-row { display: flex; align-items: flex-start; justify-content: space-between; }
+  .sidebar-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #94a3b8; }
+  .sidebar-topic { font-size: 13px; color: white; margin-top: 4px; font-weight: 500; line-height: 1.4; }
+  .sidebar-close { background: none; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; padding: 2px 6px; display: none; }
+
+  .sidebar-body { padding: 16px 18px; flex: 1; }
+  .ms-section { margin-bottom: 16px; }
+  .ms-section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--lgrey); }
+  .ms-block { background: var(--grey); border-radius: 8px; padding: 11px 13px; font-size: 13px; line-height: 1.65; color: var(--text); white-space: pre-line; border-left: 3px solid var(--navy); }
+  .ms-warn { background: var(--red-light); border-left: 3px solid var(--red); border-radius: 0 7px 7px 0; padding: 10px 12px; font-size: 13px; line-height: 1.6; color: var(--text); white-space: pre-line; }
+  .ms-warn strong { color: var(--red); }
+  .ms-note { background: var(--blue-light); border-radius: 7px; padding: 9px 12px; font-size: 12px; color: #1e40af; line-height: 1.55; margin-top: 10px; }
+  .ms-green { background: var(--green-light); border-left: 3px solid var(--green); border-radius: 0 7px 7px 0; padding: 10px 12px; font-size: 13px; line-height: 1.65; color: var(--text); white-space: pre-line; }
+  .section-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; margin-top: 8px; }
+  .tag-a { background: var(--teal-light); color: var(--teal); }
+  .tag-b { background: var(--purple-light); color: var(--purple); }
+
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; }
+
+  .main { flex: 1; padding: 24px 24px 60px; max-width: 640px; min-width: 0; }
+
+  .card { background: var(--white); border-radius: 12px; box-shadow: var(--shadow); overflow: hidden; margin-bottom: 14px; }
+  .q-meta { background: var(--navy); padding: 11px 18px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .q-topic { font-family: 'DM Mono', monospace; font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; }
+  .q-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
+  .badge-type { background: rgba(255,255,255,0.12); color: #e2e8f0; }
+  .badge-marks { background: var(--blue); color: white; }
+  .badge-sa { background: var(--teal); color: white; }
+  .badge-sb { background: var(--purple); color: white; }
+
+  .q-body { padding: 18px 20px; }
+  .section-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 7px; }
+  .q-text { font-size: 14px; line-height: 1.7; background: var(--grey); border-radius: 8px; padding: 12px 14px; border-left: 3px solid var(--blue); }
+  .q-context { font-size: 13px; line-height: 1.65; background: #f8fafc; border-radius: 8px; padding: 11px 14px; border: 1px solid var(--lgrey); margin-bottom: 10px; color: var(--mid); }
+  .q-context strong { color: var(--text); }
+
+  .r-header { background: var(--grey); padding: 9px 18px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); border-bottom: 1px solid var(--mgrey); }
+  .r-body { padding: 14px 20px; }
+  .r-text { font-size: 14px; line-height: 1.75; font-style: italic; color: var(--text); border-left: 3px solid var(--mgrey); padding-left: 12px; }
+
+  .mark-section { padding: 16px 20px; border-top: 1px solid var(--mgrey); }
+  .mark-q { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 10px; }
+  .mark-total { font-size: 12px; color: var(--muted); font-weight: 400; }
+  .mark-btns { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+  .mark-btn { width: 44px; height: 44px; border-radius: 9px; border: 2px solid var(--mgrey); background: var(--white); font-family: 'DM Mono', monospace; font-size: 17px; font-weight: 500; color: var(--mid); cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; }
+  .mark-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+  .mark-btn.selected { border-color: var(--navy); background: var(--navy); color: white; }
+
+  .just-label { font-size: 12px; font-weight: 500; color: var(--mid); margin-bottom: 6px; }
+  textarea { width: 100%; border: 1.5px solid var(--mgrey); border-radius: 8px; padding: 9px 12px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); resize: vertical; min-height: 60px; transition: border 0.15s; }
+  textarea:focus { outline: none; border-color: var(--blue); }
+  .check-btn { margin-top: 12px; width: 100%; padding: 12px; background: var(--navy); color: white; border: none; border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+  .check-btn:hover { background: var(--navy-mid); }
+  .check-btn:disabled { background: var(--mgrey); cursor: not-allowed; }
+
+  .feedback { display: none; padding: 0 20px 18px; }
+  .fb-header { border-radius: 9px; padding: 12px 15px; display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+  .fb-exact { background: var(--green-light); border: 1px solid #a7d7bc; }
+  .fb-close { background: var(--amber-light); border: 1px solid #fcd34d; }
+  .fb-off   { background: var(--red-light);   border: 1px solid #fca5a5; }
+  .fb-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .fb-verdict { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .fb-exact .fb-verdict { color: var(--green); }
+  .fb-close .fb-verdict { color: var(--amber); }
+  .fb-off   .fb-verdict { color: var(--red); }
+  .fb-marks-line { font-size: 13px; color: var(--mid); }
+  .fb-marks-line strong { font-family: 'DM Mono', monospace; color: var(--text); }
+  .fb-explanation { background: var(--grey); border-radius: 8px; padding: 13px 15px; font-size: 13px; line-height: 1.7; color: var(--text); border-left: 3px solid var(--navy); margin-bottom: 12px; }
+  .next-btn { width: 100%; padding: 12px; background: var(--blue); color: white; border: none; border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+  .next-btn:hover { background: #2563a8; }
+
+  #summaryScreen { background: var(--white); border-radius: 14px; box-shadow: var(--shadow); padding: 36px 28px; text-align: center; }
+  .sum-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--navy); margin-bottom: 6px; }
+  .sum-score { font-family: 'DM Mono', monospace; font-size: 48px; font-weight: 500; color: var(--navy); margin: 16px 0 6px; }
+  .sum-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+  .sum-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 28px; }
+  .sg-item { border-radius: 9px; padding: 14px 10px; text-align: center; }
+  .sg-item .sg-n { font-family: 'DM Mono', monospace; font-size: 24px; font-weight: 500; display: block; margin-bottom: 3px; }
+  .sg-item .sg-l { font-size: 11px; color: var(--mid); }
+  .sg-exact { background: var(--green-light); } .sg-exact .sg-n { color: var(--green); }
+  .sg-close { background: var(--amber-light); } .sg-close .sg-n { color: var(--amber); }
+  .sg-off   { background: var(--red-light);   } .sg-off   .sg-n { color: var(--red); }
+  .restart-btn { padding: 13px 36px; background: var(--navy); color: white; border: none; border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+  .restart-btn:hover { background: var(--navy-mid); }
+
+  #introScreen { background: var(--white); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+  .intro-top { background: var(--navy); padding: 28px 28px 24px; }
+  .intro-top h1 { font-family: 'DM Serif Display', serif; font-size: 24px; color: white; margin-bottom: 5px; }
+  .intro-top p { font-size: 13px; color: #94a3b8; }
+  .intro-body { padding: 24px 28px; }
+  .how-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; }
+  .step { display: flex; gap: 12px; margin-bottom: 11px; align-items: flex-start; }
+  .step-n { width: 26px; height: 26px; background: var(--navy); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .step-t { font-size: 13px; color: var(--mid); line-height: 1.55; }
+  .intro-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 20px 0; }
+  .is-item { background: var(--grey); border-radius: 9px; padding: 13px 10px; text-align: center; }
+  .is-n { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--navy); display: block; }
+  .is-l { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .section-legend { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--mid); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .start-btn { width: 100%; padding: 13px; background: var(--navy); color: white; border: none; border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.15s; }
+  .start-btn:hover { background: var(--navy-mid); }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 820px) {
+    .sidebar { position: fixed; top: 0; left: 0; height: 100vh; z-index: 300; transform: translateX(-100%); }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-overlay.open { display: block; }
+    .ms-toggle-btn { display: flex; }
+    .sidebar-close { display: block; }
+    .main { padding: 18px 16px 60px; max-width: 100%; }
+    .topbar { padding: 12px 16px; }
+  }
+  @media (max-width: 480px) { .sum-grid, .intro-stats { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-title">Mark Scheme Trainer — Paper 2</div>
+    <div class="topbar-sub">Cambridge 9990 AS Level Psychology</div>
+  </div>
+  <div class="topbar-right">
+    <button class="ms-toggle-btn" id="msToggleBtn" onclick="toggleSidebar()">📋 Mark scheme</button>
+    <div class="score-pill" id="scorePill" style="display:none">Score <span id="scoreDisplay">0 / 0</span></div>
+  </div>
+</div>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-header-row">
+        <div>
+          <div class="sidebar-title">Mark scheme reference</div>
+          <div class="sidebar-topic" id="sbTopic">—</div>
+        </div>
+        <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+      </div>
+    </div>
+    <div class="sidebar-body" id="sbBody">
+      <div style="color:var(--muted);font-size:13px;margin-top:20px;text-align:center;">Start a question to see the mark scheme here.</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- Intro -->
+    <div id="introScreen">
+      <div class="intro-top">
+        <h1>Paper 2 — Mark Scheme Trainer</h1>
+        <p>Research methods, data interpretation, and planning questions</p>
+      </div>
+      <div class="intro-body">
+        <div class="how-title">How it works</div>
+        <div class="step"><div class="step-n">1</div><div class="step-t">Read the mark scheme in the sidebar — it updates for every question</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t">Read the question and the student's response</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t">Decide how many marks the response earns</div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t">Check — see the correct mark and Cambridge's reasoning</div></div>
+        <div class="section-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>Section A — research methods</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Section B — planning question</div>
+        </div>
+        <div class="intro-stats">
+          <div class="is-item"><span class="is-n" id="totalQCount">0</span><div class="is-l">questions</div></div>
+          <div class="is-item"><span class="is-n">A+B</span><div class="is-l">both sections</div></div>
+          <div class="is-item"><span class="is-n">1–6</span><div class="is-l">marks range</div></div>
+        </div>
+        <button class="start-btn" onclick="startQuiz()">Start training →</button>
+      </div>
+    </div>
+
+    <!-- Quiz -->
+    <div id="quizScreen" class="hidden">
+      <div class="card">
+        <div class="q-meta">
+          <div class="q-topic" id="qTopic"></div>
+          <div class="q-badges">
+            <span class="badge" id="qSection"></span>
+            <span class="badge badge-type" id="qType"></span>
+            <span class="badge badge-marks" id="qMarks"></span>
+          </div>
+        </div>
+        <div class="q-body">
+          <div id="qContext"></div>
+          <div class="section-label">The question</div>
+          <div class="q-text" id="qText"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="r-header">Student response — award a mark</div>
+        <div class="r-body"><div class="r-text" id="rText"></div></div>
+        <div class="mark-section">
+          <div class="mark-q">Your mark <span class="mark-total" id="markTotal"></span></div>
+          <div class="mark-btns" id="markBtns"></div>
+          <div class="just-label">Brief justification — why did you give this mark?</div>
+          <textarea id="justification" placeholder="e.g. Compares both groups correctly…"></textarea>
+          <button class="check-btn" id="checkBtn" onclick="checkAnswer()" disabled>Check my marking</button>
+        </div>
+        <div class="feedback" id="feedback">
+          <div id="fbHeader" class="fb-header">
+            <div class="fb-icon" id="fbIcon"></div>
+            <div>
+              <div class="fb-verdict" id="fbVerdict"></div>
+              <div class="fb-marks-line" id="fbMarksLine"></div>
+            </div>
+          </div>
+          <div class="fb-explanation" id="fbExplanation"></div>
+          <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next question →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div id="summaryScreen" class="hidden">
+      <div class="sum-title">Session complete</div>
+      <div class="sum-score" id="sumScore"></div>
+      <div class="sum-sub" id="sumSub"></div>
+      <div class="sum-grid">
+        <div class="sg-item sg-exact"><span class="sg-n" id="sgExact">0</span><div class="sg-l">Exact mark</div></div>
+        <div class="sg-item sg-close"><span class="sg-n" id="sgClose">0</span><div class="sg-l">Within 1 mark</div></div>
+        <div class="sg-item sg-off"><span class="sg-n" id="sgOff">0</span><div class="sg-l">Off by 2+</div></div>
+      </div>
+      <button class="restart-btn" onclick="restart()">Try again with new order</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const QUESTIONS = [
+
+  // ══ SECTION A — QUESTIONNAIRES ════════════════════════════════════
+  {
+    section:'A', topic:'Questionnaires', type:'Define',
+    maxMarks:2, correctMark:2,
+    context: null,
+    question:'Describe what is meant by a questionnaire. [2]',
+    response:'A questionnaire is a self-report method that consists of written questions. Participants read and answer the questions themselves, usually on paper or online.',
+    sidebarTopic:'Questionnaire — definition',
+    sidebar:[
+      {label:'What earns marks', style:'green', text:'1 mark: description of what a questionnaire is.\n1 mark: detail (e.g. written / on paper / online / self-completed).\n\nShortcut: "Written questions" alone = 2 marks.'},
+      {label:'Do NOT credit', style:'warn', text:'Ethical advantages (e.g. "it is anonymous so participants are protected") = 0 marks.\nAny benefit based on ethics rather than the nature of the method.'},
+    ],
+    explanation:'2 marks. Self-report + written questions ✓ and additional detail about how it is completed ✓. Both marking criteria are met.'
+  },
+  {
+    section:'A', topic:'Questionnaires', type:'Define',
+    maxMarks:2, correctMark:0,
+    context: null,
+    question:'Describe what is meant by a questionnaire. [2]',
+    response:'A questionnaire is a research tool that allows participants to remain anonymous, meaning they feel more comfortable sharing honest responses. It is also easy to distribute to large numbers of people.',
+    sidebarTopic:'Questionnaire — definition',
+    sidebar:[
+      {label:'What earns marks', style:'green', text:'1 mark: description of what a questionnaire is.\n1 mark: detail (e.g. written / on paper / online / self-completed).\n\nShortcut: "Written questions" alone = 2 marks.'},
+      {label:'Do NOT credit', style:'warn', text:'Ethical advantages (e.g. anonymity) = 0 marks.\nPractical advantages (e.g. large samples, easy distribution) are not a definition.\n\nThis question asks WHAT a questionnaire IS — not what its advantages are.'},
+    ],
+    explanation:'0 marks. This response describes advantages of questionnaires (anonymity, large samples) rather than defining what a questionnaire actually is. Neither point addresses the nature of the method — Cambridge specifically states ethical advantages = 0 marks on definition questions.'
+  },
+  {
+    section:'A', topic:'Questionnaires', type:'Evaluate',
+    maxMarks:2, correctMark:2,
+    context: null,
+    question:'Explain one practical strength of using a questionnaire compared to an interview. [2]',
+    response:'A practical strength is that questionnaires can be sent to a large number of participants at the same time, for example by posting them online. This means the researcher can collect data from a much larger sample than would be possible with individual face-to-face interviews, making the results more representative.',
+    sidebarTopic:'Questionnaire — practical strength',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'1 mark: identifying/explaining the practical strength.\n1 mark: detail or comparison with interviews.'},
+      {label:'Do NOT credit', style:'warn', text:'Ethical advantages = 0 marks.\ne.g. "participants feel less pressured" (social desirability) is borderline — only credit if framed as a practical issue, not an ethical one.\n\n"Large sample" is a practical advantage ✓ — but must be compared to interviews.'},
+      {label:'Creditworthy practical strengths', style:'green', text:'• Wider/larger sample reachable (online/post vs one-to-one).\n• Cheaper and faster to administer.\n• Less interviewer bias (no interviewer present).\n• Participants can complete at their own pace.'}
+    ],
+    explanation:'2 marks. Practical strength clearly identified (large sample via online distribution) ✓ and explicitly compared to interviews (face-to-face interviews limit sample size) ✓. Both marks earned.'
+  },
+  {
+    section:'A', topic:'Questionnaires', type:'Evaluate',
+    maxMarks:2, correctMark:0,
+    context: null,
+    question:'Explain one practical strength of using a questionnaire compared to an interview. [2]',
+    response:'A strength is that questionnaires are more ethical because they allow participants to remain anonymous. This protects their right to confidentiality and means they are more likely to give honest answers without fear of being judged.',
+    sidebarTopic:'Questionnaire — practical strength',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'1 mark: identifying/explaining the practical strength.\n1 mark: detail or comparison with interviews.'},
+      {label:'Do NOT credit', style:'warn', text:'Ethical advantages = 0 marks.\n\nThe question asks for a PRACTICAL strength — not an ethical one. Anonymity, confidentiality, and right to withdraw are ethical concepts.\n\nEven if framed as leading to "more honest answers," if the mechanism is ethical (anonymity/confidentiality) it is not credited.'},
+    ],
+    explanation:'0 marks. This entire response is framed around ethics (anonymity, confidentiality, right to confidentiality). Cambridge is explicit: ethical advantages = 0 marks on this question type. A practical strength must relate to how the method works, not to participant rights.'
+  },
+
+  // ══ SECTION A — CONSENT ══════════════════════════════════════════
+  {
+    section:'A', topic:'Ethics', type:'Define',
+    maxMarks:1, correctMark:1,
+    context: null,
+    question:'What is meant by \'informed consent\'? [1]',
+    response:'Informed consent means agreeing to take part in the study after being told what it involves.',
+    sidebarTopic:'Informed consent — definition',
+    sidebar:[
+      {label:'What earns the mark', style:'green', text:'1 mark: "agreeing to take part" (after being given information about the study).'},
+      {label:'Do NOT credit', style:'warn', text:'"Children/parents had a choice" = 0 [not specifically linked to consent as a concept].\n"Participants were told about the study" alone = 0 [describes information-giving, not agreeing].\n\nThe key word is AGREEING — consent requires agreement, not just information.'},
+    ],
+    explanation:'1 mark. "Agreeing to take part after being told what it involves" correctly captures both elements: the agreement (consent) and the informed element (knowing what is involved).'
+  },
+  {
+    section:'A', topic:'Ethics', type:'Define',
+    maxMarks:1, correctMark:0,
+    context: null,
+    question:'What is meant by \'informed consent\'? [1]',
+    response:'Informed consent means that the researcher tells participants everything about the study before it begins.',
+    sidebarTopic:'Informed consent — definition',
+    sidebar:[
+      {label:'What earns the mark', style:'green', text:'1 mark: "agreeing to take part" (after being given information about the study).'},
+      {label:'Do NOT credit', style:'warn', text:'"Participants were told about the study" alone = 0.\nThis describes the informed part but misses the consent (agreement) part.\n\n"Telling participants everything" is also inaccurate — studies using deception cannot tell participants everything and still gain consent.'},
+    ],
+    explanation:'0 marks. This response describes giving information but omits the critical element — that participants must AGREE to take part. Consent is the agreement, not just the disclosure of information.'
+  },
+
+  // ══ SECTION A — SAMPLING ═════════════════════════════════════════
+  {
+    section:'A', topic:'Sampling', type:'Define + example',
+    maxMarks:6, correctMark:4,
+    context: null,
+    question:'Describe opportunity sampling and volunteer sampling, using any examples. [6]',
+    response:'Opportunity sampling is when the researcher uses participants who are available and accessible at the time of the study. For example, Andrade recruited participants as they were leaving another study at the Applied Psychology Unit, making them an opportunity sample.\n\nVolunteer sampling (also called self-selecting sampling) is when participants choose to come forward and take part, usually by responding to an advertisement. For example, Milgram recruited his participants through a newspaper advertisement.',
+    sidebarTopic:'Sampling methods — opportunity and volunteer',
+    sidebar:[
+      {label:'Marking allocation', style:'block', text:'1 mark per definition/point of technique — max 2 per technique.\n1 mark per example — max 2 per technique.\n\nMaximum 4 marks if no examples are given, or only one technique is covered.'},
+      {label:'Do NOT credit', style:'warn', text:'Evaluation (e.g. "more/less representative") = 0 marks.\n\nNo marks for Bandura, Hölzel, or Perry as sampling examples — no sampling information is given in these original papers.'},
+      {label:'Creditworthy examples', style:'green', text:'Opportunity: Andrade (leaving another study), Piliavin (subway passengers), Saavedra (presented at clinic).\n\nVolunteer: Milgram (newspaper advert), Baron-Cohen (magazine advertisement).'}
+    ],
+    explanation:'4 marks. Opportunity: definition ✓ + Andrade example ✓ = 2 marks. Volunteer: definition ✓ + Milgram example ✓ = 2 marks. Total = 4/6. The response is missing a second point of definition/detail for each technique to reach 6 marks (e.g. for opportunity: "regardless of whether they are representative"; for volunteer: "also called self-selecting").'
+  },
+  {
+    section:'A', topic:'Sampling', type:'Define + example',
+    maxMarks:6, correctMark:2,
+    context: null,
+    question:'Describe opportunity sampling and volunteer sampling, using any examples. [6]',
+    response:'Opportunity sampling is better than volunteer sampling because it is quicker and easier for the researcher. However, it is less representative because the researcher only uses people who happen to be available. Volunteer sampling is more ethical because participants choose to come forward, meaning they have given their consent. Bandura used volunteer sampling for his study of aggression.',
+    sidebarTopic:'Sampling methods — opportunity and volunteer',
+    sidebar:[
+      {label:'Marking allocation', style:'block', text:'1 mark per definition/point of technique — max 2 per technique.\n1 mark per example — max 2 per technique.\n\nMaximum 4 marks if no examples are given, or only one technique is covered.'},
+      {label:'Do NOT credit', style:'warn', text:'Evaluation (e.g. "more/less representative", "more ethical") = 0 marks.\n\nBandura, Hölzel, Perry = 0 as examples — no sampling information in original papers.'},
+      {label:'What this response gets', style:'green', text:'Opportunity: "people who happen to be available" = 1 mark (brief definition).\nVolunteer: "participants choose to come forward" = 1 mark (brief definition).\nEvaluation points = 0. Bandura example = 0.'}
+    ],
+    explanation:'2 marks. "People who happen to be available" earns 1 mark for opportunity. "Participants choose to come forward" earns 1 mark for volunteer. All other content is evaluation (comparison, "more ethical", "more representative") which Cambridge does not credit. Bandura = 0 — no sampling information in the original paper.'
+  },
+
+  // ══ SECTION A — DATA INTERPRETATION ══════════════════════════════
+  {
+    section:'A', topic:'Data interpretation', type:'Means',
+    maxMarks:1, correctMark:1,
+    context:'A researcher studied the effect of exercise on sleep quality. Group A exercised for 30 minutes before bed; Group B did not exercise.\n\nGroup A: Mean sleep quality score = 7.8 (out of 10)\nGroup B: Mean sleep quality score = 5.3 (out of 10)',
+    question:'State what the means show about the sleep quality of the two groups. [1]',
+    response:'The mean shows that Group A had a higher sleep quality score on average than Group B, suggesting that those who exercised slept better.',
+    sidebarTopic:'Data interpretation — means',
+    sidebar:[
+      {label:'What earns the mark', style:'green', text:'Must COMPARE both groups.\ne.g. "Group A had higher sleep quality on average than Group B."\nOR: "Group B had lower mean sleep quality than Group A."'},
+      {label:'Do NOT credit — NAQ', style:'warn', text:'"The mean of Group A was 7.8" = 0 [NAQ — Not Answering the Question].\n"Group A\'s mean was higher" = 0 [NAQ — states the comparison but not what it shows about sleep quality].\n\nThe response must say what this TELLS US about sleep quality, not just report the numbers.'},
+    ],
+    explanation:'1 mark. The response compares both groups and states what the comparison shows (Group A had higher sleep quality). This meets the requirement to compare AND interpret the difference.'
+  },
+  {
+    section:'A', topic:'Data interpretation', type:'Means',
+    maxMarks:1, correctMark:0,
+    context:'A researcher studied the effect of exercise on sleep quality. Group A exercised for 30 minutes before bed; Group B did not exercise.\n\nGroup A: Mean sleep quality score = 7.8 (out of 10)\nGroup B: Mean sleep quality score = 5.3 (out of 10)',
+    question:'State what the means show about the sleep quality of the two groups. [1]',
+    response:'The mean of Group A was 7.8 and the mean of Group B was 5.3. The mean of Group A was higher.',
+    sidebarTopic:'Data interpretation — means',
+    sidebar:[
+      {label:'What earns the mark', style:'green', text:'Must COMPARE both groups AND state what this shows.\ne.g. "Group A had higher sleep quality on average than Group B."'},
+      {label:'Do NOT credit — NAQ', style:'warn', text:'"The mean of Group A was 7.8" = 0 [NAQ].\n"The mean of Group A was higher" = 0 [NAQ — does not say what this shows about sleep quality].\n\nSimply reporting or comparing numbers without interpreting them in context = 0.'},
+    ],
+    explanation:'0 marks [NAQ]. This response reports the numbers and notes which is higher, but does not state what the means SHOW about the sleep quality of the two groups. Cambridge requires interpretation in context, not just a numerical comparison.'
+  },
+  {
+    section:'A', topic:'Data interpretation', type:'Standard deviations',
+    maxMarks:1, correctMark:1,
+    context:'A researcher studied the effect of exercise on sleep quality.\n\nGroup A: Mean = 7.8, SD = 0.6\nGroup B: Mean = 5.3, SD = 2.9',
+    question:'State what the standard deviations show about the sleep quality scores of the two groups. [1]',
+    response:'The standard deviations show that Group B\'s sleep quality scores were much more spread out / variable than Group A\'s, suggesting that exercise produced more consistent sleep quality.',
+    sidebarTopic:'Data interpretation — standard deviations',
+    sidebar:[
+      {label:'What earns the mark', style:'green', text:'Must COMPARE the spread of both groups.\ne.g. "Group B\'s scores were more spread out / variable than Group A\'s."\nOR: "Group A\'s scores were more consistent / clustered together than Group B\'s."'},
+      {label:'Do NOT credit', style:'warn', text:'"Greater deviation" = 0 [REP — repeats the term without explaining it].\n"Group B had a higher SD" = 0 [NAQ — states the comparison but not what it shows about spread].\n\nMust mention SPREAD, VARIABILITY, or CONSISTENCY — not just the numbers.'},
+    ],
+    explanation:'1 mark. Compares both groups ✓ and explains what the SD difference shows (Group B more variable; Group A more consistent) ✓. The interpretation in context earns the mark.'
+  },
+  {
+    section:'A', topic:'Data interpretation', type:'Standard deviations',
+    maxMarks:1, correctMark:0,
+    context:'A researcher studied the effect of exercise on sleep quality.\n\nGroup A: Mean = 7.8, SD = 0.6\nGroup B: Mean = 5.3, SD = 2.9',
+    question:'State what the standard deviations show about the sleep quality scores of the two groups. [1]',
+    response:'The standard deviation of Group B shows greater deviation from the mean than Group A.',
+    sidebarTopic:'Data interpretation — standard deviations',
+    sidebar:[
+      {label:'What earns the mark', style:'green', text:'Must COMPARE the spread of both groups.\ne.g. "Group B\'s scores were more spread out than Group A\'s."'},
+      {label:'Do NOT credit', style:'warn', text:'"Greater deviation" = 0 [REP — this just repeats the term "standard deviation" in different words without explaining what it means in context].\n\nThe response must use words like: spread out, variable, consistent, clustered, wide range, narrow range.'},
+    ],
+    explanation:'0 marks [REP]. "Greater deviation from the mean" simply repeats the concept of standard deviation without explaining what it shows. Cambridge marks this as REP (repetition). The answer must use interpretive language: "more spread out", "more variable", "less consistent."'
+  },
+
+  // ══ SECTION A — CORRELATIONS ════════════════════════════════════
+  {
+    section:'A', topic:'Correlations', type:'Suitability',
+    maxMarks:2, correctMark:0,
+    context:'Dr Yuen is investigating whether there is a relationship between exercise and stress. She plans to measure stress using a 3-point scale: 1 = not stressed, 2 = sometimes stressed, 3 = very stressed.',
+    question:'Explain why this measure of stress is not suitable for a correlation. [2]',
+    response:'The 3-point stress scale is not suitable because it does not measure stress accurately. A better measure would be a standardised psychometric test.',
+    sidebarTopic:'Correlations — suitability of measures',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'No mark for simply SELECTING the unsuitable measure (selecting is given).\n\n1 mark: explanation of WHY it is unsuitable.\n1 mark: link to the requirements of a correlation.'},
+      {label:'Why a 3-point scale is unsuitable', style:'green', text:'Only continuous / ordinal data can be correlated.\n\nA 3-point scale (1, 2, 3) is effectively nominal/categorical — it has too few values to show the strength or direction of a relationship on a scatter graph.\n\nCannot calculate a meaningful correlation coefficient from just 3 possible values.'},
+      {label:'Do NOT credit', style:'warn', text:'"Not accurate" or "not a good measure" = 0 (this is a validity issue, not a correlation suitability issue).\n"Should use a better test" = 0 (does not explain WHY the scale is unsuitable for correlation).'},
+    ],
+    explanation:'0 marks. Saying the measure is "not accurate" is a validity criticism, not an explanation of why it is unsuitable for correlation. The response must explain that a correlation requires continuous/ordinal data — a 3-point scale is effectively categorical and cannot show the strength or direction of a relationship.'
+  },
+  {
+    section:'A', topic:'Correlations', type:'Suitability',
+    maxMarks:2, correctMark:2,
+    context:'Dr Yuen is investigating whether there is a relationship between exercise and stress. She plans to measure stress using a 3-point scale: 1 = not stressed, 2 = sometimes stressed, 3 = very stressed.',
+    question:'Explain why this measure of stress is not suitable for a correlation. [2]',
+    response:'A correlation requires continuous or at least ordinal data with a range of values. A 3-point scale only produces three possible scores (1, 2, or 3), which means it cannot meaningfully show the strength or direction of a relationship between variables. It is effectively categorical data.',
+    sidebarTopic:'Correlations — suitability of measures',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'No mark for simply selecting the unsuitable measure.\n\n1 mark: explanation of why it is unsuitable (too few values / categorical / not continuous).\n1 mark: link to what a correlation requires (needs to show strength and direction of relationship).'},
+      {label:'Key concept', style:'green', text:'Correlations can only be calculated from continuous or ordinal data.\n\nNominal / categorical data (including scales with very few categories) cannot be plotted meaningfully on a scatter graph or used to calculate r.'},
+    ],
+    explanation:'2 marks. Explains the data type requirement (continuous/ordinal) ✓ and links to what correlation requires (showing strength and direction) ✓. The reference to "effectively categorical" shows strong understanding of why the 3-point scale is problematic.'
+  },
+  {
+    section:'A', topic:'Correlations', type:'Direction and causation',
+    maxMarks:2, correctMark:0,
+    context:'Dr Yuen finds that participants who exercise more hours per week have lower stress scores.',
+    question:'Explain what Dr Yuen should conclude from this result. [2]',
+    response:'Dr Yuen should conclude that exercising more causes stress to decrease. This means that if people want to reduce their stress, they should increase the amount of exercise they do each week.',
+    sidebarTopic:'Correlations — direction and causation',
+    sidebar:[
+      {label:'Direction mark', style:'block', text:'1 mark: correctly identifying the direction (negative correlation — as exercise increases, stress decreases).\n\nCAUTION: Causal language = 0 even if the direction is correct.'},
+      {label:'Do NOT credit — causal language', style:'warn', text:'"Causes" / "leads to" / "results in" / "means that" (implying cause) = 0 marks.\n\nA correlation can NEVER establish causation. Even if the direction is correctly identified, any causal claim loses both marks.'},
+      {label:'What to write instead', style:'green', text:'"There is a negative correlation — as exercise hours increase, stress scores decrease."\n\nLanguage that is safe: associated with, related to, as X increases Y decreases, tend to, suggests a relationship.'}
+    ],
+    explanation:'0 marks. "Exercising more CAUSES stress to decrease" — causal language. Cambridge is explicit: causal language = 0 marks even if the direction is correct. A correlation can only identify a relationship, not establish what causes what.'
+  },
+  {
+    section:'A', topic:'Correlations', type:'Direction and causation',
+    maxMarks:2, correctMark:2,
+    context:'Dr Yuen finds that participants who exercise more hours per week have lower stress scores.',
+    question:'Explain what Dr Yuen should conclude from this result. [2]',
+    response:'There is a negative correlation between exercise and stress — as the number of hours of exercise per week increases, stress scores tend to decrease. This suggests the two variables are related, but does not tell us which variable is causing the change in the other.',
+    sidebarTopic:'Correlations — direction and causation',
+    sidebar:[
+      {label:'Direction mark', style:'block', text:'1 mark: correctly identifying the direction (negative — as exercise increases, stress decreases).\n1 mark: linking this to what it means (the variables are related / move in opposite directions).'},
+      {label:'Causal language = 0', style:'warn', text:'"Causes", "leads to", "results in" = 0 even if direction is correct.\n\nThe second sentence ("does not tell us which variable is causing the change") is not needed for marks but demonstrates good understanding.'},
+    ],
+    explanation:'2 marks. Negative correlation correctly identified ✓, direction clearly explained (as exercise increases, stress decreases) ✓, and no causal language used. The addition of "does not tell us which variable is causing the change" is good practice but not required for full marks.'
+  },
+
+  // ══ SECTION A — EXPERIMENTAL DESIGN ════════════════════════════
+  {
+    section:'A', topic:'Experimental design', type:'Advantage',
+    maxMarks:2, correctMark:0,
+    context:'Dr Chen is planning an experiment to investigate whether listening to classical music improves concentration. She is deciding between independent measures and repeated measures.',
+    question:'Explain one advantage of using an independent measures design compared to a repeated measures design. Do not refer to ethics. [2]',
+    response:'An advantage of independent measures is that it is more ethical because participants only have to do the task once, which means they experience less stress and fatigue.',
+    sidebarTopic:'Experimental design — advantage/disadvantage',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'1 mark: identifying the advantage (generic identification accepted).\n1 mark: explaining how it applies to this specific study.'},
+      {label:'Do NOT credit', style:'warn', text:'Ethics = 0 marks in BOTH advantage and disadvantage parts.\n\nThe question explicitly says "Do not refer to ethics." Any reason framed around participant stress, welfare, or rights = 0.'},
+      {label:'Creditworthy advantages', style:'green', text:'• No order effects: participants only experience one condition, so they cannot improve through practice.\n• Fewer demand characteristics: participants see only one condition, less likely to guess the aim.\n• No carry-over effects between conditions.'}
+    ],
+    explanation:'0 marks. "More ethical because participants experience less stress" is explicitly excluded — the question says "Do not refer to ethics." This is the most common error on this question type. Both marks are available only for practical/methodological advantages.'
+  },
+  {
+    section:'A', topic:'Experimental design', type:'Advantage',
+    maxMarks:2, correctMark:2,
+    context:'Dr Chen is planning an experiment to investigate whether listening to classical music improves concentration. She is deciding between independent measures and repeated measures.',
+    question:'Explain one advantage of using an independent measures design compared to a repeated measures design. Do not refer to ethics. [2]',
+    response:'A key advantage is that there are no order effects. Because each participant only completes one condition, they cannot improve on the concentration task through practice, which means any difference between the music and no-music conditions is more likely to be genuine.',
+    sidebarTopic:'Experimental design — advantage/disadvantage',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'1 mark: identifying the advantage.\n1 mark: linked explanation specific to this study.'},
+      {label:'Do NOT credit', style:'warn', text:'Ethics = 0 marks in both parts.\n\nGeneric identification without study link = 1 mark only.'},
+      {label:'Creditworthy advantages', style:'green', text:'• No order effects (practice, fatigue, boredom).\n• Fewer demand characteristics (participants see only one condition).'}
+    ],
+    explanation:'2 marks. No order effects identified ✓ and linked specifically to this study (cannot improve through practice on the concentration task) ✓. Full marks.'
+  },
+  {
+    section:'A', topic:'Experimental design', type:'Disadvantage',
+    maxMarks:2, correctMark:2,
+    context:'Dr Chen is planning an experiment to investigate whether listening to classical music improves concentration. She is deciding between independent measures and repeated measures.',
+    question:'Explain one disadvantage of using an independent measures design compared to a repeated measures design. Do not refer to ethics. [2]',
+    response:'A disadvantage is participant variables. Because different people are in each condition, one group might already be naturally better at concentrating than the other before the study starts. This means any difference in performance could be due to these pre-existing individual differences rather than the music.',
+    sidebarTopic:'Experimental design — advantage/disadvantage',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'1 mark: identifying the disadvantage.\n1 mark: linked explanation specific to this study.'},
+      {label:'Do NOT credit', style:'warn', text:'Ethics = 0 marks.\nGeneric identification without study link = 1 mark only.'},
+      {label:'Creditworthy disadvantages', style:'green', text:'• Participant variables / individual differences (different people in each condition).\n• Larger sample needed (each person contributes data to only one condition).\n• Less statistically powerful than repeated measures.'}
+    ],
+    explanation:'2 marks. Participant variables identified ✓ and linked to this specific study (one group might naturally be better at concentrating before the study begins) ✓. The explanation of what this means (differences could be due to pre-existing differences, not music) shows full understanding.'
+  },
+
+  // ══ SECTION A — LONGITUDINAL / CROSS-SECTIONAL ═══════════════
+  {
+    section:'A', topic:'Longitudinal studies', type:'Advantage',
+    maxMarks:2, correctMark:0,
+    context:'Dr Gao is planning a longitudinal study on changes in reading habits from childhood into adulthood. A colleague suggests a cross-sectional design instead.',
+    question:'Suggest one advantage of the colleague\'s cross-sectional design compared to Dr Gao\'s longitudinal plan. Do not refer to contacting participants. [2]',
+    response:'An advantage of the cross-sectional design is that it allows the researcher to study how reading habits change over a person\'s lifetime by comparing different age groups at one point in time.',
+    sidebarTopic:'Longitudinal vs cross-sectional',
+    sidebar:[
+      {label:'Key answer Cambridge wants', style:'green', text:'No cohort / societal change effect.\n\nA cross-sectional design avoids the problem of different generations (cohorts) having grown up with different societal influences — e.g. changes in technology or literacy culture that might affect all members of a longitudinal cohort over time.'},
+      {label:'Do NOT credit — NAQ', style:'warn', text:'"Allows study of how reading changes over a lifetime" = 0 [NAQ — this is what longitudinal studies do, not cross-sectional ones].\n\n"Shows age differences" = 0 without explaining WHY cross-sectional is better for this.\n\n"Faster / cheaper" = 0 [too vague without explaining why in context].'},
+    ],
+    explanation:'0 marks [NAQ]. "Study how reading habits change over a person\'s lifetime" is precisely what a LONGITUDINAL study does — it is the opposite of what makes a cross-sectional design advantageous. The key advantage of cross-sectional is avoiding cohort/societal change effects.'
+  },
+  {
+    section:'A', topic:'Longitudinal studies', type:'Advantage',
+    maxMarks:2, correctMark:2,
+    context:'Dr Gao is planning a longitudinal study on changes in reading habits from childhood into adulthood. A colleague suggests a cross-sectional design instead.',
+    question:'Suggest one advantage of the colleague\'s cross-sectional design compared to Dr Gao\'s longitudinal plan. Do not refer to contacting participants. [2]',
+    response:'A cross-sectional design avoids cohort effects. In a longitudinal study, all participants grow up during the same historical period, so changes in reading habits might reflect changes in society (e.g. the rise of digital media) rather than actual age-related development. A cross-sectional design avoids this because it compares different ages at the same point in time.',
+    sidebarTopic:'Longitudinal vs cross-sectional',
+    sidebar:[
+      {label:'Key answer Cambridge wants', style:'green', text:'No cohort / societal change effects.\n\nAll participants in a longitudinal study experience the same historical events — making it hard to separate age effects from generational/cultural effects.'},
+      {label:'Do NOT credit — NAQ', style:'warn', text:'"Allows study of how reading changes over a lifetime" = 0 [NAQ — this describes longitudinal, not cross-sectional].\n\n"Faster / cheaper" = 1 mark only if linked to the specific advantage over longitudinal.'},
+    ],
+    explanation:'2 marks. Cohort/societal change effect identified ✓ and explained with a specific, relevant example (rise of digital media confounding longitudinal results) ✓. The explanation of why this makes cross-sectional preferable is clear and well-developed.'
+  },
+
+  // ══ SECTION A — ANIMAL ETHICS ══════════════════════════════════
+  {
+    section:'A', topic:'Ethics — animal research', type:'Ethical consideration',
+    maxMarks:2, correctMark:1,
+    context:null,
+    question:'Explain one ethical consideration relevant to a study that uses non-human animals. The study must be one other than Hassett et al. [2]',
+    response:'A researcher must minimise harm to the animals used in research. This is an important principle in animal ethics.',
+    sidebarTopic:'Animal ethics',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'1 mark: naming a relevant animal ethics guideline (does not need to be defined).\n1 mark: linking it to a specific animal study (other than Hassett et al.).'},
+      {label:'Constraint', style:'warn', text:'Must refer to a study OTHER THAN Hassett et al.\n\nAcceptable studies: Fagen et al. (elephant learning).\n\nThe guideline must be relevant to animal research — not human participant guidelines.'},
+      {label:'Creditworthy guidelines', style:'green', text:'• Minimising harm (e.g. procedures that could cause discomfort)\n• Numbers (whether all animals used were necessary)\n• Housing / social needs (separation from conspecifics)\n• Species-appropriate care\n• Replacement, refinement, reduction'}
+    ],
+    explanation:'1 mark. "Minimising harm" is a valid animal ethics guideline ✓. But the response does not link it to any specific animal study. The second mark requires an example from a named study other than Hassett (e.g. Fagen — trunk-wash procedure could cause discomfort to the elephants).'
+  },
+  {
+    section:'A', topic:'Ethics — animal research', type:'Ethical consideration',
+    maxMarks:2, correctMark:2,
+    context:null,
+    question:'Explain one ethical consideration relevant to a study that uses non-human animals. The study must be one other than Hassett et al. [2]',
+    response:'One consideration is minimising harm. In the study by Fagen et al., the trunk-wash training procedure involves inserting a tube into the elephant\'s trunk, which could potentially cause discomfort or distress to the animals. Researchers should therefore consider whether the procedure is necessary and whether it could be modified to reduce any discomfort.',
+    sidebarTopic:'Animal ethics',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'1 mark: naming a relevant animal ethics guideline.\n1 mark: linking to a specific animal study (other than Hassett).'},
+      {label:'Constraint', style:'warn', text:'Must refer to a study other than Hassett et al.\nFagen et al. is the main alternative animal study in the specification.'},
+    ],
+    explanation:'2 marks. Minimising harm identified ✓ and linked with a specific example from Fagen et al. (trunk-wash procedure involving tube insertion into the trunk) ✓. The additional sentence about whether it could be modified shows good evaluative thinking, though it is not required for the marks.'
+  },
+
+  // ══ SECTION B — PLANNING QUESTION ════════════════════════════
+  {
+    section:'B', topic:'Planning — Feature A (IV)', type:'Plan extract',
+    maxMarks:1, correctMark:1,
+    context:'Dr Miller is researching whether creative activities help people sleep well. A student wrote the following for Feature A (the independent variable) of their lab experiment plan.',
+    question:'Does this extract earn marks for Feature A (IV operationalised)? Award 0 (not creditworthy) or 1 (earns credit). [1]',
+    response:'"Dr Miller will manipulate whether participants take part in a creative activity or not. Group 1 will do a creative activity before bed and Group 2 will not do a creative activity."',
+    sidebarTopic:'Planning — Feature A: IV operationalised',
+    sidebar:[
+      {label:'What Feature A requires', style:'block', text:'The IV must be OPERATIONALISED — both conditions named specifically.\n\n"Creative activity vs no creative activity" is NOT operationalised.\n\nMust name a SPECIFIC creative activity:\ne.g. "Condition 1: participants paint for 45 minutes.\nCondition 2: participants watch a neutral documentary for 45 minutes."'},
+      {label:'Do NOT credit', style:'warn', text:'"Creative activity" without naming the specific activity.\n"No creative activity" alone does not operationalise the control condition (what do they do instead?).\n\nFeature A requires TWO specific, named conditions.'},
+      {label:'What earns marks', style:'green', text:'1 mark: two conditions identified (even if vague).\n2 marks: both conditions fully operationalised with specific activities named.'}
+    ],
+    explanation:'1 mark. Two conditions are identified (creative activity vs no creative activity) ✓ — this earns 1 mark. But neither condition is operationalised: "creative activity" is not specific enough (painting? music? dance?) and "no creative activity" doesn\'t say what participants actually do. For 2 marks, both conditions must name a specific activity.'
+  },
+  {
+    section:'B', topic:'Planning — Feature B (DV)', type:'Plan extract',
+    maxMarks:2, correctMark:2,
+    context:'Dr Miller is researching whether creative activities help people sleep well. A student wrote the following for Feature B (the dependent variable) of their lab experiment plan.',
+    question:'Does this extract earn marks for Feature B (DV operationalised)? Award 0, 1, or 2. [2]',
+    response:'"The DV will be sleep quality, measured using a validated sleep quality questionnaire completed the following morning. The questionnaire produces a score out of 20, where higher scores indicate better sleep quality."',
+    sidebarTopic:'Planning — Feature B: DV operationalised',
+    sidebar:[
+      {label:'What Feature B requires', style:'block', text:'The DV must be OPERATIONALISED — state specifically how it will be measured.\n\nMust be measurable and specific:\n• Score on a named questionnaire (with scale stated)\n• Number of hours of sleep\n• Number of awakenings per night\n• Score from a sleep tracker'},
+      {label:'Do NOT credit', style:'warn', text:'"How well people sleep" alone = 0.\n"Sleep quality" without stating how it will be measured = 0.\n\nMust specify the measurement tool and unit/scale.'},
+    ],
+    explanation:'2 marks. DV is fully operationalised: sleep quality measured via a validated questionnaire ✓, score out of 20 stated ✓, direction of scoring explained (higher = better). This is an excellent example of what Feature B looks like at full marks.'
+  },
+  {
+    section:'B', topic:'Planning — excluded content', type:'Plan extract',
+    maxMarks:1, correctMark:0,
+    context:'Dr Miller is researching whether creative activities help people sleep well (laboratory experiment). A student included the following in their plan.',
+    question:'How many marks does this content earn in the plan? [Award 0 or 1]',
+    response:'"Dr Miller will use opportunity sampling to recruit participants — he will approach students on the university campus and ask if they would like to take part in a sleep study."',
+    sidebarTopic:'Planning — excluded content (lab experiment)',
+    sidebar:[
+      {label:'Critical rule', style:'warn', text:'For a LABORATORY EXPERIMENT plan, Cambridge explicitly states:\n\n"Do not describe sample / sampling technique or ethical issues / guidelines in your answer."\n\nSampling = 0 marks. Ethics = 0 marks.\n\nThis content is excluded REGARDLESS of how well it is written.'},
+      {label:'Why this rule exists', style:'block', text:'The four required features for a lab experiment are:\nA — IV operationalised\nB — DV operationalised\nC — Controls / standardisation\nD — Experimental design + allocation\n\nSampling and ethics are NOT on this list. Any time spent writing about them is wasted.'},
+      {label:'Exception', style:'green', text:'FIELD EXPERIMENTS are different — ethics and sampling ARE required features C and D for field experiments.'}
+    ],
+    explanation:'0 marks. For a laboratory experiment plan, sampling technique is explicitly excluded — Cambridge\'s mark scheme says "Do not credit sample/sampling technique." This content earns nothing regardless of how accurate or detailed it is. Students who include sampling in a lab experiment plan are wasting words that should be spent on the four required features.'
+  },
+  {
+    section:'B', topic:'Planning — b(i) advantage', type:'b(i)',
+    maxMarks:2, correctMark:0,
+    context:'Dr Miller\'s lab experiment uses an independent measures design. The question asks:',
+    question:'Explain one advantage of using an independent measures design in this study compared to a repeated measures design. Do not refer to ethics. [2]',
+    response:'An advantage is that participants only have to complete one condition, which is more ethical because it reduces the burden on participants and means they are less likely to feel pressured to continue if they find the study unpleasant.',
+    sidebarTopic:'Planning b(i) — advantage of IM design',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'1 mark: identifying the advantage.\n1 mark: linking to THIS study (Dr Miller / creative activities / sleep).'},
+      {label:'Do NOT credit', style:'warn', text:'Ethics = 0 marks.\n\nThe question explicitly states "Do not refer to ethics."\n\n"Reduces burden on participants", "less likely to feel pressured" — these are ethical/welfare concerns = 0.'},
+      {label:'Creditworthy advantages', style:'green', text:'• No order effects: participants do one condition only — cannot improve at the sleep task through practice.\n• Fewer demand characteristics: participants see only one condition, less likely to guess the study aims.'}
+    ],
+    explanation:'0 marks. The entire response is framed around ethics (reducing burden, feeling pressured) — explicitly excluded. For this question, only practical/methodological advantages count. The fact that participants do only one condition is correct, but it must be framed as "no order effects" or "no practice effects" not as an ethical benefit.'
+  },
+  {
+    section:'B', topic:'Planning — b(i) advantage', type:'b(i)',
+    maxMarks:2, correctMark:2,
+    context:'Dr Miller\'s lab experiment uses an independent measures design. The question asks:',
+    question:'Explain one advantage of using an independent measures design in this study compared to a repeated measures design. Do not refer to ethics. [2]',
+    response:'There are no order effects. Because each participant only experiences one condition — either the creative activity or the control — they cannot get better at sleeping in a laboratory setting through practice. This means any difference in sleep quality between groups is more likely to reflect the effect of the creative activity rather than familiarity with the sleep lab.',
+    sidebarTopic:'Planning b(i) — advantage of IM design',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'1 mark: identifying the advantage.\n1 mark: linking to THIS study.'},
+      {label:'Do NOT credit', style:'warn', text:'Ethics = 0 marks.\nGeneric identification without study link = 1 mark only.'},
+    ],
+    explanation:'2 marks. No order effects identified ✓ and linked specifically to this study (cannot improve at sleeping in a lab through practice) ✓. The final sentence explains the consequence for the study, showing strong understanding.'
+  },
+  {
+    section:'B', topic:'Planning — b(ii) disadvantage', type:'b(ii)',
+    maxMarks:2, correctMark:2,
+    context:'Dr Miller\'s lab experiment uses an independent measures design. The question asks:',
+    question:'Explain one disadvantage of using an independent measures design in this study compared to a repeated measures design. Do not refer to ethics. [2]',
+    response:'A disadvantage is participant variables. Because different participants are in each condition, one group might already be naturally better sleepers than the other before the study begins. This pre-existing difference could be mistaken for the effect of the creative activity, making it harder to draw a valid conclusion.',
+    sidebarTopic:'Planning b(ii) — disadvantage of IM design',
+    sidebar:[
+      {label:'Marking structure', style:'block', text:'1 mark: identifying the disadvantage.\n1 mark: linking to THIS study.'},
+      {label:'Do NOT credit', style:'warn', text:'Ethics = 0 marks in this part too.\nGeneric identification without study link = 1 mark only.'},
+      {label:'Creditworthy disadvantages', style:'green', text:'• Participant variables: one group may already be better sleepers.\n• Larger sample needed: each participant contributes data for only one condition, so Dr Miller needs more participants overall.'}
+    ],
+    explanation:'2 marks. Participant variables identified ✓ and linked to this study (one group might naturally be better sleepers before the study) ✓. The explanation of why this is problematic (could be mistaken for the effect of the creative activity) is particularly clear.'
+  }
+];
+
+// ── State ──────────────────────────────────────────────────────────
+let questions=[], current=0, selectedMark=null;
+let exactCount=0, closeCount=0, offCount=0;
+
+function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function startQuiz(){
+  questions=shuffle(QUESTIONS);
+  current=0; exactCount=0; closeCount=0; offCount=0; selectedMark=null;
+  document.getElementById('introScreen').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+  document.getElementById('scorePill').style.display='flex';
+  loadQuestion();
+}
+
+function loadQuestion(){
+  const q=questions[current];
+  selectedMark=null;
+
+  // Section badge
+  const secEl=document.getElementById('qSection');
+  secEl.textContent='Section '+q.section;
+  secEl.className='badge '+(q.section==='A'?'badge-sa':'badge-sb');
+
+  document.getElementById('qTopic').textContent=q.topic;
+  document.getElementById('qType').textContent=q.type;
+  document.getElementById('qMarks').textContent=q.maxMarks+' mark'+(q.maxMarks>1?'s':'');
+
+  // Context
+  const ctxEl=document.getElementById('qContext');
+  if(q.context){
+    ctxEl.innerHTML='';
+    ctxEl.className='q-context';
+    ctxEl.textContent=q.context;
+    ctxEl.style.display='block';
+  } else {
+    ctxEl.style.display='none';
+  }
+
+  document.getElementById('qText').textContent=q.question;
+  document.getElementById('rText').textContent='"'+q.response+'"';
+  document.getElementById('markTotal').textContent='(out of '+q.maxMarks+')';
+  document.getElementById('justification').value='';
+  document.getElementById('feedback').style.display='none';
+  document.getElementById('checkBtn').style.display='block';
+  document.getElementById('checkBtn').disabled=true;
+
+  const btns=document.getElementById('markBtns');
+  btns.innerHTML='';
+  for(let i=0;i<=q.maxMarks;i++){
+    const btn=document.createElement('button');
+    btn.className='mark-btn';
+    btn.textContent=i;
+    btn.onclick=()=>selectMark(i,btn);
+    btns.appendChild(btn);
+  }
+
+  updateSidebar(q);
+  updateProgress();
+  updateScore();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateSidebar(q){
+  document.getElementById('sbTopic').textContent=q.sidebarTopic;
+  const body=document.getElementById('sbBody');
+  body.innerHTML='';
+
+  q.sidebar.forEach(s=>{
+    const wrap=document.createElement('div');
+    wrap.className='ms-section';
+    const lbl=document.createElement('div');
+    lbl.className='ms-section-label';
+    lbl.textContent=s.label;
+    wrap.appendChild(lbl);
+    const block=document.createElement('div');
+    block.className=s.style==='warn'?'ms-warn':s.style==='green'?'ms-green':'ms-block';
+    block.textContent=s.text;
+    wrap.appendChild(block);
+    body.appendChild(wrap);
+  });
+
+  const note=document.createElement('div');
+  note.className='ms-note';
+  note.textContent='Section '+q.section+' — '+q.topic+' | Max: '+q.maxMarks+' mark'+(q.maxMarks>1?'s':'');
+  body.appendChild(note);
+}
+
+function selectMark(val,btn){
+  selectedMark=val;
+  document.querySelectorAll('.mark-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('checkBtn').disabled=false;
+}
+
+function checkAnswer(){
+  const q=questions[current];
+  const diff=Math.abs(selectedMark-q.correctMark);
+  const isExact=diff===0, isClose=diff===1;
+  if(isExact) exactCount++;
+  else if(isClose) closeCount++;
+  else offCount++;
+  updateScore();
+
+  const h=document.getElementById('fbHeader');
+  h.className='fb-header '+(isExact?'fb-exact':isClose?'fb-close':'fb-off');
+  document.getElementById('fbIcon').textContent=isExact?'✓':isClose?'≈':'✗';
+  document.getElementById('fbVerdict').textContent=isExact?'Correct mark':isClose?'Close — within 1 mark':'Not quite';
+  document.getElementById('fbMarksLine').innerHTML='You gave <strong>'+selectedMark+'/'+q.maxMarks+'</strong> — Cambridge award: <strong>'+q.correctMark+'/'+q.maxMarks+'</strong>';
+  document.getElementById('fbExplanation').textContent=q.explanation;
+  document.getElementById('feedback').style.display='block';
+  document.getElementById('checkBtn').style.display='none';
+  document.getElementById('nextBtn').textContent=current===questions.length-1?'See results →':'Next question →';
+}
+
+function nextQuestion(){
+  current++;
+  if(current>=questions.length) showSummary();
+  else loadQuestion();
+}
+
+function updateProgress(){
+  document.getElementById('progressBar').style.width=(current/questions.length*100)+'%';
+}
+
+function updateScore(){
+  const total=exactCount+closeCount+offCount;
+  document.getElementById('scoreDisplay').textContent=exactCount+' / '+total;
+}
+
+function showSummary(){
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('progressBar').style.width='100%';
+  const total=questions.length;
+  document.getElementById('sumScore').textContent=exactCount+' / '+total;
+  document.getElementById('sumSub').textContent=
+    exactCount===total?'Perfect — excellent mark scheme knowledge!':
+    exactCount>=total*0.8?'Strong. Review any you were off by 2+.':
+    exactCount>=total*0.6?'Good effort. Focus on the "Do not credit" rules.':
+    'Keep practising — the patterns will become familiar.';
+  document.getElementById('sgExact').textContent=exactCount;
+  document.getElementById('sgClose').textContent=closeCount;
+  document.getElementById('sgOff').textContent=offCount;
+  document.getElementById('summaryScreen').classList.remove('hidden');
+  document.getElementById('sbBody').innerHTML='<div style="color:var(--muted);font-size:13px;padding:20px 0;text-align:center;">Session complete.</div>';
+}
+
+function restart(){
+  document.getElementById('summaryScreen').classList.add('hidden');
+  startQuiz();
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+document.getElementById('totalQCount').textContent=QUESTIONS.length;
+</script>
+</body>
+</html>
