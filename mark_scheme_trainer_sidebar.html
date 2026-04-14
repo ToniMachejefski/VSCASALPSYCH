@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9990 Psychology — Mark Scheme Decision Trainer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2550;
+    --navy-mid: #253166;
+    --blue: #2e75b6;
+    --blue-light: #dbeafe;
+    --green: #1e6b47;
+    --green-light: #d6efe2;
+    --red: #b5183a;
+    --red-light: #fae0e6;
+    --amber: #b45309;
+    --amber-light: #fef3c7;
+    --grey: #f4f5f7;
+    --mgrey: #d1d5db;
+    --lgrey: #e9ecef;
+    --text: #1f2937;
+    --mid: #4b5563;
+    --muted: #6b7280;
+    --white: #ffffff;
+    --sidebar-w: 320px;
+    --radius: 10px;
+    --shadow: 0 2px 12px rgba(26,37,80,0.09);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #eef0f5;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Top bar ── */
+  .topbar {
+    background: var(--navy);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  .topbar-left { display: flex; align-items: center; gap: 14px; }
+  .topbar-title { font-family: 'DM Serif Display', serif; font-size: 17px; color: white; }
+  .topbar-sub { font-size: 12px; color: #94a3b8; margin-top: 1px; }
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+  .score-pill {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: white;
+    white-space: nowrap;
+  }
+  .score-pill span { font-family: 'DM Mono', monospace; color: #7dd3fc; }
+  .ms-toggle-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 6px 12px;
+    color: white;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.02em;
+    transition: background 0.15s;
+  }
+  .ms-toggle-btn:hover { background: rgba(255,255,255,0.18); }
+  .ms-toggle-btn .toggle-icon { font-size: 14px; }
+
+  /* ── Progress ── */
+  .progress-wrap { background: rgba(255,255,255,0.07); height: 3px; }
+  .progress-bar { height: 3px; background: linear-gradient(90deg,#3b82f6,#60a5fa); transition: width 0.4s ease; }
+
+  /* ── Layout ── */
+  .layout {
+    display: flex;
+    min-height: calc(100vh - 55px);
+    align-items: stretch;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    background: var(--white);
+    border-right: 1px solid var(--mgrey);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 55px;
+    height: calc(100vh - 55px);
+    overflow-y: auto;
+    transition: transform 0.25s ease;
+  }
+  .sidebar::-webkit-scrollbar { width: 5px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--mgrey); border-radius: 3px; }
+
+  .sidebar-header {
+    background: var(--navy);
+    padding: 14px 18px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .sidebar-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sidebar-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #94a3b8;
+  }
+  .sidebar-study {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: white;
+    margin-top: 4px;
+  }
+  .sidebar-close {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 2px 6px;
+    display: none;
+  }
+
+  .sidebar-body { padding: 16px 18px; flex: 1; }
+
+  .ms-section { margin-bottom: 18px; }
+  .ms-section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 7px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--lgrey);
+  }
+  .ms-block {
+    background: var(--grey);
+    border-radius: 8px;
+    padding: 11px 13px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--text);
+    white-space: pre-line;
+    border-left: 3px solid var(--navy);
+  }
+  .ms-rule {
+    background: #fffbeb;
+    border-left: 3px solid var(--amber);
+    border-radius: 0 7px 7px 0;
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .ms-rule strong { color: var(--amber); }
+
+  .ms-note {
+    background: var(--blue-light);
+    border-radius: 7px;
+    padding: 9px 12px;
+    font-size: 12px;
+    color: #1e40af;
+    line-height: 1.55;
+    margin-top: 10px;
+  }
+
+  /* ── Main content ── */
+  .main {
+    flex: 1;
+    padding: 24px 24px 60px;
+    max-width: 640px;
+    min-width: 0;
+  }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 14px;
+  }
+
+  .q-meta {
+    background: var(--navy);
+    padding: 11px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .q-study-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .q-badges { display: flex; gap: 6px; }
+  .badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 20px; }
+  .badge-type { background: rgba(255,255,255,0.12); color: #e2e8f0; }
+  .badge-marks { background: var(--blue); color: white; }
+
+  .q-body { padding: 18px 20px; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 7px;
+  }
+  .q-text {
+    font-size: 14px;
+    line-height: 1.7;
+    background: var(--grey);
+    border-radius: 8px;
+    padding: 12px 14px;
+    border-left: 3px solid var(--blue);
+  }
+
+  .r-header {
+    background: var(--grey);
+    padding: 9px 18px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--mgrey);
+  }
+  .r-body { padding: 14px 20px; }
+  .r-text {
+    font-size: 14px;
+    line-height: 1.75;
+    font-style: italic;
+    color: var(--text);
+    border-left: 3px solid var(--mgrey);
+    padding-left: 12px;
+  }
+
+  /* ── Marking ── */
+  .mark-section { padding: 16px 20px; border-top: 1px solid var(--mgrey); }
+  .mark-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+  .mark-q { font-size: 13px; font-weight: 600; color: var(--text); }
+  .mark-total { font-size: 12px; color: var(--muted); font-weight: 400; }
+  .mark-btns { display: flex; gap: 7px; flex-wrap: wrap; }
+  .mark-btn {
+    width: 44px; height: 44px;
+    border-radius: 9px;
+    border: 2px solid var(--mgrey);
+    background: var(--white);
+    font-family: 'DM Mono', monospace;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--mid);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mark-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+  .mark-btn.selected { border-color: var(--navy); background: var(--navy); color: white; }
+
+  .just-label { font-size: 12px; font-weight: 500; color: var(--mid); margin-bottom: 6px; margin-top: 12px; }
+  textarea {
+    width: 100%;
+    border: 1.5px solid var(--mgrey);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--text);
+    resize: vertical;
+    min-height: 60px;
+    transition: border 0.15s;
+    background: var(--white);
+  }
+  textarea:focus { outline: none; border-color: var(--blue); }
+
+  .action-btns { display: flex; gap: 10px; margin-top: 12px; }
+  .check-btn {
+    flex: 1;
+    padding: 12px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .check-btn:hover { background: var(--navy-mid); }
+  .check-btn:disabled { background: var(--mgrey); cursor: not-allowed; }
+
+  /* ── Feedback ── */
+  .feedback { display: none; padding: 0 20px 18px; }
+  .fb-header {
+    border-radius: 9px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .fb-exact { background: var(--green-light); border: 1px solid #a7d7bc; }
+  .fb-close { background: var(--amber-light); border: 1px solid #fcd34d; }
+  .fb-off   { background: var(--red-light);   border: 1px solid #fca5a5; }
+  .fb-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .fb-result { flex: 1; }
+  .fb-verdict { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+  .fb-exact .fb-verdict { color: var(--green); }
+  .fb-close .fb-verdict { color: var(--amber); }
+  .fb-off   .fb-verdict { color: var(--red); }
+  .fb-marks-line { font-size: 13px; color: var(--mid); }
+  .fb-marks-line strong { font-family: 'DM Mono', monospace; color: var(--text); }
+
+  .fb-explanation {
+    background: var(--grey);
+    border-radius: 8px;
+    padding: 13px 15px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text);
+    border-left: 3px solid var(--navy);
+    margin-bottom: 12px;
+  }
+
+  .next-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .next-btn:hover { background: #2563a8; }
+
+  /* ── Summary ── */
+  #summaryScreen {
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    padding: 36px 28px;
+    text-align: center;
+  }
+  .sum-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--navy); margin-bottom: 6px; }
+  .sum-score { font-family: 'DM Mono', monospace; font-size: 48px; font-weight: 500; color: var(--navy); margin: 16px 0 6px; }
+  .sum-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+  .sum-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 28px; }
+  .sg-item { border-radius: 9px; padding: 14px 10px; text-align: center; }
+  .sg-item .sg-n { font-family: 'DM Mono', monospace; font-size: 24px; font-weight: 500; display: block; margin-bottom: 3px; }
+  .sg-item .sg-l { font-size: 11px; color: var(--mid); }
+  .sg-exact { background: var(--green-light); } .sg-exact .sg-n { color: var(--green); }
+  .sg-close { background: var(--amber-light); } .sg-close .sg-n { color: var(--amber); }
+  .sg-off   { background: var(--red-light);   } .sg-off   .sg-n { color: var(--red); }
+  .restart-btn {
+    padding: 13px 36px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .restart-btn:hover { background: var(--navy-mid); }
+
+  /* ── Intro ── */
+  #introScreen {
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .intro-top { background: var(--navy); padding: 28px 28px 24px; }
+  .intro-top h1 { font-family: 'DM Serif Display', serif; font-size: 24px; color: white; margin-bottom: 5px; }
+  .intro-top p { font-size: 13px; color: #94a3b8; }
+  .intro-body { padding: 24px 28px; }
+  .how-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; }
+  .step { display: flex; gap: 12px; margin-bottom: 11px; align-items: flex-start; }
+  .step-n { width: 26px; height: 26px; background: var(--navy); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .step-t { font-size: 13px; color: var(--mid); line-height: 1.55; }
+  .intro-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 20px 0; }
+  .is-item { background: var(--grey); border-radius: 9px; padding: 13px 10px; text-align: center; }
+  .is-n { font-family: 'DM Mono', monospace; font-size: 22px; font-weight: 500; color: var(--navy); display: block; }
+  .is-l { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .start-btn {
+    width: 100%;
+    padding: 13px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .start-btn:hover { background: var(--navy-mid); }
+
+  .hidden { display: none !important; }
+
+  /* ── Mobile sidebar overlay ── */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+  }
+
+  @media (max-width: 820px) {
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      z-index: 300;
+      transform: translateX(-100%);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-overlay.open { display: block; }
+    .ms-toggle-btn { display: flex; }
+    .sidebar-close { display: block; }
+    .main { padding: 18px 16px 60px; max-width: 100%; }
+    .topbar { padding: 12px 16px; }
+  }
+  @media (max-width: 480px) {
+    .sum-grid, .intro-stats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Top bar ── -->
+<div class="topbar">
+  <div class="topbar-left">
+    <div>
+      <div class="topbar-title">Mark Scheme Trainer</div>
+      <div class="topbar-sub">Cambridge 9990 AS Level Psychology</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <button class="ms-toggle-btn" id="msToggleBtn" onclick="toggleSidebar()">
+      <span class="toggle-icon">📋</span> Mark scheme
+    </button>
+    <div class="score-pill" id="scorePill" style="display:none">
+      Score <span id="scoreDisplay">0 / 0</span>
+    </div>
+  </div>
+</div>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+<!-- ── Sidebar overlay (mobile) ── -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- ── Layout ── -->
+<div class="layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-header-row">
+        <div>
+          <div class="sidebar-title">Mark scheme reference</div>
+          <div class="sidebar-study" id="sbStudy"></div>
+        </div>
+        <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+      </div>
+    </div>
+    <div class="sidebar-body" id="sbBody">
+      <div style="color:var(--muted);font-size:13px;margin-top:20px;text-align:center;">
+        Start a question to see the relevant mark scheme here.
+      </div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Intro -->
+    <div id="introScreen">
+      <div class="intro-top">
+        <h1>How many marks?</h1>
+        <p>Read the mark scheme — then apply it to each student response</p>
+      </div>
+      <div class="intro-body">
+        <div class="how-title">How it works</div>
+        <div class="step"><div class="step-n">1</div><div class="step-t">Read the mark scheme in the sidebar on the left</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t">Read the question and the student's response</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t">Decide how many marks the response earns</div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t">Check — see if your judgement matches Cambridge's and why</div></div>
+        <div class="intro-stats">
+          <div class="is-item"><span class="is-n" id="totalQCount">0</span><div class="is-l">questions</div></div>
+          <div class="is-item"><span class="is-n">12</span><div class="is-l">studies</div></div>
+          <div class="is-item"><span class="is-n">2–8</span><div class="is-l">marks range</div></div>
+        </div>
+        <button class="start-btn" onclick="startQuiz()">Start training →</button>
+      </div>
+    </div>
+
+    <!-- Quiz -->
+    <div id="quizScreen" class="hidden">
+      <div class="card">
+        <div class="q-meta">
+          <div class="q-study-label" id="qStudy"></div>
+          <div class="q-badges">
+            <span class="badge badge-type" id="qType"></span>
+            <span class="badge badge-marks" id="qMarks"></span>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="section-label">The question</div>
+          <div class="q-text" id="qText"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="r-header">Student response — award a mark</div>
+        <div class="r-body">
+          <div class="r-text" id="rText"></div>
+        </div>
+        <div class="mark-section">
+          <div class="mark-row">
+            <div class="mark-q">Your mark <span class="mark-total" id="markTotal"></span></div>
+          </div>
+          <div class="mark-btns" id="markBtns"></div>
+          <div class="just-label">Brief justification — why did you give this mark?</div>
+          <textarea id="justification" placeholder="e.g. Names the point but no study-specific detail…"></textarea>
+          <div class="action-btns">
+            <button class="check-btn" id="checkBtn" onclick="checkAnswer()" disabled>Check my marking</button>
+          </div>
+        </div>
+        <div class="feedback" id="feedback">
+          <div id="fbHeader" class="fb-header">
+            <div class="fb-icon" id="fbIcon"></div>
+            <div class="fb-result">
+              <div class="fb-verdict" id="fbVerdict"></div>
+              <div class="fb-marks-line" id="fbMarksLine"></div>
+            </div>
+          </div>
+          <div class="fb-explanation" id="fbExplanation"></div>
+          <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next question →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div id="summaryScreen" class="hidden">
+      <div class="sum-title">Session complete</div>
+      <div class="sum-score" id="sumScore"></div>
+      <div class="sum-sub" id="sumSub"></div>
+      <div class="sum-grid">
+        <div class="sg-item sg-exact"><span class="sg-n" id="sgExact">0</span><div class="sg-l">Exact mark</div></div>
+        <div class="sg-item sg-close"><span class="sg-n" id="sgClose">0</span><div class="sg-l">Within 1 mark</div></div>
+        <div class="sg-item sg-off"><span class="sg-n" id="sgOff">0</span><div class="sg-l">Off by 2+</div></div>
+      </div>
+      <button class="restart-btn" onclick="restart()">Try again with new order</button>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+// ── Question bank ────────────────────────────────────────────────────
+const QUESTIONS = [
+  {
+    study: 'Fagen et al. (elephant learning)',
+    type: 'Outline',
+    maxMarks: 2,
+    question: 'Outline what is meant by the \'capture technique\' as used in this study. [2]',
+    response: 'The capture technique is when the trainer captures the elephant\'s attention and then gives it a reward.',
+    correctMark: 1,
+    sidebarSections: [
+      { label: 'Marking rule', text: 'One mark is awarded per correct point from a definitive list.' },
+      { label: 'What earns marks', text: '• The trainer waits for the animal to perform a specified behaviour.\n• The behaviour must be spontaneous / natural / accidental.\n• The behaviour is then marked / rewarded.\n\nSpontaneous = 1 mark.  Reward = 1 mark.' },
+      { label: 'Do NOT credit', text: '"Captures the elephant\'s attention" — vague and not on the list.\nAny description that implies the trainer deliberately elicits the behaviour.' }
+    ],
+    explanation: '1 mark. The response identifies the reward element correctly but misses the key requirement — the behaviour must occur spontaneously/naturally. "Captures the elephant\'s attention" is vague and not on the Cambridge definitive list.'
+  },
+  {
+    study: 'Fagen et al. (elephant learning)',
+    type: 'Outline with data',
+    maxMarks: 2,
+    question: 'Outline one result about the mean success rate for the trunk-wash task over time. [2]',
+    response: 'The elephants improved at the trunk-wash task over time and eventually all of them passed.',
+    correctMark: 1,
+    sidebarSections: [
+      { label: 'Marking levels', text: '2 marks: result with meaningful comparison or direction, WITH data.\n1 mark: correct direction but no data or comparison.\n0 marks: vague statement with no direction.' },
+      { label: 'Creditworthy 2-mark examples', text: '• "There was a general trend — higher number of sessions = higher mean % of passed trunk washes."\n• "Mean success rate rose from approximately 36% to 86% across sessions."' },
+      { label: 'Do NOT credit', text: '"4 juveniles passed / adult failed" — this is a finding about individual animals, not about the mean success rate over time.' }
+    ],
+    explanation: '1 mark. The direction is correct (improved over time), but "eventually all of them passed" is factually wrong — only 4 of the 5 elephants passed (the adult did not). The inaccurate claim does not destroy the first mark, but no data is provided and the comparison is faulty, so 2 marks cannot be awarded.'
+  },
+  {
+    study: 'Fagen et al. (elephant learning)',
+    type: 'Application',
+    maxMarks: 2,
+    question: 'Suggest one application to everyday life using evidence from this study. Your suggestion must be ethical. [2]',
+    response: 'Trainers could use SPR techniques to train animals in zoos to cooperate with veterinary procedures. For example, a clicker (secondary reinforcer) could be paired with a food reward (primary reinforcer) to shape the animal to present a limb for examination.',
+    correctMark: 2,
+    sidebarSections: [
+      { label: 'Marking structure', text: '1 mark: WHAT the application is (clearly based on the study).\n1 mark: HOW it works (explicit — not just implied).' },
+      { label: 'Key requirement', text: 'The "how" mark requires an explicit description of the mechanism — not just naming the application. The suggestion must also be ethical.' },
+      { label: 'Common error', text: 'Giving a "what" without a "how" = 1 mark only.\nGeneric advice not linked to SPR/this study = 0 marks.' }
+    ],
+    explanation: '2 marks. The "what" (training zoo animals for vet procedures using SPR) and the "how" (clicker paired with food reward — secondary + primary reinforcer, then shaping a specific behaviour) are both explicit and clearly based on the study methodology.'
+  },
+  {
+    study: 'Hassett et al. (monkey toy preferences)',
+    type: 'Outline',
+    maxMarks: 2,
+    question: 'Outline what was meant by the behaviour \'drag\' as used in this study. [2]',
+    response: 'Drag was when the monkey dragged the toy along the floor behind it.',
+    correctMark: 2,
+    sidebarSections: [
+      { label: 'Definitive list (2 points only)', text: '• Moving the toy along the ground.\n• With the toy behind the monkey.' },
+      { label: 'Do NOT credit', text: '"Drag the toy" — merely repeats the question word.\nAny description that does not specify the toy\'s position relative to the monkey.' },
+      { label: 'Acceptable wording', text: '"Pulling" is accepted as equivalent to "toy behind the monkey."' }
+    ],
+    explanation: '2 marks. "Along the floor" = moving along the ground ✓. "Behind it" = toy behind the monkey ✓. Although the word "dragged" echoes the question, the additional positional detail ("behind it") makes both points creditworthy.'
+  },
+  {
+    study: 'Hassett et al. (monkey toy preferences)',
+    type: 'Outline',
+    maxMarks: 2,
+    question: 'Outline what is meant by the term \'socialisation\'. [2]',
+    response: 'Socialisation is the process of learning how to interact with other people and behave in social situations.',
+    correctMark: 1,
+    sidebarSections: [
+      { label: 'Two marks required', text: '1 mark = changing / adapting behaviour (or learning socially acceptable behaviours)\n1 mark = societal / cultural norms or expectations\n\nBOTH elements needed for 2 marks.' },
+      { label: 'Do NOT credit', text: '"Environment" as the mechanism — too vague.\n"Social behaviour" or "interacting with people" — does not address norms/expectations.\n"Social situations" alone — same issue.' },
+      { label: 'What Cambridge wants', text: 'The definition must reference: (1) a changing/learning process AND (2) cultural/societal norms or expectations.' }
+    ],
+    explanation: '1 mark. "Learning how to behave" earns the process/changing mark. But "in social situations" / "with other people" does not address societal or cultural norms and expectations — which is the second required element. Cambridge explicitly says to ignore reference to "interacting with people."'
+  },
+  {
+    study: 'Hassett et al. (monkey toy preferences)',
+    type: 'Ethical weakness',
+    maxMarks: 2,
+    question: 'Explain one weakness of this study in relation to the ethics of using animals in research. [2]',
+    response: 'A weakness is that the monkeys were not able to give informed consent to take part in the study.',
+    correctMark: 0,
+    sidebarSections: [
+      { label: 'Marking structure', text: '1 mark: naming/explaining a relevant animal ethics guideline.\n1 mark: specific example from Hassett\'s study.' },
+      { label: 'Relevant animal ethics guidelines', text: '• Minimising harm (e.g. releasing monkeys into unfamiliar area with objects)\n• Housing / separation from troop (monkeys are highly social)\n• Numbers (were 82 monkeys all necessary?)' },
+      { label: 'Do NOT credit', text: 'Informed consent — this is a human research guideline, not an animal ethics principle.\nAny guideline not applicable to animal research.' }
+    ],
+    explanation: '0 marks. Informed consent is a human participant guideline — it cannot apply to animal research. Cambridge\'s animal ethics principles focus on minimising harm, appropriate housing, and justifying numbers. This response does not identify a relevant guideline, so neither mark can be awarded.'
+  },
+  {
+    study: 'Hölzel et al. (mindfulness and brain scans)',
+    type: 'Application — advice',
+    maxMarks: 4,
+    question: 'Your friend Pavel cannot relax. His job is stressful. Outline the advice you would give to Pavel, using knowledge of the study by Hölzel et al. [4]',
+    response: 'Pavel should practise mindfulness. He should attend an 8-week MBSR course. During the course he should engage in mindful yoga, stretching and breathing exercises. He should also practise body scanning to become aware of his body sensations.',
+    correctMark: 4,
+    sidebarSections: [
+      { label: 'Marking rule', text: '1 mark per piece of advice clearly based on Hölzel et al. Maximum 4 marks.' },
+      { label: 'Critical Cambridge rules', text: '"Mindfulness" alone = 0 marks (too vague).\n\n1 mark max for naming ONE activity (MBSR, yoga, body scan, meditation).\n\nTimeframe (8 weeks, 45 mins, daily) earns a SEPARATE mark — but only once.\n\n"Attend an 8-week MBSR course" = 2 marks total:\n   1 mark — MBSR (named activity)\n   1 mark — 8-week timeframe' },
+      { label: 'Do NOT credit', text: 'Justifying the advice ("because it reduces stress") — the question asks for advice only.\nGeneric relaxation advice not from the study.' }
+    ],
+    explanation: '4 marks. Breakdown: "mindfulness" alone = 0, but "8-week MBSR course" = 2 marks (MBSR + timeframe). Mindful yoga = 1 mark (specific named activity). Body scanning = 1 mark (another specific technique from the study). Total = 4/4.'
+  },
+  {
+    study: 'Hölzel et al. (mindfulness and brain scans)',
+    type: 'Application — advice',
+    maxMarks: 4,
+    question: 'Your friend Pavel cannot relax. His job is stressful. Outline the advice you would give to Pavel, using knowledge of the study by Hölzel et al. [4]',
+    response: 'I would advise Pavel to practise mindfulness every day. This will help him relax and reduce his stress levels. He should try to think about his feelings more and reflect on his day. Mindfulness is a good way to manage stress.',
+    correctMark: 0,
+    sidebarSections: [
+      { label: 'Marking rule', text: '1 mark per piece of advice clearly based on Hölzel et al. Maximum 4 marks.' },
+      { label: 'Critical Cambridge rules', text: '"Mindfulness" alone = 0 marks.\n"Practise mindfulness every day" = 0 marks (mindfulness + timeframe, but no specific activity).\n"Think about feelings / reflect" = 0 (not from the study).\n\nMust name a specific technique:\nMBSR  |  yoga  |  body scan  |  breathing exercises' },
+      { label: 'Why this is 0', text: 'None of the advice names a specific technique from Hölzel\'s study. "Mindfulness" without specifying what the participant actually does earns no marks.' }
+    ],
+    explanation: '0 marks — the most common error on this question type. "Mindfulness every day" = mindfulness (0) + daily timeframe, but no specific activity is named. "Think about feelings / reflect" is not from the study at all. Cambridge requires a named specific technique (MBSR, yoga, body scan, breathing exercises).'
+  },
+  {
+    study: 'Perry et al. (personal space)',
+    type: 'Describe procedure',
+    maxMarks: 4,
+    question: 'Describe the procedure of one trial for Experiment 1 from when the fixation point appeared until the end of the trial. [4]',
+    response: 'After the fixation point appeared, participants were shown a still picture of a circular room. There was a figure at the centre of the room and an approaching figure came from one of eight entrances. Participants were asked to imagine themselves at the centre. They pressed the spacebar to stop the figure, or the trial ended when the figure collided with the participant.',
+    correctMark: 4,
+    sidebarSections: [
+      { label: 'Definitive list — 1 mark each', text: '• Participant shown a still picture.\n• Of a circular room.\n• A figure at the centre of the room.\n• An approaching figure — from one of eight entrances.\n• The approaching figure could be a ball / friend / authority / stranger (1 mark for naming one type).\n• 3-second animation of the figure approaching.\n• Participants imagined themselves at the centre.\n• Pressed spacebar to stop the figure.\n• Or trial ended when figure collided.' },
+      { label: 'Do NOT credit', text: 'The fixation point itself — given in the question.\nThe name of the protagonist displayed before the fixation point — this happened before the start point specified.' }
+    ],
+    explanation: '4 marks. Still picture ✓, circular room ✓, figure at centre ✓, approaching from eight entrances ✓, imagined at centre ✓, spacebar ✓, collision ending ✓. The 3-second animation is not mentioned but 4 marks are still available from the other correct points on the list.'
+  },
+  {
+    study: 'Milgram (obedience)',
+    type: 'Outline — conclusion',
+    maxMarks: 2,
+    question: 'One conclusion was that when a person\'s responsibility is taken from them, they are willing to harm someone else. Outline one OTHER conclusion from this study. [2]',
+    response: '26 out of 40 participants (65%) continued to the maximum shock level of 450V.',
+    correctMark: 0,
+    sidebarSections: [
+      { label: 'Marking levels', text: '2 marks: full, detailed conclusion.\n1 mark: brief/partial conclusion.\n0 marks: a result or finding (not a conclusion).' },
+      { label: 'Result vs conclusion', text: 'Result = what happened (data, statistics).\nConclusion = what the result TELLS US about human behaviour.\n\nE.g. "65% went to 450V" = result.\n"People are far more obedient to authority than expected" = conclusion.' },
+      { label: 'Do NOT credit', text: 'Any response that simply reports numerical data or describes what participants did.\nThe conclusion given in the question (responsibility/harm).' }
+    ],
+    explanation: '0 marks. Cambridge is explicit: "26 participants pressed 450V = 0 marks (result not conclusion)." A conclusion must say what the result tells us about human behaviour — for example, "ordinary people will obey an authority figure even when told to cause serious harm to another person."'
+  },
+  {
+    study: 'Milgram (obedience)',
+    type: 'Explain one strength',
+    maxMarks: 2,
+    question: 'Explain one strength of this study. [2]',
+    response: 'A strength is that Milgram used a standardised procedure. For example, all participants received the same script and the same four verbal prods were used whenever a participant hesitated.',
+    correctMark: 2,
+    sidebarSections: [
+      { label: 'Marking structure', text: '1 mark: identifying the strength (naming or describing it).\n1 mark: example from Milgram\'s study specifically.' },
+      { label: 'Do NOT credit', text: '"Validity" alone — not enough for the identification mark.\nIV/DV cause-effect arguments (e.g. "because it\'s a lab experiment, IV and DV can show cause and effect") = 0.\n"In a laboratory so controlled" = 1 mark max (identification only).' },
+      { label: 'Creditworthy strengths', text: 'Standardised procedure, quantitative data, ecological validity (convincing cover story), debriefing of participants, collection of both quantitative and qualitative data.' }
+    ],
+    explanation: '2 marks. Strength clearly identified (standardised procedure) ✓. Supported with a specific Milgram detail (same four verbal prods) ✓. This is the model structure: identification + study-specific example.'
+  },
+  {
+    study: 'Milgram (obedience)',
+    type: 'Outline with data',
+    maxMarks: 3,
+    question: 'Outline one result from this study. You must use data in your answer. [3]',
+    response: 'All 40 participants (100%) continued to at least 300V, and 26 out of 40 (65%) continued to the maximum 450V, showing a higher level of obedience than expected compared to earlier predictions by psychiatrists.',
+    correctMark: 3,
+    sidebarSections: [
+      { label: 'Marking structure', text: '2 marks: result with a meaningful comparison.\n1 mark: result without a comparison (or comparison without data).\n+1 mark: correct specific data used.' },
+      { label: 'Key data to know', text: '• 100% of participants (all 40) delivered shocks up to 300V.\n• 65% (26 out of 40) delivered the maximum 450V.\n• Psychiatrists predicted only 1–2% would go to maximum.' },
+      { label: 'Common errors', text: '0 marks: "Most participants obeyed" (no data, no comparison).\n1 mark: "65% of participants delivered the maximum shock" (correct data, no comparison).' }
+    ],
+    explanation: '3 marks. Correct data for both 300V (100%) and 450V (65%, 26/40) ✓, plus a meaningful comparison (compared to psychiatrists\' predictions of ~1–2%) ✓. All three mark criteria are met.'
+  },
+  {
+    study: 'Baron-Cohen et al. (eyes test)',
+    type: 'Identify sample features',
+    maxMarks: 2,
+    question: 'The Group 1 sample consisted of 15 participants who were all male. Identify two other features of the Group 1 sample. [2]',
+    response: '1. They all had a diagnosis of Asperger syndrome or high-functioning autism (AS/HFA).\n2. They were all adults with a mean age of 29.7 years.',
+    correctMark: 2,
+    sidebarSections: [
+      { label: 'Definitive list — 1 mark each', text: '• Adults.\n• Diagnosed with AS/HFA.\n• Recruited via magazine advertisements / volunteer sample.\n• Similar socioeconomic class to Group 2.\n• Similar education background to Group 2.\n• Mean IQ of 115 / similar IQ to Group 4.\n• Mean age 29.7 years (accept 29–30).\n• From the UK.' },
+      { label: 'Do NOT credit', text: '"All male" — given in the question.\nNote: "adults" and "mean age 29.7 years" are the same point and together earn only 1 mark.' }
+    ],
+    explanation: '2 marks. AS/HFA diagnosis ✓ and "adults / mean age 29.7" ✓ — both are on the Cambridge definitive list. Note that "adults" and the specific age are the same point, so they together earn 1 mark. But since the response gives both a distinct diagnosis point AND an age point, 2 marks are correctly awarded.'
+  },
+  {
+    study: 'Baron-Cohen et al. (eyes test)',
+    type: 'Explain one strength',
+    maxMarks: 2,
+    question: 'Explain one strength of the revised eyes test. [2]',
+    response: 'A strength is that the study used a large and well-matched sample, with Group 2 having similar education and socioeconomic status to Group 1. This makes comparisons between groups more valid.',
+    correctMark: 0,
+    sidebarSections: [
+      { label: 'Critical distinction', text: 'The question asks about the REVISED EYES TEST (the measurement tool) — NOT the study design or methodology.\n\nStrengths of the test itself:\n• Quantitative data produced (easy to compare between groups)\n• Published / standardised (other researchers can use it)\n• 4 response options not 2 (harder, less chance)\n• Uses photographs of real eyes not drawings\n• 36 items not 25 (more reliable)' },
+      { label: 'Do NOT credit', text: 'Strengths of the study design (matching of groups, sample size, standardised procedure) — these are study strengths, not RET strengths.\n\nAny response that does not specifically address a feature of the test instrument itself.' }
+    ],
+    explanation: '0 marks. A common and important error. Matching of groups is a study design strength, not a feature of the revised eyes test itself. The question specifically asks about the test — its quantitative output, standardisation, number of options, use of photographs, or number of items.'
+  },
+  {
+    study: 'Pozzulo et al. (line-ups)',
+    type: 'Outline — social factors',
+    maxMarks: 3,
+    question: 'Outline the role of social factors in identification errors made by children. [3]',
+    response: 'Children may feel intimidated by the police officer or experimenter who is seen as an authority figure. This social pressure makes them feel they have to choose someone from the line-up even in a target-absent condition. Additionally, children may try to please the adult by choosing whoever they think the adult wants them to choose.',
+    correctMark: 3,
+    sidebarSections: [
+      { label: 'Marking rule', text: '1 mark per correct point. NO identification mark available.\nDo NOT credit findings from the study itself.' },
+      { label: 'Creditworthy points', text: '• Experimenter/police officer seen as an authority figure.\n• Child feels intimidated/nervous/stressed.\n• Child wants to "please" the experimenter/avoid trouble.\n• Mere presentation of a line-up by an adult implies a choice must be made.\n• Child might guess who the experimenter thinks is the culprit.\n• Not selecting might imply the child is not cooperating.' },
+      { label: 'Do NOT credit', text: 'Findings from the Pozzulo et al. study (e.g. "children made more false positives than adults").\nCognitive explanations (memory, recall ability).' }
+    ],
+    explanation: '3 marks. Three distinct creditworthy points all clearly present: (1) authority figure causing intimidation ✓, (2) social pressure to make a choice ✓, (3) wanting to please the adult ✓.'
+  },
+  {
+    study: 'Pozzulo et al. (line-ups)',
+    type: 'Ethics dialogue',
+    maxMarks: 4,
+    question: 'Doris says the study is ethical. Tony says it is not. Outline why you think either Doris OR Tony is correct, using evidence from the study. [4]',
+    response: 'I think Tony is correct because the children were deceived. They were not told the true aim of the study — they thought they were just watching cartoons. Also, there was no right to withdraw because the children were questioned by an adult and may have felt they had to answer.',
+    correctMark: 3,
+    sidebarSections: [
+      { label: 'Marking structure', text: '1 mark: identifying a relevant ethical guideline.\nUp to 3 further marks: explanation/consequences of adhering to or breaking the guideline.' },
+      { label: 'Tony (not ethical) — relevant guidelines', text: '• Harm/stress — children may experience psychological stress in target-absent conditions.\n• Right to withdraw — children questioned by adults; may feel unable to say no.\n• Consent (only if in context of children specifically).' },
+      { label: 'CRITICAL: Do NOT accept', text: 'DECEPTION — Cambridge explicitly states this is not creditworthy for Pozzulo et al. The children were told they were watching cartoons and identifying characters, which is exactly what they did. There was no deception about the task itself.' }
+    ],
+    explanation: '3 marks (not 4). Right to withdraw is a valid guideline, well explained with study evidence = 2 marks. However, the deception claim is factually incorrect — Cambridge explicitly says "Do not accept deception" for Pozzulo. Children did watch cartoons; they were not deceived about the task. The deception point scores 0.'
+  },
+  {
+    study: 'Piliavin et al. (subway Samaritans)',
+    type: 'Issues and debates',
+    maxMarks: 4,
+    question: 'Outline what is meant by the individual/situational debate, including one example from each side from Piliavin et al. [4]',
+    response: 'The individual side refers to behaviour caused by factors within the person such as their personality. For example in Piliavin\'s study, the drunk victim received less help than the ill victim because people made an internal attribution — they thought the drunk person caused their own problem. The situational side refers to behaviour caused by factors in the external environment. For example, the presence of other bystanders in the subway carriage affected whether people helped.',
+    correctMark: 4,
+    sidebarSections: [
+      { label: 'Marking structure', text: '1 mark: definition of individual explanation.\n1 mark: example from Piliavin of individual explanation.\n1 mark: definition of situational explanation.\n1 mark: example from Piliavin of situational explanation.' },
+      { label: 'Definitions', text: 'Individual: behaviour caused by factors WITHIN the person (disposition, personality, characteristics).\nSituational: behaviour caused by factors in the EXTERNAL ENVIRONMENT.' },
+      { label: 'Examples from Piliavin', text: 'Individual examples: some bystanders left the area (personality of not helping); race of victim/helper affected rates.\nSituational examples: type of victim (cane/drunk) affected helping; number of bystanders present; time available (60 seconds).\n\nNote: tautological definitions (e.g. "individual means individual factors") = 0 for that mark.\nExamples MUST be from Piliavin only.' }
+    ],
+    explanation: '4 marks. Individual definition ✓, Piliavin individual example (internal attribution for drunk victim) ✓, situational definition ✓, Piliavin situational example (bystanders present) ✓. All four marks earned cleanly.'
+  },
+  {
+    study: 'Piliavin et al. (subway Samaritans)',
+    type: 'Describe procedure',
+    maxMarks: 5,
+    question: 'Describe the procedure for one trial in the cane condition. [5]',
+    response: 'The victim was a confederate who would collapse on the train. In the cane condition he was sober and held a black cane. He would fall about 70 seconds after the train departed. There were also two female observers who recorded how quickly people helped and who helped. The victim would stay on the floor until helped or until the train reached the next station.',
+    correctMark: 4,
+    sidebarSections: [
+      { label: 'Definitive list — 1 mark each', text: '• Study took place on New York subway (59th–125th St route).\n• Victim collapsed ~70 seconds after departure.\n• Cane condition: victim appeared sober, carried a black cane.\n• A second confederate (model) present — would help after a set delay if no spontaneous help.\n• Two female observer confederates recorded bystander behaviour.\n• Victim remained on floor until helped or until next station.\n• Multiple trials run throughout the day.' },
+      { label: 'Common omission', text: 'The model confederate who would help after a delay if no one else helped — often missed. This is a distinct required point on the definitive list.' }
+    ],
+    explanation: '4 marks. Collapsed 70 seconds after departure ✓, sober + black cane ✓, two female observers + what they recorded ✓, stayed on floor until helped/next station ✓. Missing: the model confederate who would step in after a delay. Also, the New York subway route is not mentioned. Both are on the definitive list = 4/5.'
+  },
+  {
+    study: 'Bandura et al. (aggression)',
+    type: 'Application',
+    maxMarks: 4,
+    question: 'A mother, Ana, is worried that her son Marco has started hitting his sister. Outline the advice you would give to Ana, using knowledge of the study by Bandura et al. Your advice must be ethical. [4]',
+    response: 'Ana should reward Marco with stickers every time he plays nicely with his sister. She should also make sure that the model Marco sees (such as herself) behaves in a non-aggressive way. She should ensure any model is the same sex as Marco, as same-sex models were more influential in Bandura\'s study. She should also reward the model for behaving non-aggressively.',
+    correctMark: 3,
+    sidebarSections: [
+      { label: 'Marking rule', text: '1 mark per piece of advice clearly based on Bandura et al. Maximum 4 marks.' },
+      { label: 'CRITICAL: Do NOT credit', text: 'Directly rewarding the child (e.g. stickers, praise for good behaviour) = 0 marks.\nThis is OPERANT CONDITIONING (Skinner), not Bandura\'s social learning theory.\n\nFor Bandura questions: advice must be about the MODEL — not reinforcing the child directly.' },
+      { label: 'Creditworthy advice', text: '• Non-aggressive adult model for Marco to observe.\n• Model should be the same sex as Marco (male models more influential).\n• Reward the model for non-aggressive behaviour.\n• Ensure Marco is not frustrated before playtime.\n• Remove exposure to aggressive models (TV, aggressive adults).\n\n"Calm/peaceful" model advice credited ONCE only.' }
+    ],
+    explanation: '3 marks. Rewarding Marco directly = 0 (operant conditioning — explicitly "do not credit"). Non-aggressive model ✓ (1 mark). Same-sex model ✓ (1 mark). Reward the model ✓ (1 mark). The first piece of advice is the classic Bandura error: reinforcing the child = Skinner, not Bandura.'
+  },
+  {
+    study: 'Dement and Kleitman (sleep and dreams)',
+    type: 'Describe — EEG technique',
+    maxMarks: 4,
+    question: 'Describe how the EEG (electroencephalogram) was used in this study. [4]',
+    response: 'The EEG was used to measure brain waves and detect when participants were in REM or NREM sleep. Electrodes were attached to the scalp and next to the eyes. The wires were joined into a single cord to stop them getting tangled and to allow the participant to move freely during sleep. The EEG ran all night and recorded eye movements continuously.',
+    correctMark: 4,
+    sidebarSections: [
+      { label: 'Definitive list — 1 mark each', text: '• Electrodes placed next to the eyes.\n• Electrodes placed on the scalp.\n• All electrode wires attached to top of head, made into a single cord.\n• Single cord to prevent entanglement / give free movement.\n• EEG ran continuously / all night.\n• Paper speed of 3 or 6 mm/sec allowed recognition of eye movements.\n• Eye movements used to identify REM/NREM / wake participant at specific times.\n• Could measure direction of eye movement during dreaming.' },
+      { label: 'Important limit', text: '"Detects brain waves / electrical activity / frequency and amplitude" = 1 mark MAXIMUM, regardless of how it is phrased.\n\n"On the eyes" / "in the brain" / "attached to head" = too generic = 0.' }
+    ],
+    explanation: '4 marks. Electrodes next to eyes ✓, electrodes on scalp ✓, single cord to prevent entanglement ✓, ran all night ✓. "Measure brain waves" alone would cap at 1 mark, but here it is not the only point — the other specific details earn the remaining marks.'
+  },
+  {
+    study: 'Dement and Kleitman (sleep and dreams)',
+    type: 'Similarities between studies',
+    maxMarks: 8,
+    question: 'Explain two similarities between the study by Dement and Kleitman (sleep and dreams) and one other study from the biological approach. Do not refer to brain measurement techniques. [8]',
+    response: '1. Both Dement and Kleitman and Hölzel et al. used quantitative data. In Dement\'s study, the percentage of dream recall in REM and NREM awakenings was recorded. In Hölzel\'s study, grey matter density scores and FFMQ mindfulness scores were quantitative. This means both studies produced numerical data that could be compared statistically.\n\n2. Both studies used a small sample. Dement used 9 participants and Hölzel used 31. This limits generalisability as small samples may not represent the wider population.',
+    correctMark: 8,
+    sidebarSections: [
+      { label: 'Level descriptors (4 marks per similarity)', text: 'L4 (4): Similarity well explained using BOTH studies as examples.\nL3 (3): Well explained but only one study used, OR both studies used briefly.\nL2 (2): Brief with at least one study example, OR well explained with no study evidence.\nL1 (1): Brief, no study examples.\nL0 (0): No creditable response.' },
+      { label: 'Constraint', text: 'Do NOT credit comparisons about brain measurement techniques (EEG / MRI / brain scans).\n\nOther biological approach studies: Hölzel et al. and Hassett et al.\n(Perry et al. also accepted if about biological mechanisms.)' },
+      { label: 'Other biological studies', text: 'Hölzel et al. (mindfulness and brain scans)\nHassett et al. (monkey toy preferences)' }
+    ],
+    explanation: '8 marks (L4 + L4). Similarity 1 — quantitative data: both studies named with specific examples (% dream recall; grey matter density scores) plus explanation of significance = L4 ✓. Similarity 2 — small sample: both sample sizes given (9 and 31) with explanation of limitation = L4 ✓. MRI is mentioned only to illustrate data type, not as a brain measurement comparison, so the constraint does not apply.'
+  },
+  {
+    study: 'Andrade (doodling)',
+    type: 'Describe sample',
+    maxMarks: 4,
+    question: 'The sample size was 40 participants. Describe the sample used in this study, other than the sample size of 40. [4]',
+    response: 'The participants were recruited using opportunity sampling as they were leaving another study. They were mostly female (35 female, 5 male) and were aged between 18 and 55. They were members of the Applied Psychology Unit participant panel and were paid for their participation.',
+    correctMark: 4,
+    sidebarSections: [
+      { label: 'Definitive list — 1 mark each', text: '• Recruited via opportunity sampling.\n• Were leaving another study when recruited.\n• Members of university participant panel / Applied Psychology Unit.\n• Aged 18–55 years.\n• Paid for participation.\n• Majority female: 35 female, 5 male.\n• Doodling group: 17F, 3M. Control: 18F, 2M.' },
+      { label: 'Do NOT accept', text: '"Students" — not stated in the study.\n"MRC members" — not accurate.\n\nNote: "opportunity sampling" and "leaving another study" are effectively the same point. Together they earn 1 mark, not 2. (Check the actual source to confirm.) They can be treated as 2 separate points if specific enough.' }
+    ],
+    explanation: '4 marks. Opportunity sampling ✓, APU panel ✓, age 18–55 ✓, paid ✓, 35F/5M ✓. Multiple correct points given — maximum of 4 applies.'
+  },
+  {
+    study: 'Andrade (doodling)',
+    type: 'Compare',
+    maxMarks: 8,
+    question: 'Explain two differences between the study by Andrade (doodling) and one other study from the cognitive approach. Do not refer to the sample of participants. [8]',
+    response: '1. Andrade\'s study was different from Baron-Cohen et al. because Andrade used an auditory task (listening to a phone message) whereas Baron-Cohen used a visual task (looking at photographs of eyes). This means they investigated different types of cognitive processing — Andrade looked at attention and memory, while Baron-Cohen investigated social cognition and theory of mind.\n\n2. Andrade used an independent measures design with only two conditions, whereas Pozzulo et al. used both independent groups (adults vs children) and repeated measures within participants. This means Pozzulo\'s design was more complex and could introduce order effects, which was not a concern for Andrade.',
+    correctMark: 8,
+    sidebarSections: [
+      { label: 'Level descriptors (4 marks per difference)', text: 'L4 (4): Difference well explained using BOTH studies as examples.\nL3 (3): Well explained but only one study, OR both briefly.\nL2 (2): Brief with one study, OR well explained no evidence.\nL1 (1): Brief, no study examples.' },
+      { label: 'L1 maximum for', text: '"Different aims / psychology" as the sole point.\n"Different procedures" stated without explanation.' },
+      { label: 'L0 — do NOT credit', text: 'Standardisation comparisons.\nDifferent conclusions.\nDifferent numbers of groups or conditions.\nBaron-Cohen described as matched pairs design (incorrect).' },
+      { label: 'Other cognitive approach studies', text: 'Baron-Cohen et al. (eyes test)\nPozzulo et al. (line-ups)' }
+    ],
+    explanation: '8 marks (L4 + L4). Difference 1 — auditory vs visual task: both studies named with specific details and explanation of cognitive processes involved = L4 ✓. Difference 2 — experimental design complexity: both studies named with specific design features and consequence (order effects) explained = L4 ✓.'
+  },
+  {
+    study: 'Saavedra and Silverman (button phobia)',
+    type: 'Outline',
+    maxMarks: 2,
+    question: 'One aim was to investigate the role of disgust in a childhood phobia. Outline one OTHER aim of this study. [2]',
+    response: 'Another aim was to investigate whether positive reinforcement could help to reduce the severity of the boy\'s button phobia.',
+    correctMark: 1,
+    sidebarSections: [
+      { label: 'Marking levels', text: '2 marks: full, detailed aim.\n1 mark: brief or partial aim.' },
+      { label: '2-mark examples', text: '• To investigate the role of classical conditioning / evaluative learning in the button phobia.\n• To investigate whether imagery or behavioural exposure would effectively treat the phobia.' },
+      { label: 'Restrictions', text: 'Do NOT credit: any aim about disgust (given in the question).\n\nOperant conditioning = 1 mark MAXIMUM — not the primary learning mechanism in this study. Classical conditioning / evaluative learning is what Cambridge wants for 2 marks.' }
+    ],
+    explanation: '1 mark. Positive reinforcement = operant conditioning — Cambridge caps this at 1 mark maximum. For 2 marks, the aim must reference classical conditioning / evaluative learning, or specifically whether imagery vs behavioural exposure would treat the phobia.'
+  }
+];
+
+// ── State ──────────────────────────────────────────────────────────
+let questions = [], current = 0, selectedMark = null;
+let exactCount = 0, closeCount = 0, offCount = 0;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  questions = shuffle(QUESTIONS);
+  current = 0; exactCount = 0; closeCount = 0; offCount = 0; selectedMark = null;
+  document.getElementById('introScreen').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+  document.getElementById('scorePill').style.display = 'flex';
+  loadQuestion();
+}
+
+function loadQuestion() {
+  const q = questions[current];
+  selectedMark = null;
+
+  document.getElementById('qStudy').textContent = q.study;
+  document.getElementById('qType').textContent = q.type;
+  document.getElementById('qMarks').textContent = q.maxMarks + ' mark' + (q.maxMarks > 1 ? 's' : '');
+  document.getElementById('qText').textContent = q.question;
+  document.getElementById('rText').textContent = '"' + q.response + '"';
+  document.getElementById('markTotal').textContent = '(out of ' + q.maxMarks + ')';
+  document.getElementById('justification').value = '';
+  document.getElementById('feedback').style.display = 'none';
+  document.getElementById('checkBtn').style.display = 'block';
+  document.getElementById('checkBtn').disabled = true;
+
+  // Mark buttons
+  const btns = document.getElementById('markBtns');
+  btns.innerHTML = '';
+  for (let i = 0; i <= q.maxMarks; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'mark-btn';
+    btn.textContent = i;
+    btn.onclick = () => selectMark(i, btn);
+    btns.appendChild(btn);
+  }
+
+  // Update sidebar
+  updateSidebar(q);
+  updateProgress();
+  updateScore();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateSidebar(q) {
+  document.getElementById('sbStudy').textContent = q.study;
+  const body = document.getElementById('sbBody');
+  body.innerHTML = '';
+
+  q.sidebarSections.forEach(section => {
+    const wrap = document.createElement('div');
+    wrap.className = 'ms-section';
+
+    const lbl = document.createElement('div');
+    lbl.className = 'ms-section-label';
+    lbl.textContent = section.label;
+    wrap.appendChild(lbl);
+
+    const isDoNot = section.label.toLowerCase().includes('do not') || section.label.toLowerCase().includes('critical');
+    const isRule = section.label.toLowerCase().includes('critical') || section.label.toLowerCase().includes('important');
+
+    const block = document.createElement('div');
+    block.className = isDoNot ? 'ms-rule' : 'ms-block';
+    block.textContent = section.text;
+    wrap.appendChild(block);
+
+    body.appendChild(wrap);
+  });
+
+  // Question type hint
+  const hint = document.createElement('div');
+  hint.className = 'ms-note';
+  hint.textContent = 'Question type: ' + q.type + '  |  Max marks: ' + q.maxMarks;
+  body.appendChild(hint);
+}
+
+function selectMark(val, btn) {
+  selectedMark = val;
+  document.querySelectorAll('.mark-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('checkBtn').disabled = false;
+}
+
+function checkAnswer() {
+  const q = questions[current];
+  const diff = Math.abs(selectedMark - q.correctMark);
+  const isExact = diff === 0;
+  const isClose = diff === 1;
+
+  if (isExact) exactCount++;
+  else if (isClose) closeCount++;
+  else offCount++;
+
+  updateScore();
+
+  const fbHeader = document.getElementById('fbHeader');
+  fbHeader.className = 'fb-header ' + (isExact ? 'fb-exact' : isClose ? 'fb-close' : 'fb-off');
+  document.getElementById('fbIcon').textContent = isExact ? '✓' : isClose ? '≈' : '✗';
+
+  const verdicts = { exact: 'Correct mark', close: 'Close — within 1 mark', off: 'Not quite' };
+  document.getElementById('fbVerdict').textContent = isExact ? verdicts.exact : isClose ? verdicts.close : verdicts.off;
+  document.getElementById('fbMarksLine').innerHTML =
+    'You gave <strong>' + selectedMark + '/' + q.maxMarks + '</strong> — Cambridge award: <strong>' + q.correctMark + '/' + q.maxMarks + '</strong>';
+
+  document.getElementById('fbExplanation').textContent = q.explanation;
+  document.getElementById('feedback').style.display = 'block';
+  document.getElementById('checkBtn').style.display = 'none';
+  document.getElementById('nextBtn').textContent = current === questions.length - 1 ? 'See results →' : 'Next question →';
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= questions.length) showSummary();
+  else loadQuestion();
+}
+
+function updateProgress() {
+  document.getElementById('progressBar').style.width = (current / questions.length * 100) + '%';
+}
+
+function updateScore() {
+  const total = exactCount + closeCount + offCount;
+  document.getElementById('scoreDisplay').textContent = exactCount + ' / ' + total;
+}
+
+function showSummary() {
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('progressBar').style.width = '100%';
+  const total = questions.length;
+  document.getElementById('sumScore').textContent = exactCount + ' / ' + total;
+  document.getElementById('sumSub').textContent =
+    exactCount === total ? 'Perfect — excellent mark scheme knowledge!' :
+    exactCount >= total * 0.8 ? 'Strong. Review any questions you were off by 2+.' :
+    exactCount >= total * 0.6 ? 'Good effort. Focus on the Cambridge "Do not credit" rules.' :
+    'Keep practising — the mark scheme patterns will become familiar.';
+  document.getElementById('sgExact').textContent = exactCount;
+  document.getElementById('sgClose').textContent = closeCount;
+  document.getElementById('sgOff').textContent = offCount;
+  document.getElementById('summaryScreen').classList.remove('hidden');
+  document.getElementById('sbBody').innerHTML = '<div style="color:var(--muted);font-size:13px;padding:20px 0;text-align:center;">Session complete.</div>';
+}
+
+function restart() {
+  document.getElementById('summaryScreen').classList.add('hidden');
+  startQuiz();
+}
+
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('sidebarOverlay');
+  sb.classList.toggle('open');
+  ov.classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+
+document.getElementById('totalQCount').textContent = QUESTIONS.length;
+</script>
+</body>
+</html>
