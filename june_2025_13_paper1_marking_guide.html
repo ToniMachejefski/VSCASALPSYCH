@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9990/13 Paper 1 — Marking Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1A2550;--navy2:#253166;--navy3:#0F1A3A;
+  --blue:#2E75B6;--blue-lt:#D6E4F3;--blue-xs:#EEF5FB;
+  --green:#1E6B47;--green-lt:#D6EFE2;
+  --red:#B5183A;--red-lt:#FAE0E6;
+  --amber:#B45309;--amber-lt:#FEF3C7;
+  --teal:#0E7490;--teal-lt:#CFFAFE;
+  --purple:#5B21B6;--purple-lt:#EDE9FE;
+  --grey:#F4F5F7;--mgrey:#D1D5DB;--lgrey:#E9ECEF;
+  --text:#1F2937;--mid:#4B5563;--muted:#6B7280;--white:#FFFFFF;
+  --sidebar:320px;
+  --serif:'Libre Baskerville',Georgia,serif;
+  --sans:'Source Sans 3',system-ui,sans-serif;
+  --mono:'Source Code Pro',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:#EEF0F5;color:var(--text);min-height:100vh}
+
+.topbar{background:var(--navy3);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.topbar-title{font-family:var(--serif);font-size:16px;color:#fff;letter-spacing:-.2px}
+.topbar-sub{font-size:11px;color:#94A3B8;margin-top:2px}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.score-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:50px;padding:5px 14px;font-size:13px;font-weight:500;color:#fff;white-space:nowrap}
+.score-pill span{font-family:var(--mono);color:#7DD3FC}
+.sidebar-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:5px 11px;color:#fff;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;display:none;align-items:center;gap:5px;transition:background .15s}
+.sidebar-btn:hover{background:rgba(255,255,255,.18)}
+.prog-wrap{height:3px;background:rgba(255,255,255,.07)}
+.prog-bar{height:3px;background:linear-gradient(90deg,#3B82F6,#60A5FA);transition:width .4s}
+
+.layout{display:flex;min-height:calc(100vh - 52px)}
+
+.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--white);border-right:1px solid var(--mgrey);display:flex;flex-direction:column;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;transition:transform .25s}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--mgrey);border-radius:2px}
+.sb-head{background:var(--navy);padding:14px 16px;position:sticky;top:0;z-index:10}
+.sb-head-row{display:flex;align-items:flex-start;justify-content:space-between}
+.sb-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94A3B8}
+.sb-q{font-family:var(--serif);font-size:13px;color:#fff;margin-top:4px;line-height:1.4}
+.sb-close{background:none;border:none;color:#94A3B8;font-size:18px;cursor:pointer;padding:2px 5px;display:none}
+.sb-body{padding:14px 16px;flex:1}
+.sb-sec{margin-bottom:14px}
+.sb-sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:5px;padding-bottom:4px;border-bottom:1px solid var(--lgrey)}
+.sb-block{background:var(--grey);border-radius:7px;padding:10px 12px;font-size:12.5px;line-height:1.65;color:var(--text);white-space:pre-line;border-left:3px solid var(--navy)}
+.sb-warn{background:var(--red-lt);border-left:3px solid var(--red);border-radius:0 6px 6px 0;padding:9px 12px;font-size:12.5px;line-height:1.6;color:var(--text);white-space:pre-line}
+.sb-warn strong{color:var(--red)}
+.sb-tip{background:#FFF7ED;border-left:3px solid var(--amber);border-radius:0 6px 6px 0;padding:9px 12px;font-size:12.5px;line-height:1.6;color:var(--text)}
+.sb-tip strong{color:var(--amber)}
+.sb-green{background:var(--green-lt);border-left:3px solid var(--green);border-radius:0 6px 6px 0;padding:9px 12px;font-size:12.5px;line-height:1.6;color:var(--text);white-space:pre-line}
+.sb-meta{background:var(--blue-xs);border-radius:6px;padding:7px 10px;font-size:11.5px;color:#1E40AF;margin-top:8px}
+
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:150}
+.main{flex:1;padding:24px 24px 60px;max-width:680px;min-width:0}
+
+#introScreen{background:var(--white);border-radius:14px;box-shadow:0 2px 12px rgba(26,37,80,.09);overflow:hidden}
+.intro-hero{background:var(--navy3);padding:32px 32px 28px}
+.intro-hero h1{font-family:var(--serif);font-size:24px;color:#fff;margin-bottom:6px}
+.intro-hero p{font-size:13px;color:#94A3B8}
+.intro-body{padding:24px 28px}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.mode-card{border:2px solid var(--mgrey);border-radius:10px;padding:16px;cursor:pointer;transition:all .15s;text-align:center}
+.mode-card:hover{border-color:var(--blue);background:var(--blue-xs)}
+.mode-card.selected{border-color:var(--navy);background:var(--blue-xs)}
+.mode-card .mc-icon{font-size:26px;margin-bottom:8px}
+.mode-card .mc-title{font-weight:600;font-size:14px;color:var(--text)}
+.mode-card .mc-desc{font-size:12px;color:var(--muted);margin-top:3px}
+.name-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.name-field{display:flex;flex-direction:column;gap:5px}
+.name-field label{font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em}
+.name-field input{border:1.5px solid var(--mgrey);border-radius:8px;padding:9px 12px;font-family:var(--sans);font-size:14px;color:var(--text);transition:border .15s}
+.name-field input:focus{outline:none;border-color:var(--blue)}
+.how-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.step{display:flex;gap:11px;margin-bottom:9px;align-items:flex-start}
+.step-n{width:24px;height:24px;background:var(--navy);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.step-t{font-size:13px;color:var(--mid);line-height:1.5}
+.intro-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}
+.is-item{background:var(--grey);border-radius:8px;padding:12px 8px;text-align:center}
+.is-n{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--navy);display:block}
+.is-l{font-size:11px;color:var(--muted);margin-top:2px}
+.start-btn{width:100%;padding:13px;background:var(--navy);color:#fff;border:none;border-radius:9px;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s}
+.start-btn:hover{background:var(--navy2)}
+
+.q-card{background:var(--white);border-radius:12px;box-shadow:0 2px 12px rgba(26,37,80,.08);overflow:hidden;margin-bottom:12px}
+.q-meta{background:var(--navy);padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.q-num{font-family:var(--mono);font-size:11px;color:#94A3B8;text-transform:uppercase;letter-spacing:.08em}
+.q-badges{display:flex;gap:6px;align-items:center}
+.badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px}
+.b-topic{background:rgba(255,255,255,.12);color:#E2E8F0}
+.b-marks{background:var(--blue);color:#fff}
+.b-sa{background:var(--teal);color:#fff}
+.b-sb{background:#7C3AED;color:#fff}
+.q-body{padding:18px 20px}
+.q-context{background:#F8FAFC;border:1px solid var(--lgrey);border-radius:7px;padding:11px 14px;font-size:13px;line-height:1.65;color:var(--mid);margin-bottom:12px;font-family:var(--serif);font-style:italic}
+.q-context strong{font-style:normal;color:var(--text)}
+.q-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:14px;line-height:1.7;background:var(--grey);border-radius:8px;padding:12px 14px;border-left:3px solid var(--blue);font-family:var(--serif)}
+.q-note{font-size:12px;color:var(--red);font-weight:600;margin-top:8px;padding:7px 10px;background:var(--red-lt);border-radius:6px}
+
+.mark-area{padding:16px 20px;border-top:1px solid var(--mgrey)}
+.mark-label{font-size:13px;font-weight:600;color:var(--text);margin-bottom:9px}
+.mark-total{font-size:12px;color:var(--muted);font-weight:400}
+.mark-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px}
+.mb{width:42px;height:42px;border-radius:8px;border:2px solid var(--mgrey);background:var(--white);font-family:var(--mono);font-size:16px;font-weight:500;color:var(--mid);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.mb:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-xs)}
+.mb.sel{border-color:var(--navy);background:var(--navy);color:#fff}
+.just-lbl{font-size:12px;font-weight:500;color:var(--mid);margin-bottom:5px}
+textarea{width:100%;border:1.5px solid var(--mgrey);border-radius:7px;padding:8px 11px;font-family:var(--sans);font-size:13px;color:var(--text);resize:vertical;min-height:54px;transition:border .15s}
+textarea:focus{outline:none;border-color:var(--blue)}
+.check-btn{margin-top:11px;width:100%;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+.check-btn:hover{background:var(--navy2)}
+.check-btn:disabled{background:var(--mgrey);cursor:not-allowed}
+
+.feedback{display:none;padding:0 20px 18px}
+.fb-header{border-radius:8px;padding:11px 14px;display:flex;align-items:flex-start;gap:11px;margin-bottom:11px}
+.fb-exact{background:var(--green-lt);border:1px solid #A7D7BC}
+.fb-close{background:var(--amber-lt);border:1px solid #FCD34D}
+.fb-off{background:var(--red-lt);border:1px solid #FCA5A5}
+.fb-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.fb-v{font-size:13px;font-weight:700;margin-bottom:2px}
+.fb-exact .fb-v{color:var(--green)}
+.fb-close .fb-v{color:var(--amber)}
+.fb-off .fb-v{color:var(--red)}
+.fb-ml{font-size:12px;color:var(--mid)}
+.fb-ml strong{font-family:var(--mono);color:var(--text)}
+.fb-expl{background:var(--grey);border-radius:7px;padding:11px 13px;font-size:13px;line-height:1.7;color:var(--text);border-left:3px solid var(--navy);margin-bottom:11px}
+.next-btn{width:100%;padding:11px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+.next-btn:hover{background:#2563A8}
+
+#summaryScreen{background:var(--white);border-radius:14px;box-shadow:0 2px 12px rgba(26,37,80,.09);padding:32px 28px}
+.sum-names{font-size:13px;color:var(--muted);margin-bottom:6px}
+.sum-title{font-family:var(--serif);font-size:26px;color:var(--navy);margin-bottom:4px}
+.sum-score{font-family:var(--mono);font-size:52px;font-weight:500;color:var(--navy);margin:16px 0 4px}
+.sum-sub{font-size:13px;color:var(--muted);margin-bottom:24px}
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
+.sg-item{border-radius:9px;padding:13px 10px;text-align:center}
+.sg-n{font-family:var(--mono);font-size:22px;font-weight:500;display:block;margin-bottom:3px}
+.sg-l{font-size:11px;color:var(--mid)}
+.sg-ex{background:var(--green-lt)}.sg-ex .sg-n{color:var(--green)}
+.sg-cl{background:var(--amber-lt)}.sg-cl .sg-n{color:var(--amber)}
+.sg-of{background:var(--red-lt)}.sg-of .sg-n{color:var(--red)}
+.sum-breakdown{margin-bottom:24px}
+.sum-bk-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
+.bk-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--lgrey);font-size:13px}
+.bk-q{font-family:var(--mono);font-size:12px;color:var(--mid);width:60px;flex-shrink:0}
+.bk-bar-wrap{flex:1;height:8px;background:var(--lgrey);border-radius:4px;overflow:hidden}
+.bk-bar{height:100%;border-radius:4px;transition:width .6s ease}
+.bk-bar.full{background:var(--green)}
+.bk-bar.part{background:var(--amber)}
+.bk-bar.none{background:var(--red)}
+.bk-score{font-family:var(--mono);font-size:12px;color:var(--text);width:40px;text-align:right;flex-shrink:0}
+.restart-btn{padding:12px 32px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+.restart-btn:hover{background:var(--navy2)}
+
+.hidden{display:none!important}
+@media(max-width:820px){
+  .sidebar{position:fixed;top:0;left:0;height:100vh;z-index:250;transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sb-overlay.open{display:block}
+  .sidebar-btn{display:flex}
+  .sb-close{display:block}
+  .main{padding:16px 14px 60px;max-width:100%}
+  .topbar{padding:10px 14px}
+  .mode-grid,.name-row,.sum-grid,.intro-stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-title">Paper 1 Marking Guide</div>
+    <div class="topbar-sub">Cambridge 9990/13 — May/June 2025</div>
+  </div>
+  <div class="topbar-right">
+    <button class="sidebar-btn" id="sbBtn" onclick="toggleSidebar()">📋 Mark scheme</button>
+    <div class="score-pill" id="scorePill" style="display:none">Score <span id="scoreDisplay">0 / 0</span></div>
+  </div>
+</div>
+<div class="prog-wrap"><div class="prog-bar" id="progBar" style="width:0%"></div></div>
+
+<div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+  <div class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <div class="sb-head-row">
+        <div>
+          <div class="sb-label">Mark scheme</div>
+          <div class="sb-q" id="sbQ">—</div>
+        </div>
+        <button class="sb-close" onclick="closeSidebar()">✕</button>
+      </div>
+    </div>
+    <div class="sb-body" id="sbBody">
+      <div style="color:var(--muted);font-size:13px;margin-top:16px;text-align:center">Start marking to see the mark scheme here.</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <div id="introScreen">
+      <div class="intro-hero">
+        <h1>Self &amp; Peer Marking Guide</h1>
+        <p>9990/13 Approaches, Issues and Debates — May/June 2025 — 60 marks</p>
+      </div>
+      <div class="intro-body">
+        <div class="how-title">Choose your mode</div>
+        <div class="mode-grid">
+          <div class="mode-card" id="modeSelf" onclick="selectMode('self')">
+            <div class="mc-icon">📝</div>
+            <div class="mc-title">Self-mark</div>
+            <div class="mc-desc">Mark your own paper</div>
+          </div>
+          <div class="mode-card" id="modePeer" onclick="selectMode('peer')">
+            <div class="mc-icon">🔄</div>
+            <div class="mc-title">Peer-mark</div>
+            <div class="mc-desc">Mark a classmate's paper</div>
+          </div>
+        </div>
+        <div class="name-row">
+          <div class="name-field">
+            <label>Marker's name</label>
+            <input type="text" id="markerName" placeholder="Your name">
+          </div>
+          <div class="name-field" id="candidateField">
+            <label>Candidate's name</label>
+            <input type="text" id="candidateName" placeholder="Paper being marked">
+          </div>
+        </div>
+        <div class="how-title">How it works</div>
+        <div class="step"><div class="step-n">1</div><div class="step-t">The mark scheme loads automatically in the sidebar for each question</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t">Find the answer on the actual paper in front of you</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t">Award a mark — then check against the Cambridge reasoning</div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t">A Paper 1 tip appears after each question to build exam technique</div></div>
+        <div class="intro-stats">
+          <div class="is-item"><span class="is-n">20</span><div class="is-l">questions</div></div>
+          <div class="is-item"><span class="is-n">60</span><div class="is-l">total marks</div></div>
+          <div class="is-item"><span class="is-n">A+B</span><div class="is-l">both sections</div></div>
+        </div>
+        <button class="start-btn" onclick="startMarking()">Begin marking →</button>
+      </div>
+    </div>
+
+    <div id="quizScreen" class="hidden">
+      <div class="q-card">
+        <div class="q-meta">
+          <div class="q-num" id="qNum"></div>
+          <div class="q-badges">
+            <span class="badge" id="qSec"></span>
+            <span class="badge b-topic" id="qTopic"></span>
+            <span class="badge b-marks" id="qMarks"></span>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-context" id="qContext" style="display:none"></div>
+          <div class="q-lbl">The question</div>
+          <div class="q-text" id="qText"></div>
+          <div class="q-note" id="qNote" style="display:none"></div>
+        </div>
+      </div>
+      <div class="q-card">
+        <div class="mark-area">
+          <div class="mark-label">Award a mark <span class="mark-total" id="mTotal"></span></div>
+          <div class="mark-btns" id="mBtns"></div>
+          <div class="just-lbl">Brief reason for your mark (optional)</div>
+          <textarea id="justTxt" placeholder="e.g. Names the type of validity but no study example…"></textarea>
+          <button class="check-btn" id="checkBtn" onclick="checkMark()" disabled>Check mark</button>
+        </div>
+        <div class="feedback" id="feedback">
+          <div class="fb-header" id="fbHead">
+            <div class="fb-icon" id="fbIcon"></div>
+            <div>
+              <div class="fb-v" id="fbV"></div>
+              <div class="fb-ml" id="fbML"></div>
+            </div>
+          </div>
+          <div class="fb-expl" id="fbExpl"></div>
+          <button class="next-btn" id="nextBtn" onclick="nextQ()">Next question →</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="summaryScreen" class="hidden">
+      <div class="sum-names" id="sumNames"></div>
+      <div class="sum-title">Marking complete</div>
+      <div class="sum-score" id="sumScore"></div>
+      <div class="sum-sub" id="sumSub"></div>
+      <div class="sum-grid">
+        <div class="sg-item sg-ex"><span class="sg-n" id="sgEx">0</span><div class="sg-l">Exact mark</div></div>
+        <div class="sg-item sg-cl"><span class="sg-n" id="sgCl">0</span><div class="sg-l">Within 1</div></div>
+        <div class="sg-item sg-of"><span class="sg-n" id="sgOf">0</span><div class="sg-l">Off by 2+</div></div>
+      </div>
+      <div class="sum-breakdown">
+        <div class="sum-bk-title">Marks by question</div>
+        <div id="bkRows"></div>
+      </div>
+      <button class="restart-btn" onclick="restart()">Mark another paper</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const QS = [
+  // ── Q1 FAGEN ET AL. ────────────────────────────────────────────
+  {
+    id:'1(a)', sec:'A', topic:'Fagen et al.', max:1, correct:1,
+    context:'From the study by Fagen et al. (elephant learning):',
+    question:'State the number of elephants used in this study.',
+    note:'If more than one answer given, take the first only.',
+    sidebar:{
+      q:'Q1(a) — Number of elephants (Fagen)',
+      sections:[
+        {lbl:'Answer',style:'green',text:'5\n\nAccept: "4 juvenile + 1 adult"'},
+        {lbl:'Do NOT credit',style:'warn',text:'Any other number.\nIf two answers given, take the first only.'},
+      ]
+    },
+    explanation:'1 mark for 5 (or "4 juvenile + 1 adult"). The study used 5 Asian female elephants at a stable in Nepal: 4 juveniles aged 5–7 and 1 adult in her 50s.',
+    tip:{title:'State questions — Paper 1 tip',text:'"State" requires only a factual answer — no explanation needed. One correct fact = full marks. Providing extra information is harmless but wastes time. If two answers are given, Cambridge takes the FIRST only — so never write two different answers hoping one is right.'}
+  },
+  {
+    id:'1(b)', sec:'A', topic:'Fagen et al.', max:2, correct:2,
+    context:'From the study by Fagen et al. (elephant learning):',
+    question:'Identify two criteria used to select the elephants in this study.',
+    note:'List is definitive — only the criteria on the mark scheme earn marks.',
+    sidebar:{
+      q:'Q1(b) — Selection criteria (Fagen)',
+      sections:[
+        {lbl:'Definitive list — 1 mark each',style:'green',text:'• Level of docility\n• Lack of pregnancy / does not currently have a calf (accept "pregnancy" alone)\n• Willingness of mahout to participate\n• Trained using traditional methods\n• No previous experience with secondary positive reinforcement'},
+        {lbl:'Do NOT credit',style:'warn',text:'"Healthy" — not on the list\n"Nepalese" — not a selection criterion\n"Not trained" — incorrect (they WERE traditionally trained)'},
+      ]
+    },
+    explanation:'1 mark per correct criterion from the definitive list. "Healthy" and "Nepalese" are common errors — neither appears in the original Fagen paper as a stated selection criterion.',
+    tip:{title:'Identify questions — definitive lists',text:'When a question says "identify" in Fagen, Milgram procedure, or similar, the mark scheme usually has a definitive list. Only points on that list earn marks. If you\'re unsure between two answers, write the one you\'re most confident about first — for "identify two" questions Cambridge marks independently, so both attempts are assessed.'}
+  },
+  {
+    id:'1(c)', sec:'A', topic:'Fagen et al.', max:2, correct:2,
+    context:'Elephants were trained to do a number of behavioural tasks including "trunk here".',
+    question:'Outline the \'trunk here\' task.',
+    note:'List is definitive — exactly two required points.',
+    sidebar:{
+      q:'Q1(c) — The "trunk here" task (Fagen)',
+      sections:[
+        {lbl:'Two required points (definitive list)',style:'green',text:'1. The (distal) end of the trunk placed (gently) on the palm of the trainer.\n2. The underside (ventral) part of the trunk must also be touching the palm of the trainer.'},
+        {lbl:'Both points required for 2 marks',style:'warn',text:'Saying only "trunk placed on trainer\'s palm" without specifying the UNDERSIDE / ventral surface = 1 mark only.'},
+      ]
+    },
+    explanation:'2 marks requires both specific points: tip of trunk on palm AND the underside/ventral surface also touching the palm. A vague "elephant places trunk on trainer" earns 1 mark at most.',
+    tip:{title:'Outline questions with definitive lists',text:'For tasks and procedures in Fagen, the mark scheme specifies exactly what must be present. Read the mark scheme carefully — the "trunk here" task has two distinct physical components and both must be described. Vague or incomplete descriptions earn partial credit only.'}
+  },
+
+  // ── Q2 DEMENT & KLEITMAN ────────────────────────────────────────
+  {
+    id:'2(a)', sec:'A', topic:'Dement & Kleitman', max:2, correct:2,
+    context:'In the study by Dement and Kleitman (sleep and dreams), an EEG was used.',
+    question:'Outline where on each participant\'s body the EEG electrodes were attached.',
+    note:'List is definitive.',
+    sidebar:{
+      q:'Q2(a) — EEG electrode placement (Dement)',
+      sections:[
+        {lbl:'Definitive list — 1 mark each',style:'green',text:'• Electrodes placed next to the eyes.\n• Electrodes placed on the scalp / head (accept "skull").\n• All electrode lead wires further attached to the top of the head.'},
+        {lbl:'Do NOT credit',style:'warn',text:'"On the eyes" — must be next to / beside the eyes\n"In the brain" — electrodes are on the scalp, not inserted\n"Under eyes" — incorrect position\n"In a ponytail" — not creditworthy phrasing'},
+      ]
+    },
+    explanation:'1 mark per correct point from the definitive list. The most commonly lost mark is the single cord running from the top of the head — many students only describe the eye and scalp electrodes.',
+    tip:{title:'EEG electrode questions',text:'The EEG setup in Dement & Kleitman has three distinct features: (1) electrodes next to the eyes to detect eye movements, (2) electrodes on the scalp to detect brain waves, and (3) all wires combined into a single cord at the top of the head to prevent entanglement. All three appear regularly in exam questions.'}
+  },
+  {
+    id:'2(b)', sec:'A', topic:'Dement & Kleitman', max:2, correct:2,
+    context:'From the study by Dement and Kleitman (sleep and dreams):',
+    question:'Explain one weakness of this study in relation to validity.',
+    note:null,
+    sidebar:{
+      q:'Q2(b) — Validity weakness (Dement)',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: identify the type of validity (by name or outline)\n1 mark: study-specific example'},
+        {lbl:'Creditworthy examples',style:'green',text:'Ecological validity: Lab sleep setting is artificial — participants sleep differently in a lab than at home, which may have changed their dream patterns.\n\nPopulation validity: Only 9 participants (all adult, mostly male) — findings may not generalise to children, females, or other populations.\n\nInternal validity: We don\'t know if participants told the truth about dream content — self-reports of dreams may be unreliable.\n\nEcological validity: Stress of being in a laboratory might affect dream content.'},
+        {lbl:'Do NOT credit',style:'warn',text:'"Generalisability" alone — the mark scheme says credit population validity specifically, not generalisability as a general concept.\n\nReliability — the question asks specifically about VALIDITY.'},
+      ]
+    },
+    explanation:'2 marks requires naming or describing a type of validity PLUS a specific example from Dement & Kleitman. "The study lacks validity" alone = 0 marks. The identification mark can be earned either by naming the type (e.g. ecological validity) or by describing the problem (e.g. "it wasn\'t a real setting").',
+    tip:{title:'Validity vs reliability vs generalisability',text:'Validity = does the study measure what it claims to / do findings reflect real-world behaviour?\nReliability = consistency (would you get the same result again?)\nGeneralisability = can findings apply to other people/settings?\n\nFor validity questions, always name the TYPE of validity and link it to the specific study. "Ecological validity because they slept in a lab not at home" = 2 marks. "Lacks validity" = 0.'}
+  },
+
+  // ── Q3 BANDURA ET AL. ────────────────────────────────────────────
+  {
+    id:'3(a)', sec:'A', topic:'Bandura et al.', max:2, correct:2,
+    context:'From the study by Bandura et al. (aggression). One aim was to investigate whether children would reproduce the aggression shown by a model when that model is no longer there.',
+    question:'Outline one OTHER aim of this study.',
+    note:'Do not credit responses about imitation in the absence of the model — this is given in the question.',
+    sidebar:{
+      q:'Q3(a) — Other aim (Bandura)',
+      sections:[
+        {lbl:'Marking levels',style:'block',text:'2 marks: full/detailed aim\n1 mark: partial/brief aim'},
+        {lbl:'2-mark examples',style:'green',text:'• To investigate whether children imitate the aggressive behaviour of an aggressive model.\n• To investigate whether children are more likely to imitate the behaviour of a same-sex model.\n• To investigate whether males imitate more aggression than females.'},
+        {lbl:'1-mark examples',style:'green',text:'• To investigate how children learn aggression.\n• To see if aggression was nature or nurture.'},
+        {lbl:'Do NOT credit',style:'warn',text:'Any aim about imitation in the ABSENCE of the model — this is stated in the question.\n\nFor the sex-differences aim: "imitate" (or synonym: reproduce, copy, repeat) is needed for 2 marks.'},
+      ]
+    },
+    explanation:'For 2 marks the aim must be specific and complete. "To investigate aggression" is too vague for 2 marks. The sex differences aims (same-sex model, males vs females) are worth 2 marks only if they include the concept of imitation.',
+    tip:{title:'Outline an aim questions',text:'A full aim (2 marks) typically has the structure: "To investigate WHETHER [variable X] affects [variable Y] in [population Z]." A partial aim (1 mark) names the general area without specifying what is being compared. Watch for the instruction "other than" — any aim that overlaps with the given aim earns 0.'}
+  },
+  {
+    id:'3(b)', sec:'A', topic:'Bandura et al.', max:2, correct:2,
+    context:'From the study by Bandura et al. (aggression):',
+    question:'Identify two features of the sample in this study.',
+    note:'List is definitive.',
+    sidebar:{
+      q:'Q3(b) — Sample features (Bandura)',
+      sections:[
+        {lbl:'Definitive list — 1 mark each',style:'green',text:'• n = 72\n• Aged 37–69 months / mean age 52 months (accept 3–6 years)\n• Split evenly across sex / 36 male and 36 female\n• Enrolled at Stanford University Nursery School'},
+        {lbl:'Do NOT credit',style:'warn',text:'"Male + female" = 0 (too vague — not a feature, just states sex exists)\n"From Stanford University" = 0 (must specify nursery SCHOOL)\n"Children" alone = 0 (not a specific feature)'},
+      ]
+    },
+    explanation:'1 mark per point from the definitive list. "Male and female" without the even split (36/36) earns 0. "Stanford University" without "Nursery School" earns 0 — both specifics matter.',
+    tip:{title:'Identify sample features — be specific',text:'Sample description questions require precise facts. "The sample included males and females" = 0 because this is true of virtually every study. "The sample was split evenly: 36 male and 36 female" = 1 mark. Always include numbers where you know them — sample size, age range, and split are the most commonly tested features.'}
+  },
+  {
+    id:'3(c)', sec:'A', topic:'Bandura et al.', max:2, correct:2,
+    context:'From the study by Bandura et al. (aggression):',
+    question:'Suggest one application to everyday life using evidence from this study. Your suggestion must be ethical.',
+    note:null,
+    sidebar:{
+      q:'Q3(c) — Application (Bandura)',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: WHAT the application is (clearly based on Bandura)\n1 mark: HOW it will be achieved'},
+        {lbl:'Creditworthy examples',style:'green',text:'What: Children can be taught prosocial behaviour.\nHow: A child observes a model engaging in prosocial behaviour and is likely to imitate it.\n\nWhat: Children can be taught a new skill at school.\nHow: A child observes a teacher demonstrating the skill and then replicates it.\n\nWhat: TV/video game companies can reduce aggression in content.\nHow: By presenting more prosocial behaviour / reducing violent content for children.\n\nWhat: Parents can limit children\'s exposure to aggressive media.\nHow: By restricting time on aggressive games / supervising viewing.'},
+        {lbl:'Do NOT credit',style:'warn',text:'"It explains why people are aggressive" — this is explaining a finding, not an application.\n"Be careful what you do around others" — too vague, no specific how.\n\nDirectly reinforcing/rewarding the CHILD = 0 (this is operant conditioning — Skinner, not Bandura).'},
+      ]
+    },
+    explanation:'2 marks requires a "what" (a specific, ethically sound application) AND a "how" (the mechanism by which it works, clearly rooted in social learning theory). Describing the study\'s findings without applying them earns 0.',
+    tip:{title:'Application questions — what AND how',text:'Application questions always need two components:\n(1) WHAT will you do? (the application)\n(2) HOW will it work? (the mechanism from Bandura)\n\nThe HOW must reference observation of a model, imitation, or the influence of reward on the model — not direct reward to the child (that\'s operant conditioning). Always check the suggestion is ethical.'}
+  },
+
+  // ── Q4 PERRY ET AL. ────────────────────────────────────────────
+  {
+    id:'4', sec:'A', topic:'Perry et al.', max:3, correct:3,
+    context:'In Experiment 1 in the study by Perry et al. (personal space), participants were given oxytocin (OT) or a placebo (PL).',
+    question:'Describe one result from the HIGH EMPATHY OT condition that compares two approaching figures. You must use data in your answer.',
+    note:'High empathy OT condition only. No credit for comparisons with placebo or low empathy conditions.',
+    sidebar:{
+      q:'Q4 — Result with data (Perry)',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'2 marks: result with meaningful comparison between two figures\n1 mark: result with no meaningful comparison\n+ 1 mark: correct data used (tolerance ±2)'},
+        {lbl:'3-mark examples',style:'green',text:'"The mean distance for the ball invading personal space was lower than that for a stranger (40)."\n\n"The mean distance for the stranger invading personal space was higher than that for a friend (8.4)."'},
+        {lbl:'2-mark examples (comparison, no data)',style:'green',text:'"The mean distance for the ball was lower than for a stranger."\n"The mean distance for the stranger was higher than for a friend."'},
+        {lbl:'1-mark examples (data, no comparison)',style:'green',text:'"The mean distance for a friend invading personal space was the lowest."\n"The mean distance for a stranger was the highest."'},
+        {lbl:'Do NOT credit',style:'warn',text:'Any comparison with the placebo condition.\nAny comparison with the low empathy condition.\nAuthority = boss/teacher is accepted but NOT parent/family.'},
+      ]
+    },
+    explanation:'3 marks requires a meaningful comparison between two specific approaching figure types IN the high empathy OT condition, plus the correct data. The most common error is comparing OT to PL — the question specifically asks for a comparison within the high empathy OT condition.',
+    tip:{title:'Result with data questions — Paper 1',text:'For 3 marks: state what the result SHOWS (comparison) + the specific data.\n\nThe comparison must be between two things (two types of figures, two conditions). Simply reporting one number = 1 mark. Comparing without data = 2 marks. Comparison + data = 3 marks.\n\nFor Perry Experiment 1 data: friend ≈ 8–9 cm, stranger ≈ 40 cm, ball ≈ 28 cm (accept tolerance of ±2).'}
+  },
+
+  // ── Q5 SOCIAL APPROACH ─────────────────────────────────────────
+  {
+    id:'5(a)', sec:'A', topic:'Social approach', max:2, correct:2,
+    context:null,
+    question:'Outline one assumption of the social approach.',
+    note:null,
+    sidebar:{
+      q:'Q5(a) — Social approach assumption',
+      sections:[
+        {lbl:'Marking levels',style:'block',text:'2 marks: full/detailed assumption\n1 mark: partial/brief assumption\n\nFor 2 marks need TWO of the "influenced" components.'},
+        {lbl:'2-mark examples',style:'green',text:'"Behaviour, cognitions, and emotions are influenced by social contexts, social environments and social groups." (any 2 mechanisms)\n\n"Behaviour, cognitions and emotions are influenced by actual, implied or imagined presence of others." (any 2 of these)'},
+        {lbl:'1-mark examples',style:'green',text:'"Behaviour is affected by other people."\n"Behaviour is influenced by groups."'},
+        {lbl:'Other creditworthy "influenced by"',style:'green',text:'• Interaction with others\n• Social pressure\n• Social norms'},
+      ]
+    },
+    explanation:'For 2 marks the assumption must include TWO components — e.g. two types of behaviour affected (cognitions AND emotions, not just behaviour) OR two sources of social influence (social contexts AND social groups). A single vague statement earns only 1 mark.',
+    tip:{title:'Approach assumptions',text:'Social approach assumptions follow a structure: "[what is influenced] is affected by [social factor]". For 2 marks you need TWO elements on BOTH sides — e.g. "behaviour AND cognitions are influenced by social contexts AND social groups." A single brief statement like "behaviour is affected by others" = 1 mark.'}
+  },
+  {
+    id:'5(b)', sec:'A', topic:'Social approach / Piliavin', max:2, correct:2,
+    context:'Explain how the study by Piliavin et al. (subway Samaritans) supports the assumption you outlined in part (a).',
+    question:'Explain how the study by Piliavin et al. (subway Samaritans) supports the assumption you outlined in part (a).',
+    note:'If the link is not with the assumption from 5(a), only the result/conclusion mark can be awarded.',
+    sidebar:{
+      q:'Q5(b) — Piliavin supports social assumption',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: result / conclusion / concept from Piliavin\n1 mark: explicit link back to the assumption in 5(a)'},
+        {lbl:'Creditworthy',style:'green',text:'"They were affected by the social context of witnessing a drunk person needing help (1). They were less likely to help as it was seen as self-inflicted (1)."\n\n"When there was a larger group, it affected their behaviour as they were faster at helping (1). This shows social presence of others (the group) influenced behaviour (1)."'},
+        {lbl:'Critical rule',style:'warn',text:'The link MUST connect to the specific assumption stated in 5(a). If the student links to a different assumption or just restates the aim, maximum 1 mark.\n\n1 mark maximum if linked to the AIM of the study rather than a FINDING.'},
+      ]
+    },
+    explanation:'The second mark requires an explicit link back to the assumption described in 5(a). Describing a Piliavin result without connecting it to the assumption earns only 1 mark. The examiner checks whether the Piliavin evidence actually supports the stated assumption.',
+    tip:{title:'Assumption + support questions',text:'These follow a strict formula:\n5(a) = state the assumption\n5(b) = find a Piliavin RESULT that demonstrates the assumption in action\n\nThe link sentence must say something like "...which shows that [social factor] influences [type of behaviour]" — explicitly tying the result back to the assumption. A result without this link earns 1 mark only.'}
+  },
+
+  // ── Q6 HASSETT ET AL. ────────────────────────────────────────────
+  {
+    id:'6(a)', sec:'A', topic:'Hassett et al.', max:3, correct:3,
+    context:'From the study by Hassett et al. (monkey toy preferences):',
+    question:'Describe the psychology being investigated in this study.',
+    note:'1 mark maximum for an example from the study. Do not accept any answer about "gender" of monkeys (must use "sex").',
+    sidebar:{
+      q:'Q6(a) — Psychology investigated (Hassett)',
+      sections:[
+        {lbl:'Creditworthy points',style:'green',text:'• Sex differences refer to behavioural differences based on biological differences between males and females.\n• These can be based on hormones / chromosomes.\n• The main male hormone is testosterone; the main female hormone is oestrogen.\n• Play is any mental/physical activity performed in leisure time for enjoyment.\n• Socialisation is any mechanism that changes/adapts behaviour to societal/cultural expectations.\n• Description of nature-nurture debate (1 mark).'},
+        {lbl:'Example (1 mark max)',style:'green',text:'"The study looked at whether male and female monkeys preferred masculine or feminine toys."'},
+        {lbl:'Do NOT credit',style:'warn',text:'"Gender" of monkeys — must use "sex" (biological distinction).\nDo not credit descriptions of the actual findings/results.'},
+      ]
+    },
+    explanation:'3 marks requires multiple distinct points about the psychological concepts being investigated: sex differences, the role of biology (hormones/chromosomes), and/or the concept of play or socialisation. 1 of the 3 marks can come from a study example.',
+    tip:{title:'Sex vs gender in Hassett',text:'In Hassett et al., Cambridge insists on the word "sex" (biological) rather than "gender" (social construct). The study is investigating whether biological sex (determined by hormones/chromosomes) drives toy preferences — any answer using "gender" for the monkeys will not receive that mark.\n\nFor 3 marks: define sex differences + explain the biological mechanism (hormones) + add a third concept (play/socialisation/nature-nurture).'}
+  },
+  {
+    id:'6(b)', sec:'A', topic:'Hassett et al.', max:4, correct:3,
+    context:'Two friends, Madison and Zach, are discussing the validity of the study by Hassett et al. (monkey toy preferences). Madison says the study has validity. Zach says it does not.',
+    question:'Outline why you think either Madison or Zach is correct, using evidence from the study.',
+    note:'If both Madison and Zach appear in the answer, mark them independently and credit the highest score. Standardisation / reliability / replicability = 0 for the identification mark.',
+    sidebar:{
+      q:'Q6(b) — Validity dialogue (Hassett)',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: identification of a relevant type of validity\nUp to 3 marks: examples and explanation of why/why not valid'},
+        {lbl:'Valid validity types (identification mark)',style:'green',text:'• Ecological validity / external validity\n• Mundane realism\n• Internal validity / IV affects DV / causal relationship\n• Population validity\n• Control of extraneous variables'},
+        {lbl:'Madison (has validity) — examples',style:'green',text:'• The enclosure was the monkeys\' everyday setting (ecological validity).\n• Controls: the types of toys were chosen to represent wheeled/plush categories, reducing confounds.\n• This means it is more likely the sex of the monkey (IV) was affecting toy choice (DV).'},
+        {lbl:'Zach (lacks validity) — examples',style:'green',text:'• Having to choose human toys is not an everyday activity for monkeys (lacks ecological validity).\n• No participant variables controlled — e.g. amount of previous experience with novel objects.\n• A monkey drawn to more exciting toys might not be responding to sex-typing at all.'},
+        {lbl:'Do NOT credit',style:'warn',text:'"Standardisation", "reliability", "replicability" = 0 for the identification mark.\nIf candidate mixes up Madison and Zach (says Zach but gives a "valid" answer): maximum 2 marks.'},
+      ]
+    },
+    explanation:'4 marks requires: 1 identification mark (named type of validity) + up to 3 marks for Hassett-specific examples and explanation. Simply saying "it has/lacks ecological validity" without evidence earns only the 1 identification mark.',
+    tip:{title:'Validity dialogue questions',text:'These questions award:\n(1) 1 identification mark — name a type of validity\n(2) Up to 3 evidence marks — study-specific examples\n\nYou only need to argue ONE side. Arguing both sides means the examiner marks each independently and credits the higher score — but this wastes time.\n\nFor Hassett: choosing between Madison (validity) and Zach (no validity) — Zach is slightly easier to argue because the artificial lab setting and the use of human toys are clear ecological validity weaknesses.'}
+  },
+
+  // ── Q7 MILGRAM ────────────────────────────────────────────────────
+  {
+    id:'7', sec:'A', topic:'Milgram', max:5, correct:5,
+    context:'In the study by Milgram (obedience), a shock generator was used. It consisted of 30 lever switches in a horizontal line.',
+    question:'Describe the shock generator used in this study, other than these features.',
+    note:'List is definitive. Do not credit the 1,2,3,4 answer box.',
+    sidebar:{
+      q:'Q7 — Shock generator (Milgram)',
+      sections:[
+        {lbl:'Definitive list — 1 mark each',style:'green',text:'• Each switch labelled with a voltage.\n• Volts ranged from 15V to 450V / minimum 15V / maximum 450V.\n• Each button went up by 15V increments.\n• Verbal designations for groups of four voltage levels.\n• Last two levels labelled XXX (simply).\n• Upon pressing a switch: a red light appeared.\n• An electric buzzing was emitted.\n• A blue light labelled "voltage energizer" lit up.\n• Labels ranging from "Slight Shock" to "Danger Severe Shock" (any two of these labels = 1 mark).\n• Connected to the learner by electrodes/wires "supposed" to send a shock.'},
+        {lbl:'Do NOT credit',style:'warn',text:'The 30 switches in a horizontal line — given in the question.\nThe 1,2,3,4 answer box on the shock generator.\n\nIf XXX already awarded, needs TWO different additional labels for the "Slight Shock to Danger" mark.'},
+      ]
+    },
+    explanation:'5 marks from the definitive list. Students most commonly forget: the buzzing sound, the blue voltage energizer light, the red light on pressing, and the XXX label on the final two switches. Note that the verbal label mark requires naming labels from the specific range (Slight Shock → Severe Shock → Extreme Intensity Shock → Danger Severe Shock → XXX).',
+    tip:{title:'Describe procedure/equipment — definitive lists',text:'For Milgram equipment questions, the list is fixed and no marks are available for reasonable guesses outside it. The most commonly missed points are the SENSORY features (buzzing sound, lights) rather than the labels. Work through the equipment systematically: what did it LOOK like, what SOUNDS did it make, what HAPPENED when you pressed a switch, and what were the LABELS?'}
+  },
+
+  // ── Q8 ANDRADE ────────────────────────────────────────────────────
+  {
+    id:'8', sec:'A', topic:'Andrade', max:4, correct:4,
+    context:'Your friend Alfonso is finding it difficult to concentrate at school. His concentration is worse when he is bored.',
+    question:'Outline the advice you would give to Alfonso, using your knowledge of the study by Andrade (doodling).',
+    note:'No credit for justifying the advice. "Doodling", "doodle" or "secondary task" by itself = 0.',
+    sidebar:{
+      q:'Q8 — Advice for Alfonso (Andrade)',
+      sections:[
+        {lbl:'Marking rule',style:'block',text:'1 mark per piece of advice clearly based on Andrade\'s study. Max 4.'},
+        {lbl:'Creditworthy advice',style:'green',text:'• Tell Alfonso to have a piece of paper in class.\n• Tell Alfonso he can draw shapes on the paper.\n• Tell Alfonso he can shade the shapes.\n• He can shade/draw whenever he wants / about whatever he wants.\n• It doesn\'t matter how neat or quick he is when shading/drawing.\n• The paper can already have shapes on it for him to colour in.\n• He could doodle especially when the teacher is giving important information to be remembered.'},
+        {lbl:'Do NOT credit',style:'warn',text:'"Doodle" / "doodling" / "secondary task" by itself = 0 (must specify what this involves).\n"Scribble" = 0.\n"Go into a quiet dull room" = 0.\n\nNo credit for justifying the advice ("because it will improve concentration") — the question only asks for the advice itself.'},
+      ]
+    },
+    explanation:'4 marks from the list of specific advice points. The key Cambridge rule here is that "doodle" alone earns 0 — students must describe what doodling actually involves (drawing shapes, shading, on a piece of paper). Justifying the advice also earns 0 as the question only asks for the advice.',
+    tip:{title:'Advice questions based on Andrade',text:'Andrade\'s study used a very specific task: participants shaded shapes (pre-drawn squares and circles) while listening to a dull phone message. When giving advice based on Andrade, describe the actual activity — shading shapes on paper. Generic advice like "keep occupied" or "doodle" without specifying what earns 0.\n\nAnother key rule: do NOT justify the advice. "Have a piece of paper" = 1 mark. "Have a piece of paper because it will improve concentration" = still 1 mark, but the justification part earns nothing.'}
+  },
+
+  // ── Q9(a) HÖLZEL ET AL. ────────────────────────────────────────────
+  {
+    id:'9(a)', sec:'B', topic:'Hölzel et al. / FFMQ', max:4, correct:4,
+    context:'From the study by Hölzel et al. (mindfulness and brain scans):',
+    question:'Describe the Five Facet Mindfulness Questionnaire (FFMQ) used in this study.',
+    note:'List is definitive. No credit for describing any of the five facets in detail.',
+    sidebar:{
+      q:'Q9(a) — The FFMQ (Hölzel)',
+      sections:[
+        {lbl:'Definitive list',style:'green',text:'• 39-item questionnaire.\n• Measures the five factors of mindfulness: observing / describing / acting with awareness / non-judging of inner experience / non-reactivity to inner experience — 1 mark max for naming one.\n• Rated on a 5-point / 1–5 / Likert scale.\n• 1 = never or rarely true.\n• 5 = very often or always true.'},
+        {lbl:'Example of 3-mark answer',style:'green',text:'"1 = never; 5 = very often" earns 3 marks:\n1 mark for the 1–5 scale\n1 mark for 1 = never\n1 mark for 5 = very often'},
+        {lbl:'Do NOT credit',style:'warn',text:'Describing or explaining any of the five facets = 0 for that point (only naming one earns 1 mark).\nAny number other than 39 items = 0.\n"Likert scale" alone without any detail about the scale values = 1 mark only.'},
+      ]
+    },
+    explanation:'4 marks from the definitive list. The most commonly missed marks are the two anchor points of the scale (1 = never/rarely true; 5 = very often/always true). Simply saying "5-point scale" earns 1 mark. Describing the individual facets (e.g. what "observing" involves) earns no additional credit.',
+    tip:{title:'Describe a measurement tool questions',text:'For questionnaire description questions, Cambridge tests: number of items, what is measured, scale format, and scale anchor points. The FFMQ has four testable facts:\n39 items | 5 facets (name one) | 5-point scale | 1=never, 5=very often\n\nDescribing what the facets involve (e.g. "observing means noticing sensations") earns 0 — only naming a facet earns the 1 available example mark.'}
+  },
+
+  // ── Q9(b) HÖLZEL COMPARISON ────────────────────────────────────────
+  {
+    id:'9(b)', sec:'B', topic:'Hölzel / Biological approach', max:8, correct:6,
+    context:'The other biological approach studies are Hassett et al. and Dement & Kleitman. Perry et al. accepted for oxytocin-related comparisons only. Do not refer to questionnaires.',
+    question:'Explain one similarity AND one difference between the study by Hölzel et al. (mindfulness and brain scans) and one other study from the biological approach. Do not refer to questionnaires.',
+    note:'Award L1–L4 separately for the similarity and the difference. 4 marks per component = 8 total.',
+    sidebar:{
+      q:'Q9(b) — Similarity & difference (Hölzel + one biological study)',
+      sections:[
+        {lbl:'Level descriptors (applied to EACH of similarity and difference)',style:'block',text:'L4 (4 marks): Well explained using BOTH studies as examples.\nL3 (3 marks): Well explained but only one study used, OR both used briefly.\nL2 (2 marks): Brief with at least one study example, OR well explained with no evidence.\nL1 (1 mark): Brief, no study examples.\nL0 (0 marks): No creditable response.'},
+        {lbl:'Other biological studies',style:'block',text:'Hassett et al. (monkey toy preferences)\nDement & Kleitman (sleep and dreams)\nPerry et al. — only for oxytocin-related comparisons'},
+        {lbl:'Creditworthy similarities',style:'green',text:'• Small samples (Hölzel: 31; Dement: 9)\n• Used brain measurement techniques\n• Quantitative data collected\n• Experimental / quasi-experimental design\n• Lab-based data collection'},
+        {lbl:'Creditworthy differences',style:'green',text:'• Brain measurement technique: Hölzel used MRI (brain density/structure); Dement used EEG (brain wave activity/function)\n• Type of data: Hölzel included qualitative self-report; Hassett used only quantitative observation\n• Species: Hölzel (humans) vs Hassett (rhesus monkeys)'},
+        {lbl:'Do NOT credit',style:'warn',text:'"Different aims" = L1 only.\n"Different species" = L1 only.\n"Both study biology" = L0.\nQuestionnaires = 0 (excluded by question).\nAny response that just describes what each study did (without identifying a similarity/difference) = L1.'},
+      ]
+    },
+    explanation:'8 marks total — 4 for the similarity, 4 for the difference. For L4 on each: the similarity/difference must be well explained AND use both studies as examples. Simply stating "both used quantitative data" earns L2 at best — must explain why this is similar AND give both study examples.',
+    tip:{title:'Similarity & difference — 8-mark structure',text:'Use this structure for each component:\n\nSIMILARITY: "Both [Study A] and [Study B] [similarity]. In [Study A], [specific evidence]. In [Study B], [specific evidence]. This similarity means [explanation of significance]."\n\nDIFFERENCE: "Hölzel used [X] whereas Dement used [Y]. Therefore [Study A] could [outcome] while [Study B] [different outcome]."\n\nL4 requires BOTH study examples AND an explanation of significance. L3 = well explained but only one study.'}
+  },
+
+  // ── Q10 SAAVEDRA & SILVERMAN ESSAY ────────────────────────────────
+  {
+    id:'10', sec:'B', topic:'Saavedra & Silverman / Essay', max:10, correct:7,
+    context:'Named issue: at least one evaluation point must be about SUBJECTIVE DATA.',
+    question:'Evaluate the study by Saavedra and Silverman (button phobia) in terms of two strengths and two weaknesses. At least one of your evaluation points must be about subjective data.',
+    note:'Without the named issue (subjective data), maximum L3 regardless of quality. Check: is at least one point clearly about subjective data?',
+    sidebar:{
+      q:'Q10 — Evaluate Saavedra & Silverman (10 marks)',
+      sections:[
+        {lbl:'Level descriptors',style:'block',text:'L5 (9–10): Very good evaluation including named issue. All 4 points in detail.\nL4 (7–8): Good evaluation including named issue. Majority of points in depth.\nL3 (5–6): Mostly appropriate. May not include named issue. Two of one type in detail, OR one of each in detail, OR all four briefly.\nL2 (3–4): Weak. May not include named issue. Points brief, some with no context.\nL1 (1–2): Little/no evaluation. Superficial.\nL0 (0): No creditable response.'},
+        {lbl:'Named issue — subjective data',style:'warn',text:'At least one point MUST be about subjective data to access L4 or L5.\n\nSubjective data strength: The Feelings Thermometer captures the boy\'s own experience of distress — subjective data is the most valid way to measure a personal phobia.\n\nSubjective data weakness: The boy may have given socially desirable responses (rating buttons as less scary to please the therapist). He could have rated items differently to how he truly felt.'},
+        {lbl:'Other strengths',style:'green',text:'• Standardised procedure (using Feelings Thermometer consistently) → replicable → testable for reliability.\n• Quantitative data from the Feelings Thermometer → objective, comparable across sessions.\n• Longitudinal follow-up (6 and 12 months) → shows whether improvement lasted.'},
+        {lbl:'Other weaknesses',style:'green',text:'• Sample: one boy with a highly specific/unique button phobia → difficult to generalise → females or people with different phobia types may respond differently.\n• Ethics: boy may have experienced distress during exposure sessions.\n• Small sample / case study: cannot establish cause and effect across a population.'},
+        {lbl:'In detail vs brief — examples',style:'block',text:'IN DETAIL: "The sample was one boy with a button phobia, which may be difficult to generalise. Females may react differently to the type of therapy as they tend to be more emotional, plus people with other types of phobia may not find a Feelings Thermometer useful if the phobia is not a concrete object."\n\nBRIEF BUT IN CONTEXT: "The participant could have given false responses / shown social desirability. He could have rated some buttons differently to how he felt as he did not want to look scared."\n\nNO CONTEXT: "There was a standardised procedure meaning it could be replicated."'},
+      ]
+    },
+    explanation:'To reach L4/L5, the named issue (subjective data) must be present. Without it, maximum L3 (5–6 marks). For L5, all four points must be in detail with Saavedra-specific evidence — generic evaluation language without study examples caps at L3.',
+    tip:{title:'10-mark evaluate essay — structure',text:'Structure: Strength 1 (in detail) → Strength 2 (in detail) → Weakness 1 including named issue (in detail) → Weakness 2 (in detail).\n\nFor "in detail" each point needs:\n(1) Name the issue\n(2) Study-specific evidence\n(3) Explain the impact on findings or credibility\n\n"No context" = could apply to any study = L2 maximum for that point. Always anchor every point to something specific in Saavedra & Silverman (the Feelings Thermometer, the single participant, the button phobia, the exposure sessions).'}
+  },
+];
+
+// ── State ─────────────────────────────────────────────────────────
+let mode='self', markerName='', candidateName='';
+let qs=[], cur=0, sel=null;
+let exact=0, close=0, off=0;
+let marksAwarded=[];
+
+function selectMode(m){
+  mode=m;
+  document.getElementById('modeSelf').classList.toggle('selected',m==='self');
+  document.getElementById('modePeer').classList.toggle('selected',m==='peer');
+  document.getElementById('candidateField').style.display=m==='peer'?'block':'none';
+}
+
+function startMarking(){
+  markerName=document.getElementById('markerName').value.trim()||'Marker';
+  candidateName=document.getElementById('candidateName').value.trim()||(mode==='self'?markerName:'Candidate');
+  qs=[...QS]; cur=0; sel=null; exact=0; close=0; off=0;
+  marksAwarded=new Array(qs.length).fill(null);
+  document.getElementById('introScreen').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+  document.getElementById('scorePill').style.display='flex';
+  loadQ();
+}
+
+function loadQ(){
+  const q=qs[cur]; sel=null;
+  document.getElementById('qNum').textContent=q.id;
+  const sec=document.getElementById('qSec');
+  sec.textContent='Section '+q.sec;
+  sec.className='badge '+(q.sec==='A'?'b-sa':'b-sb');
+  document.getElementById('qTopic').textContent=q.topic;
+  document.getElementById('qMarks').textContent=q.max+' mark'+(q.max>1?'s':'');
+  const ctx=document.getElementById('qContext');
+  if(q.context){ctx.textContent=q.context;ctx.style.display='block';}
+  else ctx.style.display='none';
+  document.getElementById('qText').textContent=q.question;
+  const nt=document.getElementById('qNote');
+  if(q.note){nt.textContent=q.note;nt.style.display='block';}
+  else nt.style.display='none';
+  document.getElementById('justTxt').value='';
+  document.getElementById('feedback').style.display='none';
+  document.getElementById('checkBtn').style.display='block';
+  document.getElementById('checkBtn').disabled=true;
+  const btns=document.getElementById('mBtns');
+  btns.innerHTML='';
+  for(let i=0;i<=q.max;i++){
+    const b=document.createElement('button');
+    b.className='mb';b.textContent=i;
+    b.onclick=()=>pickMark(i,b);
+    btns.appendChild(b);
+  }
+  document.getElementById('mTotal').textContent='(out of '+q.max+')';
+  updateSidebar(q);
+  updateProg();
+  updateScore();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateSidebar(q){
+  document.getElementById('sbQ').textContent=q.sidebar.q;
+  const body=document.getElementById('sbBody');
+  body.innerHTML='';
+  q.sidebar.sections.forEach(s=>{
+    const wrap=document.createElement('div');
+    wrap.className='sb-sec';
+    const lbl=document.createElement('div');
+    lbl.className='sb-sec-lbl';lbl.textContent=s.lbl;
+    wrap.appendChild(lbl);
+    const block=document.createElement('div');
+    block.className=s.style==='warn'?'sb-warn':s.style==='green'?'sb-green':'sb-block';
+    block.textContent=s.text;
+    wrap.appendChild(block);
+    body.appendChild(wrap);
+  });
+  if(q.tip){
+    const tw=document.createElement('div');tw.className='sb-sec';
+    const tl=document.createElement('div');tl.className='sb-sec-lbl';tl.textContent='Paper 1 tip';
+    tw.appendChild(tl);
+    const tb=document.createElement('div');tb.className='sb-tip';
+    tb.innerHTML='<strong>'+q.tip.title+'</strong><br><br>'+q.tip.text.replace(/\n/g,'<br>');
+    tw.appendChild(tb);body.appendChild(tw);
+  }
+  const meta=document.createElement('div');meta.className='sb-meta';
+  meta.textContent='Section '+q.sec+' — '+q.topic+' | Max: '+q.max+' mark'+(q.max>1?'s':'');
+  body.appendChild(meta);
+}
+
+function pickMark(v,btn){
+  sel=v;
+  document.querySelectorAll('.mb').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('checkBtn').disabled=false;
+}
+
+function checkMark(){
+  const q=qs[cur];
+  const diff=Math.abs(sel-q.correct);
+  const isEx=diff===0,isCl=diff===1;
+  if(isEx)exact++;else if(isCl)close++;else off++;
+  marksAwarded[cur]=sel;
+  updateScore();
+  const fh=document.getElementById('fbHead');
+  fh.className='fb-header '+(isEx?'fb-exact':isCl?'fb-close':'fb-off');
+  document.getElementById('fbIcon').textContent=isEx?'✓':isCl?'≈':'✗';
+  document.getElementById('fbV').textContent=isEx?'Mark agreed':(isCl?'Close — within 1 mark':'Different from Cambridge');
+  document.getElementById('fbML').innerHTML='You awarded <strong>'+sel+'/'+q.max+'</strong> — Cambridge model: <strong>'+q.correct+'/'+q.max+'</strong>';
+  document.getElementById('fbExpl').textContent=q.explanation;
+  document.getElementById('feedback').style.display='block';
+  document.getElementById('checkBtn').style.display='none';
+  document.getElementById('nextBtn').textContent=cur===qs.length-1?'See results →':'Next question →';
+}
+
+function nextQ(){
+  cur++;
+  if(cur>=qs.length)showSummary();
+  else loadQ();
+}
+
+function updateProg(){
+  document.getElementById('progBar').style.width=(cur/qs.length*100)+'%';
+}
+
+function updateScore(){
+  const t=exact+close+off;
+  document.getElementById('scoreDisplay').textContent=exact+' / '+t;
+}
+
+function showSummary(){
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('progBar').style.width='100%';
+  const totalAwarded=marksAwarded.reduce((a,v)=>a+(v||0),0);
+  const totalPossible=qs.reduce((a,q)=>a+q.max,0);
+  document.getElementById('sumNames').textContent=
+    mode==='peer'?'Marker: '+markerName+' — Paper: '+candidateName:'Marker: '+markerName;
+  document.getElementById('sumScore').textContent=totalAwarded+' / '+totalPossible;
+  document.getElementById('sumSub').textContent=
+    totalAwarded>=54?'Excellent — strong mark scheme knowledge across the paper.':
+    totalAwarded>=42?'Good performance. Review questions where marks were lost.':
+    totalAwarded>=30?'Developing. Focus on the question types where most marks were dropped.':
+    'Significant gaps — work through the mark scheme carefully for each question type.';
+  document.getElementById('sgEx').textContent=exact;
+  document.getElementById('sgCl').textContent=close;
+  document.getElementById('sgOf').textContent=off;
+  const bkRows=document.getElementById('bkRows');
+  bkRows.innerHTML='';
+  qs.forEach((q,i)=>{
+    const awarded=marksAwarded[i]||0;
+    const pct=q.max>0?awarded/q.max:0;
+    const row=document.createElement('div');row.className='bk-row';
+    const cl=pct===1?'full':pct>0?'part':'none';
+    row.innerHTML=`<div class="bk-q">${q.id}</div><div class="bk-bar-wrap"><div class="bk-bar ${cl}" style="width:${pct*100}%"></div></div><div class="bk-score">${awarded}/${q.max}</div>`;
+    bkRows.appendChild(row);
+  });
+  document.getElementById('summaryScreen').classList.remove('hidden');
+  document.getElementById('sbBody').innerHTML='<div style="color:var(--muted);font-size:13px;padding:20px 0;text-align:center">Marking complete.</div>';
+}
+
+function restart(){
+  document.getElementById('summaryScreen').classList.add('hidden');
+  document.getElementById('introScreen').classList.remove('hidden');
+  document.getElementById('scorePill').style.display='none';
+  document.getElementById('progBar').style.width='0%';
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sbOverlay').classList.toggle('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sbOverlay').classList.remove('open');
+}
+
+selectMode('self');
+</script>
+</body>
+</html>
