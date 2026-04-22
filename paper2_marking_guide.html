@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9990/23 Paper 2 — Marking Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1A2550; --navy2:#253166; --navy3:#0F1A3A;
+  --blue:#2E75B6; --blue-lt:#D6E4F3; --blue-xs:#EEF5FB;
+  --green:#1E6B47; --green-lt:#D6EFE2;
+  --red:#B5183A; --red-lt:#FAE0E6;
+  --amber:#B45309; --amber-lt:#FEF3C7;
+  --teal:#0E7490; --teal-lt:#CFFAFE;
+  --grey:#F4F5F7; --mgrey:#D1D5DB; --lgrey:#E9ECEF;
+  --text:#1F2937; --mid:#4B5563; --muted:#6B7280;
+  --white:#FFFFFF;
+  --sidebar:320px;
+  --serif:'Libre Baskerville',Georgia,serif;
+  --sans:'Source Sans 3',system-ui,sans-serif;
+  --mono:'Source Code Pro',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:#EEF0F5;color:var(--text);min-height:100vh}
+
+/* ── Topbar ─────────────────────────────────────────── */
+.topbar{background:var(--navy3);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.topbar-title{font-family:var(--serif);font-size:16px;color:#fff;letter-spacing:-.2px}
+.topbar-sub{font-size:11px;color:#94A3B8;margin-top:2px}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.score-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:50px;padding:5px 14px;font-size:13px;font-weight:500;color:#fff;white-space:nowrap}
+.score-pill span{font-family:var(--mono);color:#7DD3FC}
+.sidebar-btn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:7px;padding:5px 11px;color:#fff;font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;display:none;align-items:center;gap:5px;transition:background .15s}
+.sidebar-btn:hover{background:rgba(255,255,255,.18)}
+.prog-wrap{height:3px;background:rgba(255,255,255,.07)}
+.prog-bar{height:3px;background:linear-gradient(90deg,#3B82F6,#60A5FA);transition:width .4s}
+
+/* ── Layout ─────────────────────────────────────────── */
+.layout{display:flex;min-height:calc(100vh - 52px)}
+
+/* ── Sidebar ─────────────────────────────────────────── */
+.sidebar{width:var(--sidebar);flex-shrink:0;background:var(--white);border-right:1px solid var(--mgrey);display:flex;flex-direction:column;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;transition:transform .25s}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--mgrey);border-radius:2px}
+.sb-head{background:var(--navy);padding:14px 16px;position:sticky;top:0;z-index:10}
+.sb-head-row{display:flex;align-items:flex-start;justify-content:space-between}
+.sb-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#94A3B8}
+.sb-q{font-family:var(--serif);font-size:13px;color:#fff;margin-top:4px;line-height:1.4}
+.sb-close{background:none;border:none;color:#94A3B8;font-size:18px;cursor:pointer;padding:2px 5px;display:none}
+.sb-body{padding:14px 16px;flex:1}
+
+/* Sidebar content blocks */
+.sb-sec{margin-bottom:14px}
+.sb-sec-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:5px;padding-bottom:4px;border-bottom:1px solid var(--lgrey)}
+.sb-block{background:var(--grey);border-radius:7px;padding:10px 12px;font-size:12.5px;line-height:1.65;color:var(--text);white-space:pre-line;border-left:3px solid var(--navy)}
+.sb-warn{background:var(--red-lt);border-left:3px solid var(--red);border-radius:0 6px 6px 0;padding:9px 12px;font-size:12.5px;line-height:1.6;color:var(--text);white-space:pre-line}
+.sb-warn strong{color:var(--red)}
+.sb-tip{background:#FFF7ED;border-left:3px solid var(--amber);border-radius:0 6px 6px 0;padding:9px 12px;font-size:12.5px;line-height:1.6;color:var(--text)}
+.sb-tip strong{color:var(--amber)}
+.sb-green{background:var(--green-lt);border-left:3px solid var(--green);border-radius:0 6px 6px 0;padding:9px 12px;font-size:12.5px;line-height:1.6;color:var(--text);white-space:pre-line}
+.sb-meta{background:var(--blue-xs);border-radius:6px;padding:7px 10px;font-size:11.5px;color:#1E40AF;margin-top:8px}
+
+/* ── Main ─────────────────────────────────────────── */
+.main{flex:1;padding:24px 24px 60px;max-width:680px;min-width:0}
+
+/* ── Intro screen ─────────────────────────────────── */
+#introScreen{background:var(--white);border-radius:14px;box-shadow:0 2px 12px rgba(26,37,80,.09);overflow:hidden}
+.intro-hero{background:var(--navy3);padding:32px 32px 28px}
+.intro-hero h1{font-family:var(--serif);font-size:24px;color:#fff;margin-bottom:6px}
+.intro-hero p{font-size:13px;color:#94A3B8}
+.intro-body{padding:24px 28px}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.mode-card{border:2px solid var(--mgrey);border-radius:10px;padding:16px;cursor:pointer;transition:all .15s;text-align:center}
+.mode-card:hover{border-color:var(--blue);background:var(--blue-xs)}
+.mode-card.selected{border-color:var(--navy);background:var(--blue-xs)}
+.mode-card .mc-icon{font-size:26px;margin-bottom:8px}
+.mode-card .mc-title{font-weight:600;font-size:14px;color:var(--text)}
+.mode-card .mc-desc{font-size:12px;color:var(--muted);margin-top:3px}
+.name-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.name-field{display:flex;flex-direction:column;gap:5px}
+.name-field label{font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.06em}
+.name-field input{border:1.5px solid var(--mgrey);border-radius:8px;padding:9px 12px;font-family:var(--sans);font-size:14px;color:var(--text);transition:border .15s}
+.name-field input:focus{outline:none;border-color:var(--blue)}
+.how-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px}
+.step{display:flex;gap:11px;margin-bottom:9px;align-items:flex-start}
+.step-n{width:24px;height:24px;background:var(--navy);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.step-t{font-size:13px;color:var(--mid);line-height:1.5}
+.intro-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}
+.is-item{background:var(--grey);border-radius:8px;padding:12px 8px;text-align:center}
+.is-n{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--navy);display:block}
+.is-l{font-size:11px;color:var(--muted);margin-top:2px}
+.start-btn{width:100%;padding:13px;background:var(--navy);color:#fff;border:none;border-radius:9px;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s}
+.start-btn:hover{background:var(--navy2)}
+
+/* ── Quiz screen ─────────────────────────────────── */
+.q-card{background:var(--white);border-radius:12px;box-shadow:0 2px 12px rgba(26,37,80,.08);overflow:hidden;margin-bottom:12px}
+.q-meta{background:var(--navy);padding:10px 18px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.q-num{font-family:var(--mono);font-size:11px;color:#94A3B8;text-transform:uppercase;letter-spacing:.08em}
+.q-badges{display:flex;gap:6px;align-items:center}
+.badge{font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px}
+.b-topic{background:rgba(255,255,255,.12);color:#E2E8F0}
+.b-marks{background:var(--blue);color:#fff}
+.b-sa{background:var(--teal);color:#fff}
+.b-sb{background:#7C3AED;color:#fff}
+
+.q-body{padding:18px 20px}
+.q-context{background:#F8FAFC;border:1px solid var(--lgrey);border-radius:7px;padding:11px 14px;font-size:13px;line-height:1.65;color:var(--mid);margin-bottom:12px;font-family:var(--serif);font-style:italic}
+.q-context strong{font-style:normal;color:var(--text)}
+.q-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px}
+.q-text{font-size:14px;line-height:1.7;background:var(--grey);border-radius:8px;padding:12px 14px;border-left:3px solid var(--blue);font-family:var(--serif)}
+.q-note{font-size:12px;color:var(--red);font-weight:600;margin-top:8px;padding:7px 10px;background:var(--red-lt);border-radius:6px}
+
+/* Marking area */
+.mark-area{padding:16px 20px;border-top:1px solid var(--mgrey)}
+.mark-label{font-size:13px;font-weight:600;color:var(--text);margin-bottom:9px}
+.mark-total{font-size:12px;color:var(--muted);font-weight:400}
+.mark-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px}
+.mb{width:42px;height:42px;border-radius:8px;border:2px solid var(--mgrey);background:var(--white);font-family:var(--mono);font-size:16px;font-weight:500;color:var(--mid);cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center}
+.mb:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-xs)}
+.mb.sel{border-color:var(--navy);background:var(--navy);color:#fff}
+.just-lbl{font-size:12px;font-weight:500;color:var(--mid);margin-bottom:5px}
+textarea{width:100%;border:1.5px solid var(--mgrey);border-radius:7px;padding:8px 11px;font-family:var(--sans);font-size:13px;color:var(--text);resize:vertical;min-height:54px;transition:border .15s}
+textarea:focus{outline:none;border-color:var(--blue)}
+.check-btn{margin-top:11px;width:100%;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+.check-btn:hover{background:var(--navy2)}
+.check-btn:disabled{background:var(--mgrey);cursor:not-allowed}
+
+/* Feedback */
+.feedback{display:none;padding:0 20px 18px}
+.fb-header{border-radius:8px;padding:11px 14px;display:flex;align-items:flex-start;gap:11px;margin-bottom:11px}
+.fb-exact{background:var(--green-lt);border:1px solid #A7D7BC}
+.fb-close{background:var(--amber-lt);border:1px solid #FCD34D}
+.fb-off{background:var(--red-lt);border:1px solid #FCA5A5}
+.fb-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.fb-v{font-size:13px;font-weight:700;margin-bottom:2px}
+.fb-exact .fb-v{color:var(--green)}
+.fb-close .fb-v{color:var(--amber)}
+.fb-off .fb-v{color:var(--red)}
+.fb-ml{font-size:12px;color:var(--mid)}
+.fb-ml strong{font-family:var(--mono);color:var(--text)}
+.fb-expl{background:var(--grey);border-radius:7px;padding:11px 13px;font-size:13px;line-height:1.7;color:var(--text);border-left:3px solid var(--navy);margin-bottom:11px}
+.next-btn{width:100%;padding:11px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+.next-btn:hover{background:#2563A8}
+
+/* ── Summary screen ─────────────────────────────────── */
+#summaryScreen{background:var(--white);border-radius:14px;box-shadow:0 2px 12px rgba(26,37,80,.09);padding:32px 28px}
+.sum-names{font-size:13px;color:var(--muted);margin-bottom:6px}
+.sum-title{font-family:var(--serif);font-size:26px;color:var(--navy);margin-bottom:4px}
+.sum-score{font-family:var(--mono);font-size:52px;font-weight:500;color:var(--navy);margin:16px 0 4px}
+.sum-sub{font-size:13px;color:var(--muted);margin-bottom:24px}
+.sum-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px}
+.sg-item{border-radius:9px;padding:13px 10px;text-align:center}
+.sg-n{font-family:var(--mono);font-size:22px;font-weight:500;display:block;margin-bottom:3px}
+.sg-l{font-size:11px;color:var(--mid)}
+.sg-ex{background:var(--green-lt)}.sg-ex .sg-n{color:var(--green)}
+.sg-cl{background:var(--amber-lt)}.sg-cl .sg-n{color:var(--amber)}
+.sg-of{background:var(--red-lt)}.sg-of .sg-n{color:var(--red)}
+.sum-breakdown{margin-bottom:24px}
+.sum-bk-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
+.bk-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--lgrey);font-size:13px}
+.bk-q{font-family:var(--mono);font-size:12px;color:var(--mid);width:60px;flex-shrink:0}
+.bk-bar-wrap{flex:1;height:8px;background:var(--lgrey);border-radius:4px;overflow:hidden}
+.bk-bar{height:100%;border-radius:4px;transition:width .6s ease}
+.bk-bar.full{background:var(--green)}
+.bk-bar.part{background:var(--amber)}
+.bk-bar.none{background:var(--red)}
+.bk-score{font-family:var(--mono);font-size:12px;color:var(--text);width:40px;text-align:right;flex-shrink:0}
+.restart-btn{padding:12px 32px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+.restart-btn:hover{background:var(--navy2)}
+
+.hidden{display:none!important}
+.sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:150}
+
+@media(max-width:820px){
+  .sidebar{position:fixed;top:0;left:0;height:100vh;z-index:250;transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0)}
+  .sb-overlay.open{display:block}
+  .sidebar-btn{display:flex}
+  .sb-close{display:block}
+  .main{padding:16px 14px 60px;max-width:100%}
+  .topbar{padding:10px 14px}
+  .mode-grid,.name-row,.sum-grid,.intro-stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-title">Paper 2 Marking Guide</div>
+    <div class="topbar-sub">Cambridge 9990/23 — May/June 2025</div>
+  </div>
+  <div class="topbar-right">
+    <button class="sidebar-btn" id="sbBtn" onclick="toggleSidebar()">📋 Mark scheme</button>
+    <div class="score-pill" id="scorePill" style="display:none">
+      Score <span id="scoreDisplay">0 / 0</span>
+    </div>
+  </div>
+</div>
+<div class="prog-wrap"><div class="prog-bar" id="progBar" style="width:0%"></div></div>
+
+<div class="sb-overlay" id="sbOverlay" onclick="closeSidebar()"></div>
+
+<div class="layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <div class="sb-head-row">
+        <div>
+          <div class="sb-label">Mark scheme</div>
+          <div class="sb-q" id="sbQ">—</div>
+        </div>
+        <button class="sb-close" onclick="closeSidebar()">✕</button>
+      </div>
+    </div>
+    <div class="sb-body" id="sbBody">
+      <div style="color:var(--muted);font-size:13px;margin-top:16px;text-align:center">Start marking to see the mark scheme here.</div>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Intro -->
+    <div id="introScreen">
+      <div class="intro-hero">
+        <h1>Self &amp; Peer Marking Guide</h1>
+        <p>9990/23 Research Methods — May/June 2025 — 60 marks</p>
+      </div>
+      <div class="intro-body">
+        <div class="how-title">Choose your mode</div>
+        <div class="mode-grid">
+          <div class="mode-card" id="modeSelf" onclick="selectMode('self')">
+            <div class="mc-icon">📝</div>
+            <div class="mc-title">Self-mark</div>
+            <div class="mc-desc">Mark your own paper</div>
+          </div>
+          <div class="mode-card" id="modePeer" onclick="selectMode('peer')">
+            <div class="mc-icon">🔄</div>
+            <div class="mc-title">Peer-mark</div>
+            <div class="mc-desc">Mark a classmate's paper</div>
+          </div>
+        </div>
+        <div class="name-row" id="nameRow">
+          <div class="name-field">
+            <label>Marker's name</label>
+            <input type="text" id="markerName" placeholder="Your name">
+          </div>
+          <div class="name-field" id="candidateField">
+            <label>Candidate's name</label>
+            <input type="text" id="candidateName" placeholder="Paper being marked">
+          </div>
+        </div>
+        <div class="how-title">How it works</div>
+        <div class="step"><div class="step-n">1</div><div class="step-t">The mark scheme for each question loads automatically in the sidebar on the left</div></div>
+        <div class="step"><div class="step-n">2</div><div class="step-t">Read the question and find the answer on the actual paper in front of you</div></div>
+        <div class="step"><div class="step-n">3</div><div class="step-t">Award a mark using the buttons — then click Check to see the Cambridge reasoning</div></div>
+        <div class="step"><div class="step-n">4</div><div class="step-t">A Paper 2 tip appears after each question to build your exam technique</div></div>
+        <div class="intro-stats">
+          <div class="is-item"><span class="is-n">25</span><div class="is-l">questions</div></div>
+          <div class="is-item"><span class="is-n">60</span><div class="is-l">total marks</div></div>
+          <div class="is-item"><span class="is-n">A+B</span><div class="is-l">both sections</div></div>
+        </div>
+        <button class="start-btn" onclick="startMarking()">Begin marking →</button>
+      </div>
+    </div>
+
+    <!-- Quiz -->
+    <div id="quizScreen" class="hidden">
+      <div class="q-card">
+        <div class="q-meta">
+          <div class="q-num" id="qNum"></div>
+          <div class="q-badges">
+            <span class="badge" id="qSec"></span>
+            <span class="badge b-topic" id="qTopic"></span>
+            <span class="badge b-marks" id="qMarks"></span>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="q-context" id="qContext" style="display:none"></div>
+          <div class="q-lbl">The question</div>
+          <div class="q-text" id="qText"></div>
+          <div class="q-note" id="qNote" style="display:none"></div>
+        </div>
+      </div>
+      <div class="q-card">
+        <div class="mark-area">
+          <div class="mark-label">Award a mark <span class="mark-total" id="mTotal"></span></div>
+          <div class="mark-btns" id="mBtns"></div>
+          <div class="just-lbl">Brief reason for your mark (optional)</div>
+          <textarea id="justTxt" placeholder="e.g. Gives the guideline but no study-specific link…"></textarea>
+          <button class="check-btn" id="checkBtn" onclick="checkMark()" disabled>Check mark</button>
+        </div>
+        <div class="feedback" id="feedback">
+          <div class="fb-header" id="fbHead">
+            <div class="fb-icon" id="fbIcon"></div>
+            <div>
+              <div class="fb-v" id="fbV"></div>
+              <div class="fb-ml" id="fbML"></div>
+            </div>
+          </div>
+          <div class="fb-expl" id="fbExpl"></div>
+          <button class="next-btn" id="nextBtn" onclick="nextQ()">Next question →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div id="summaryScreen" class="hidden">
+      <div class="sum-names" id="sumNames"></div>
+      <div class="sum-title">Marking complete</div>
+      <div class="sum-score" id="sumScore"></div>
+      <div class="sum-sub" id="sumSub"></div>
+      <div class="sum-grid">
+        <div class="sg-item sg-ex"><span class="sg-n" id="sgEx">0</span><div class="sg-l">Exact mark</div></div>
+        <div class="sg-item sg-cl"><span class="sg-n" id="sgCl">0</span><div class="sg-l">Within 1</div></div>
+        <div class="sg-item sg-of"><span class="sg-n" id="sgOf">0</span><div class="sg-l">Off by 2+</div></div>
+      </div>
+      <div class="sum-breakdown">
+        <div class="sum-bk-title">Marks by question</div>
+        <div id="bkRows"></div>
+      </div>
+      <button class="restart-btn" onclick="restart()">Mark another paper</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── Questions ────────────────────────────────────────────────────
+const QS = [
+  {
+    id:'1(a)', sec:'A', topic:'Ethics', max:1, correct:1,
+    context:null,
+    question:'Outline the ethical guideline of \'confidentiality\'.',
+    note:null,
+    sidebar:{
+      q:'Q1(a) — Confidentiality',
+      sections:[
+        {lbl:'Marking rule',style:'block',text:'1 mark for any of the following:'},
+        {lbl:'Creditworthy',style:'green',text:'• Keeping the identity of the participant a secret.\n• Not revealing who the participants were.\n• Keeping data secure from people not part of the study.'},
+      ]
+    },
+    explanation:'1 mark for any of the three definitions above. The key idea is that participants\' identities or personal data are not disclosed beyond the research team.',
+    tip:{title:'Ethics questions — Paper 2 tip',text:'Confidentiality (about data/identity) is different from anonymity (about the participant not being identifiable during the study). If the question asks for confidentiality specifically, your answer must address what happens to data after collection.'}
+  },
+  {
+    id:'1(b)', sec:'A', topic:'Ethics / Dement & Kleitman', max:2, correct:2,
+    context:'Explain one way that the ethical guideline of confidentiality was followed in the study by Dement and Kleitman (sleep and dreams).',
+    question:'Explain one way that the ethical guideline of confidentiality was followed in the study by Dement and Kleitman (sleep and dreams).',
+    note:null,
+    sidebar:{
+      q:'Q1(b) — Confidentiality in Dement & Kleitman',
+      sections:[
+        {lbl:'Marking levels',style:'block',text:'Generic explanation = 1 mark\nLinked explanation (study-specific) = 2 marks'},
+        {lbl:'Creditworthy',style:'green',text:'1 mark (generic): "The names of the participants were not published."\n\n2 marks (specific): "The participants\' names were replaced by their initials." ✓\n\n2 marks (specific): "Only the participants\' genders/occupations were known (so they couldn\'t be identified)." ✓'},
+      ]
+    },
+    explanation:'For 2 marks the answer must include a study-specific detail from Dement & Kleitman — e.g. that participants were referred to by initials only. A generic statement about confidentiality alone earns only 1 mark.',
+    tip:{title:'Study-linked ethics questions',text:'When a question asks how an ethical guideline was followed IN a specific study, always include a study-specific detail. "The data was kept confidential" = 1 mark. "Participants were identified only by initials in the published paper" = 2 marks.'}
+  },
+  {
+    id:'2(a)', sec:'A', topic:'Concepts', max:1, correct:1,
+    context:'Cognitive psychologists sometimes study people\'s recall of past events.',
+    question:'Outline what is meant by \'subjectivity\'.',
+    note:null,
+    sidebar:{
+      q:'Q2(a) — Subjectivity',
+      sections:[
+        {lbl:'Creditworthy',style:'green',text:'• Seeing things from your own perspective.\n• Being unable to take on an external viewpoint.\n• Your interpretation of behaviour is influenced by your own / personal bias.'},
+        {lbl:'Do NOT credit',style:'warn',text:'"Not being objective" / "Lacking objectivity" = 0 marks [NAQ — repeats the concept without defining it].'},
+      ]
+    },
+    explanation:'1 mark for any correct definition. The NAQ trap here is important — simply saying "not objective" doesn\'t demonstrate understanding of what subjectivity actually means.',
+    tip:{title:'Outline questions — Paper 2 tip',text:'NAQ = Not Answering the Question. Cambridge will not credit responses that define a term using the term itself. "Subjectivity means being subjective" = 0. Always rephrase: "seeing things from your own personal perspective" = 1 mark.'}
+  },
+  {
+    id:'2(b)', sec:'A', topic:'Concepts', max:2, correct:2,
+    context:'Cognitive psychologists sometimes study people\'s recall of past events.',
+    question:'Suggest how subjectivity could be a problem when studying people\'s recall of past events.',
+    note:null,
+    sidebar:{
+      q:'Q2(b) — Subjectivity as a problem',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: suggestion of the problem\n1 mark: detail/elaboration'},
+        {lbl:'Creditworthy',style:'green',text:'Problem: Participants\' recall could be distorted over time.\nDetail: Events in between could interfere with memories.\n\nProblem: New memories could overwrite old ones.\nDetail: A bad event later might affect how an earlier memory is remembered.\n\nProblem: The researcher may have a memory of the same event.\nDetail: So two people might recall the same event differently, meaning they interpret the information differently.'},
+      ]
+    },
+    explanation:'2 marks requires a clear problem AND an elaborating detail. A bare suggestion without explanation earns only 1 mark.',
+    tip:{title:'Suggest questions',text:'Suggest questions always follow a "suggestion + detail" structure. State the problem (1 mark), then explain WHY or HOW it is a problem (1 mark). Without the second step, you cap at 1/2.'}
+  },
+  {
+    id:'3(a)', sec:'A', topic:'Correlations / Graphs', max:3, correct:3,
+    context:'A study tested the relationship between average number of hours of sleep per night and physical health. Participants slept in their own homes. Results showed a positive correlation.',
+    question:'Sketch a graph to show the results of this study. You must label the axes.',
+    note:'Award marks based on the sketch drawn on the paper. Check: (1) both axes labelled with sleep and health, (2) positive correlation shown, (3) "hours" on sleep axis, (4) scale/label for health.',
+    sidebar:{
+      q:'Q3(a) — Sketch a correlation graph',
+      sections:[
+        {lbl:'4 marking criteria (max 3)',style:'block',text:'1. Both axes labelled with "sleep" and "physical health" (either axis for either variable)\n2. Positive correlation shown (dots trending up-right OR a line of best fit going up-right)\n3. "Hours" appears on the sleep axis\n4. Scale for health (numbers or words e.g. low–high)'},
+        {lbl:'Common errors',style:'warn',text:'Missing "hours" from sleep axis = lose 1 mark.\nNegative or zero correlation drawn = lose the correlation mark.\nAxes swapped is fine — no penalty.\nBar chart instead of scatter graph = 0 for the correlation mark.'},
+      ]
+    },
+    explanation:'Up to 3 marks from 4 criteria. Students most commonly lose the "hours" mark — the axis must say "hours of sleep" or "hours per night", not just "sleep".',
+    tip:{title:'Correlation graphs — Paper 2 tip',text:'For a scatter graph: x-axis = predictor/independent variable, y-axis = outcome/dependent variable (though Cambridge does not penalise swapping). Always include units on the numerical axis (e.g. "hours"). A line of best fit going bottom-left to top-right = positive correlation. Cambridge awards the correlation mark for the trend, not for individual data points.'}
+  },
+  {
+    id:'3(b)', sec:'A', topic:'Correlations / Data collection', max:4, correct:4,
+    context:'The participants slept in their own homes.',
+    question:'Suggest two problems with collecting data about the number of hours of sleep in this study.',
+    note:'Two separate problems required. 1 mark per problem, 1 mark per link. Maximum 4.',
+    sidebar:{
+      q:'Q3(b) — Two problems collecting sleep data',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: suggestion of problem\n1 mark: link/elaboration (x2 = 4 marks total)'},
+        {lbl:'Creditworthy',style:'green',text:'Problem 1: Participants may lie.\nLink: They may feel they have to say they slept for a long time.\n\nProblem 2: Their sleep may be disturbed.\nLink: e.g. by dogs/children at home.\n\nProblem 3: The environment can\'t be controlled.\nLink: e.g. how dark/noisy the room is — this affects number of hours, not just self-report.'},
+      ]
+    },
+    explanation:'4 marks requires two distinct problems, each with a linked elaboration. A bare problem without a link caps at 1 mark per problem. Both problems must be clearly separated.',
+    tip:{title:'Two-problem questions',text:'Always write Problem 1 and Problem 2 as clearly separate answers. If both blend together, the examiner may only credit one. Each needs: (a) a named problem and (b) an explicit reason why it\'s a problem or an example of it occurring.'}
+  },
+  {
+    id:'4', sec:'A', topic:'Hypotheses', max:2, correct:2,
+    context:'An investigation is testing the hypothesis: "Intelligence affects obedience."',
+    question:'State whether this is a directional or a non-directional hypothesis. Justify your answer.',
+    note:null,
+    sidebar:{
+      q:'Q4 — Directional vs non-directional',
+      sections:[
+        {lbl:'Critical rule',style:'warn',text:'NO mark for simply writing "non-directional" or "two-tailed".\nThe marks are for the JUSTIFICATION only.'},
+        {lbl:'Marking levels',style:'block',text:'1 mark: generic justification\n2 marks: linked justification (referencing IV and DV specifically)'},
+        {lbl:'Creditworthy justifications',style:'green',text:'1 mark (generic): "It only says the results in the two conditions will be different."\n\n2 marks (linked): "It only says the levels of obedience (DV) will be different based on levels of intelligence (IV) — it doesn\'t say which direction the difference will go."'},
+      ]
+    },
+    explanation:'The answer is non-directional. The hypothesis says "affects" which does not specify whether more intelligence = more or less obedience. The marks are entirely in the justification — no mark for just identifying the type.',
+    tip:{title:'Hypothesis questions',text:'Directional = states which group will score higher/lower (e.g. "more intelligence leads to more obedience").\nNon-directional = states a difference will exist but not its direction (e.g. "intelligence affects obedience").\n\nThe word "affects" is a key signal for non-directional. "Improves", "increases", "decreases" signal directional.'}
+  },
+  {
+    id:'5', sec:'A', topic:'Sampling / Bandura', max:2, correct:2,
+    context:'In the study by Bandura et al. (aggression), a sample of children was recruited from a university nursery. The sampling technique is not stated.',
+    question:'Suggest why Bandura et al. may not have used volunteer sampling.',
+    note:null,
+    sidebar:{
+      q:'Q5 — Why Bandura didn\'t use volunteer sampling',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: suggestion (generic problem with volunteer sampling)\n1 mark: link (specific to Bandura\'s study / children / aggression)'},
+        {lbl:'Creditworthy',style:'green',text:'Generic (1 mark): "Bias / lack of generalisability."\n\nLinked (2 marks): "An aggressive child\'s parent may have been too embarrassed to let their child take part."\n\nLinked (2 marks): "Parents of non-aggressive children might have been too worried about consequences to let them take part."'},
+      ]
+    },
+    explanation:'2 marks requires a specific link to the content of the Bandura study — i.e. why parents might self-select in a biased way given the study involved aggression. A generic "volunteer sampling is biased" earns only 1 mark.',
+    tip:{title:'Sampling questions — study-linked',text:'When a sampling question is attached to a named study, the 2-mark answer must explain WHY that sampling method would be problematic for THAT study specifically. Generic sampling criticisms cap at 1 mark.'}
+  },
+  {
+    id:'6', sec:'A', topic:'Interviews', max:6, correct:6,
+    context:null,
+    question:'Describe structured interviews and semi-structured interviews, using any example(s).',
+    note:'Max 4 if no examples given OR if only one type described. Max 2 per type for definitions/points. Max 2 per type for examples. Only 1 example needed overall to access all 6 marks.',
+    sidebar:{
+      q:'Q6 — Structured & semi-structured interviews',
+      sections:[
+        {lbl:'Allocation',style:'block',text:'Max 2 marks: definition/description of structured interview\nMax 2 marks: definition/description of semi-structured interview\nMax 2 marks: examples (shared across both)\n\nMax 4 if no examples, or only one type covered.'},
+        {lbl:'Structured interview',style:'green',text:'• Follows a set list of questions / a script.\n• May also have set dress / tone of voice to standardise the interviewer.\n• Same questions asked in the same order for all participants.'},
+        {lbl:'Semi-structured interview',style:'green',text:'• Follows some set questions but the interviewer can add follow-up questions.\n• Allows flexibility based on the participant\'s responses.\n• Combines standardisation with the ability to probe interesting answers.'},
+        {lbl:'Creditworthy examples',style:'green',text:'• Dement & Kleitman: asked all Ps whether they had a dream but sometimes asked more about the dream (semi-structured).\n• Milgram: conducted interviews one year later to see how participants felt (general interview).\n• Saavedra & Silverman: used interviews at 6 and 12-month follow-ups.'},
+        {lbl:'Do NOT credit examples for',style:'warn',text:'Open vs closed questions — these are question TYPES within interviews, not examples of interview studies.'},
+      ]
+    },
+    explanation:'To reach 6 marks: cover both types with enough detail (2+2) PLUS at least one example from a named study (2). If only one type is described or no examples given, maximum is 4.',
+    tip:{title:'6-mark describe questions',text:'Structure your answer: define Type 1 (2 marks), define Type 2 (2 marks), give example(s) (2 marks). Cambridge needs only ONE example across both types to access the example marks — but it must be from a named study with a clear link to which type of interview was used.'}
+  },
+  {
+    id:'7(a)', sec:'A', topic:'Case study / Mindfulness', max:2, correct:2,
+    context:'Dr Jones is conducting a case study of a man, Kevan, who has been practising mindfulness for 10 years.',
+    question:'Suggest two questions that Dr Jones could use in a self-report (questionnaire or interview) that would investigate different features of Kevan\'s mindfulness.',
+    note:null,
+    sidebar:{
+      q:'Q7(a) — Questions about mindfulness',
+      sections:[
+        {lbl:'Marking rule',style:'block',text:'1 mark per relevant question (max 2). Questions must be about DIFFERENT features of mindfulness. Can be open or closed.'},
+        {lbl:'Creditworthy examples',style:'green',text:'• "How did you learn mindfulness?" (open)\n• "How often do you practise mindfulness?" (open/closed)\n• "What do you think is the most important part of your mindfulness routine?" (open)\n• "Rate how easily you enter a mindful state from 0–5." (closed)\n• "Tick which activities you do: body scan / yoga / sitting meditation." (closed)\n• Any question from the FFMQ (Five Facet Mindfulness Questionnaire).'},
+        {lbl:'Both questions must differ',style:'warn',text:'Questions about the same feature of mindfulness = only 1 mark even if both questions are correctly formed.'},
+      ]
+    },
+    explanation:'2 marks requires two clearly different questions about different aspects of mindfulness (e.g. one about frequency, one about methods used). Two questions about "how much mindfulness" only earns 1 mark.',
+    tip:{title:'Suggest questions for a case study',text:'When asked to write questions for a self-report, ensure each question would actually produce a measurable or usable answer. Vague questions like "Tell me about mindfulness" may not be credited. Specific open questions ("How long have you been practising?") and closed questions ("Rate from 1–5 how focused you feel during meditation") both earn marks.'}
+  },
+  {
+    id:'7(b)(i)', sec:'A', topic:'Case study / Observation', max:2, correct:2,
+    context:'Dr Jones wants to investigate whether Kevan has changed in any ways that could be linked to his mindfulness. He plans to interview Kevan\'s friends.',
+    question:'Suggest two changes in Kevan that his friends could observe. These changes must be behavioural, emotional or cognitive.',
+    note:null,
+    sidebar:{
+      q:'Q7(b)(i) — Observable changes in Kevan',
+      sections:[
+        {lbl:'Marking rule',style:'block',text:'1 mark per valid change (max 2). Must be behavioural, emotional or cognitive. Both must be observable by friends.'},
+        {lbl:'Creditworthy',style:'green',text:'• Changes in sleep / eating behaviour.\n• Differences in sociability (more friendly, more talkative).\n• Emotional changes (happier, less anxious, calmer).\n• Behaviour at work (more motivated, more efficient).\n• Cognitive changes (better concentration, improved focus).'},
+      ]
+    },
+    explanation:'1 mark per valid observable change. Both must be things friends could plausibly observe — internal states like "reduced cortisol" or "grey matter density" would not be observable by friends.',
+    tip:{title:'Behavioural vs cognitive vs emotional',text:'Behavioural = something you can directly SEE someone doing (sleeping more, being more sociable).\nEmotional = a feeling state (happier, less stressed).\nCognitive = a mental process (better concentration, improved decision-making).\n\nAll three are valid here, but they must be things a friend could observe or detect — purely internal states are not creditworthy.'}
+  },
+  {
+    id:'7(b)(ii)', sec:'A', topic:'Case study / Methodology', max:2, correct:2,
+    context:'Dr Jones plans to interview Kevan\'s friends about changes they have observed.',
+    question:'Explain why one of the changes that you suggested in part (b)(i) would be difficult to investigate.',
+    note:null,
+    sidebar:{
+      q:'Q7(b)(ii) — Why a change would be hard to investigate',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: explanation of the difficulty\n1 mark: detail linked to the specific change suggested'},
+        {lbl:'Creditworthy examples',style:'green',text:'Sleep: Friends usually don\'t live together, so they wouldn\'t be able to observe sleep. (1+1)\n\nWork behaviour: Friends can only observe behaviour outside of work — they couldn\'t see if he\'s more motivated at work. (1+1)\n\nKindness/cognitive change: What one friend classes as kind another wouldn\'t — difficult to define consistently. (1+1)'},
+      ]
+    },
+    explanation:'2 marks requires the explanation plus a linked detail specific to the change chosen. A generic "it would be hard to observe" earns only 1 mark.',
+    tip:{title:'Follow-through answers',text:'When (b)(ii) refers back to (b)(i), the examiner will check that your answer links to the specific change you wrote in (b)(i). If you gave "sleep behaviour" in (b)(i) but then discuss "emotions" in (b)(ii), you will not earn the marks. Always match your follow-through answers.'}
+  },
+  {
+    id:'7(c)(i)', sec:'A', topic:'Reliability & validity', max:1, correct:1,
+    context:'Dr Jones has two problems with his self-report:\nProblem 1: Several different ways to interpret the answers to one item.\nProblem 2: An item supposed to measure mindfulness is measuring happiness instead.',
+    question:'Explain which problem relates to reliability.',
+    note:'No mark for identifying Problem 1 alone — the explanation of WHY it relates to reliability is required.',
+    sidebar:{
+      q:'Q7(c)(i) — Reliability',
+      sections:[
+        {lbl:'Critical rule',style:'warn',text:'NO mark for just identifying "Problem 1" or stating "there are different responses". The mark is for the EXPLANATION of why it relates to reliability.'},
+        {lbl:'Creditworthy',style:'green',text:'Problem 1 relates to reliability because the interpretations are not consistent — reliability requires consistent measurement, and if answers can be interpreted differently, the measure is unreliable.'},
+      ]
+    },
+    explanation:'The mark is for explaining that inconsistent interpretation = lack of reliability (consistent measurement). Just naming Problem 1 earns nothing.',
+    tip:{title:'Reliability vs validity',text:'Reliability = consistency (getting the same result each time you measure).\nValidity = accuracy (measuring what you claim to measure).\n\nProblem 1 is reliability because different interpretations mean inconsistent scoring.\nProblem 2 is validity because the measure is testing the wrong construct.'}
+  },
+  {
+    id:'7(c)(ii)', sec:'A', topic:'Reliability & validity', max:1, correct:1,
+    context:'Problem 2: An item supposed to measure mindfulness is measuring happiness instead.',
+    question:'Explain which problem relates to validity.',
+    note:'No mark for identifying Problem 2 alone — the explanation of WHY it relates to validity is required.',
+    sidebar:{
+      q:'Q7(c)(ii) — Validity',
+      sections:[
+        {lbl:'Critical rule',style:'warn',text:'NO mark for just identifying "Problem 2" or "it\'s measuring happiness". The mark is for the EXPLANATION of why it relates to validity.'},
+        {lbl:'Creditworthy',style:'green',text:'Problem 2 relates to validity because the item is not testing what it claims to test — validity requires that a measure actually measures the concept it is supposed to measure.'},
+        {lbl:'Also credit for Problem 1 as validity',style:'green',text:'Because the inconsistencies mean Dr Jones can\'t be sure any of the interpretations accurately reflects the construct being measured.'},
+      ]
+    },
+    explanation:'The mark is for explaining that measuring the wrong thing = lack of validity. Noting that Problem 2 "isn\'t measuring mindfulness" alone is not enough — must say WHY this is a validity issue.',
+    tip:{title:'Construct validity',text:'Construct validity = does the measure actually measure the psychological construct it claims to? If a "mindfulness" scale is picking up general happiness instead, it lacks construct validity. This is different from ecological validity (do findings generalise to real life) or internal validity (are extraneous variables controlled?).'}
+  },
+  {
+    id:'8(a)', sec:'A', topic:'Animal ethics', max:2, correct:2,
+    context:'Dr Mohan has proposed a study using monkeys. Suggestion 1: use animals with less complex brains.',
+    question:'Explain why suggestion 1 (using animals with less complex brains) would make Dr Mohan\'s study more ethical.',
+    note:null,
+    sidebar:{
+      q:'Q8(a) — Simpler brains more ethical',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: explanation (guideline or generic reason)\n1 mark: detail'},
+        {lbl:'Creditworthy',style:'green',text:'Guideline: Species / minimising distress.\n\nDetail: Simpler animals will experience less distress — they have less capacity for suffering.\n\nDetail: Simpler animals will suffer less and be less distressed during the study.'},
+      ]
+    },
+    explanation:'2 marks requires the ethical principle (minimising suffering/distress) plus a detail about WHY simpler brains = less suffering. The link must be made explicit.',
+    tip:{title:'Animal ethics — Paper 2 tip',text:'The key animal ethics guidelines are: replacement (use alternative methods), reduction (use as few animals as possible), refinement (minimise suffering), species (use simplest possible organism), housing, numbers.\n\nFor "simpler brains" questions, the relevant guidelines are species and minimising distress — simpler nervous systems = less capacity for conscious suffering.'}
+  },
+  {
+    id:'8(b)', sec:'A', topic:'Animal ethics', max:2, correct:2,
+    context:'Suggestion 2: use videos of animals\' behaviour in their natural habitat.',
+    question:'Explain why suggestion 2 (using videos of animals in their natural habitat) would make Dr Mohan\'s study more ethical.',
+    note:null,
+    sidebar:{
+      q:'Q8(b) — Videos of wild animals more ethical',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: explanation / guideline\n1 mark: detail'},
+        {lbl:'Creditworthy',style:'green',text:'Guideline: Replacement — using video avoids having animals in a laboratory at all.\nDetail: Using undisturbed wild animals avoids use in labs.\nDetail: Wild animals will be less distressed than captive ones.\n\nGuideline: Minimising distress.\nDetail: Animals filmed in natural habitat are not subjected to lab conditions.'},
+      ]
+    },
+    explanation:'2 marks requires the replacement guideline (or distress) plus an explanation of how videos achieve that. Simply saying "it\'s better for the animals" without the guideline earns only 1 mark.',
+    tip:{title:'Replacement in animal research',text:'Replacement means using methods that don\'t involve live animals at all — videos, computer models, cell cultures. When a question asks why a non-animal method is more ethical, replacement is almost always the key guideline to name.'}
+  },
+  {
+    id:'9(a)', sec:'A', topic:'Longitudinal studies', max:1, correct:1,
+    context:'Kioni is conducting a longitudinal study on changes in preferred personal space throughout participants\' lives.',
+    question:'Suggest a suitable frequency for Kioni to test her participants throughout their lives.',
+    note:null,
+    sidebar:{
+      q:'Q9(a) — Testing frequency',
+      sections:[
+        {lbl:'Marking rule',style:'block',text:'Must give at least 3 measurement points over an average lifespan.\nMust NOT be more frequent than once per year.'},
+        {lbl:'Creditworthy examples',style:'green',text:'• Every year\n• Every two years from age 15 to 40\n• At ages 10, 20, 30, 40, 50, etc.'},
+        {lbl:'Do NOT credit',style:'warn',text:'More frequent than once a year (e.g. "every month") — this is unrealistic for a life-span study.\nFewer than 3 points across a lifetime.'},
+      ]
+    },
+    explanation:'1 mark for any reasonable frequency that would capture change over a lifespan while being practical. Monthly = too frequent. Once per decade = acceptable.',
+    tip:{title:'Longitudinal study design',text:'A longitudinal study follows the SAME participants over time. The key advantage is that it tracks real change within individuals (no cohort effects). The key disadvantage is attrition — participants drop out. When suggesting frequency, consider: too frequent = impractical/expensive; too infrequent = might miss important developmental changes.'}
+  },
+  {
+    id:'9(b)', sec:'A', topic:'Longitudinal studies', max:2, correct:2,
+    context:'Kioni needs to re-contact participants each time she tests them.',
+    question:'Suggest one way for Kioni to re-contact her participants each time she needs to test them.',
+    note:null,
+    sidebar:{
+      q:'Q9(b) — Re-contacting participants',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: appropriate method of contact\n1 mark: link to the study (what is communicated)'},
+        {lbl:'Creditworthy',style:'green',text:'Email: to ask if they still want to be part of the personal space study. (1+1)\n\nPhone: to say she would like their personal space to be tested again. (1+1)\n\nGroup chat: set up for the study, message sent when the next test is due. (1+1)'},
+        {lbl:'What earns the link mark',style:'block',text:'The link must show that the contact is about the STUDY — just saying "email them" without any reference to arranging participation = 1 mark only.'},
+      ]
+    },
+    explanation:'2 marks requires the method plus a specific statement about what is communicated — confirming continued participation, scheduling the next test session, etc.',
+    tip:{title:'Longitudinal attrition',text:'One of the biggest problems in longitudinal research is participant attrition — people drop out, move away, or lose interest. When asked about re-contacting, think about what information needs to be conveyed: (1) reminding them they\'re part of a study, (2) explaining what the next step involves, (3) confirming they still consent to participate.'}
+  },
+  {
+    id:'9(c)(i)', sec:'A', topic:'Measuring personal space', max:2, correct:2,
+    context:'Kioni aims to study changes in preferred personal space throughout participants\' lives.',
+    question:'Describe one way that Kioni could measure personal space.',
+    note:null,
+    sidebar:{
+      q:'Q9(c)(i) — Measuring personal space',
+      sections:[
+        {lbl:'Marking levels',style:'block',text:'1 mark: basic/incomplete outline of the method\n2 marks: detailed/complete outline'},
+        {lbl:'Three valid methods from Perry et al.',style:'green',text:'Paper-and-pencil CID (2 marks): Participants imagine themselves in a room and draw a circle/line where they would want an approaching person to stop.\n\nComputerised CID (2 marks): Participant is at the centre of a virtual room; a figure approaches from different entrances and they press a spacebar to indicate when the figure should stop.\n\nRoom choice test (2 marks): Participants choose between images of rooms with chairs at different distances and select which room they would use to talk to another person.'},
+      ]
+    },
+    explanation:'2 marks requires a complete description of the method — both what the participant is shown and what they are asked to do. A vague "they draw a circle" without the imagined scenario earns only 1 mark.',
+    tip:{title:'Describing measurement methods',text:'For 2 marks, always include: (a) what the participant sees/experiences, and (b) what the participant actually does (their response). A method described without the participant\'s role earns only 1 mark.'}
+  },
+  {
+    id:'9(c)(ii)', sec:'A', topic:'Measuring personal space', max:2, correct:2,
+    context:'For the method described in 9(c)(i):',
+    question:'Suggest one strength of measuring personal space in this way.',
+    note:'Mark based on the method described in 9(c)(i).',
+    sidebar:{
+      q:'Q9(c)(ii) — Strength of the measurement method',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: strength identified\n1 mark: detail / elaboration'},
+        {lbl:'Paper-and-pencil CID',style:'green',text:'Strength: Simple to use.\nDetail: So can easily gather a large, representative sample.'},
+        {lbl:'Computerised CID',style:'green',text:'Strength: High ecological validity.\nDetail: The approaching figure simulates real approach behaviour — more realistic than imagining on paper.'},
+        {lbl:'Room choice test',style:'green',text:'Strength: Low social desirability / demand characteristics.\nDetail: The purpose of the task is embedded in a choice between rooms — participants don\'t realise they\'re measuring personal space.'},
+        {lbl:'Reminder',style:'warn',text:'The strength must match the method described in 9(c)(i). If the student described a computerised CID, a strength about simplicity of paper methods cannot be credited.'},
+      ]
+    },
+    explanation:'2 marks requires a strength specific to the method described, plus a detail. A generic strength like "it gives quantitative data" without linking to the specific method earns only 1 mark.',
+    tip:{title:'Follow-through in 9(c)',text:'The strength in 9(c)(ii) must match the method described in 9(c)(i). Examiners check this — you cannot earn marks for a strength that belongs to a different measurement method.'}
+  },
+  {
+    id:'9(d)(i)', sec:'A', topic:'Personal space / Variables', max:2, correct:2,
+    context:'Kioni is concerned there may be variables other than AGE that affect personal space preferences.',
+    question:'Suggest two variables that could affect an individual\'s preferred personal space, other than age and gender.',
+    note:'"Age" or "gender" as answers = 0 [NAQ].',
+    sidebar:{
+      q:'Q9(d)(i) — Variables affecting personal space',
+      sections:[
+        {lbl:'Creditworthy variables',style:'green',text:'• Culture\n• Number of siblings\n• Mental health / psychological disorders\n• Past experiences (e.g. trauma, abuse)\n• Personality (introversion/extroversion, empathy)'},
+        {lbl:'Do NOT credit',style:'warn',text:'Age = 0 [given in stem]\nGender = 0 [given in stem]'},
+      ]
+    },
+    explanation:'1 mark per valid variable, 2 marks total. Must be different from age and gender (both are given in the question).',
+    tip:{title:'Variables in research',text:'A variable must be something that could realistically and meaningfully vary between people AND plausibly affect the specific outcome being measured (personal space). Vague variables like "their life" or "who they are" will not be credited — be specific.'}
+  },
+  {
+    id:'9(d)(ii)', sec:'A', topic:'Personal space / Variables', max:2, correct:2,
+    context:'For one of the variables suggested in 9(d)(i):',
+    question:'Suggest how this variable could affect an individual\'s preferred personal space.',
+    note:null,
+    sidebar:{
+      q:'Q9(d)(ii) — How the variable affects personal space',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: effect of the variable on personal space\n1 mark: detail / example'},
+        {lbl:'Culture',style:'green',text:'Effect: Being close is more/less acceptable in some cultures.\nDetail: e.g. Anglo-Saxons tend to prefer larger personal space than Latin or Mediterranean cultures.'},
+        {lbl:'Number of siblings',style:'green',text:'Effect: People with siblings are used to being close to others.\nDetail: So they would tolerate smaller personal spaces than only children.'},
+        {lbl:'Mental health',style:'green',text:'Effect: Some disorders make closeness more or less easy.\nDetail: e.g. some people with autism find close contact difficult; some with Down\'s syndrome accept closer contact.'},
+      ]
+    },
+    explanation:'2 marks requires the effect on personal space (bigger or smaller preference) PLUS a specific detail or example. A general statement without the direction of effect caps at 1 mark.',
+    tip:{title:'Effect + detail structure',text:'When asked "how could X affect Y", always state the DIRECTION of the effect and give an example. "Culture affects personal space" = 0 marks (too vague). "People from collectivist cultures tend to prefer smaller personal space" = 1 mark. Adding a specific example or detail earns the second mark.'}
+  },
+  {
+    id:'10(a)', sec:'B', topic:'Planning — Lab experiment', max:10, correct:8,
+    context:'Isla is a teacher who thinks allowing students to play with an object will improve attention. She is unsure whether a pen or a different non-writing object is better.',
+    question:'Describe how Isla could conduct an experiment to test whether attention is better if students play with a pen or an object not used for writing.\n\nDo not describe sample / sampling technique or ethical issues / guidelines in your answer.',
+    note:'IMPORTANT: Sampling and ethics = 0 marks. Use the level descriptors in the mark scheme. Award a level based on how many required features are present and how much detail is given.',
+    sidebar:{
+      q:'Q10(a) — Planning question (10 marks)',
+      sections:[
+        {lbl:'Four required features',style:'block',text:'A — IV operationalised: pen vs a specific named non-writing object (e.g. key ring, elastic band, stress ball)\n\nB — DV operationalised: how attention is measured (e.g. score on a test after the lesson, number of errors, teacher rating)\n\nC — Controls / standardisation: at least two named controls (e.g. same classroom, same lesson length, same instructions to students)\n\nD — Experimental design: named design (repeated measures or independent measures) + how participants are assigned'},
+        {lbl:'Level descriptors',style:'green',text:'L5 (9–10): All 4 features, all with detail, mostly appropriate terminology.\n\nL4 (7–8): All 4 features, some with detail, some terminology.\n\nL3 (5–6): Some features with detail OR all features with no detail.\n\nL2 (3–4): At least 2 features, little terminology.\n\nL1 (1–2): 1 feature only.\n\nL0 (0): No creditable response.'},
+        {lbl:'Do NOT credit',style:'warn',text:'Sampling technique = 0\nEthical guidelines = 0\n\nThese are explicitly excluded by the question.'},
+      ]
+    },
+    explanation:'Award a level based on how many of the four required features (IV, DV, controls, design) are present and how much detail each has. For full marks (L5) all four must be present with detail. Check: is the non-writing object actually "playable with" — is it a fair comparison to the pen?',
+    tip:{title:'Planning questions — the four features',text:'Every lab experiment planning question tests the same four things:\n\nA) IV operationalised — name BOTH conditions specifically.\nB) DV operationalised — state EXACTLY how it is measured (what unit/scale).\nC) Controls — name at least TWO specific things kept the same.\nD) Design — name the design (RM/IM/MP) AND state how participants are assigned.\n\nDo NOT include: sampling, ethics, or justifications for your choices unless asked.'}
+  },
+  {
+    id:'10(b)(i)', sec:'B', topic:'Evaluate a feature', max:2, correct:2,
+    context:'For one feature of the experiment described in 10(a):',
+    question:'Explain why that feature is a strength of the study. Do not refer to sampling or ethics in your answer.',
+    note:'The answer must refer to a feature from 10(a). If (b)(i) and (b)(ii) are about DIFFERENT features, only one gains credit — mark both and award the higher.',
+    sidebar:{
+      q:'Q10(b)(i) — Strength of a feature',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: identification of the feature/strength\n1 mark: explanation (generic or linked to this study)'},
+        {lbl:'Creditworthy features & strengths',style:'green',text:'Operationalisation of IV: Makes the study replicable — another researcher could run the same conditions.\n\nOperationalisation of DV: Provides objective, quantifiable data — reduces researcher bias.\n\nControls: Reduces the impact of extraneous variables — means any difference in attention is more likely due to the IV.\n\nExperimental design (IM): No order effects — students can\'t improve at the attention task through practice.\n\nExperimental design (RM + counterbalancing): Controls for individual differences in attention ability.'},
+        {lbl:'Do NOT credit',style:'warn',text:'Ethics = 0\nSampling = 0'},
+      ]
+    },
+    explanation:'2 marks requires identification of the feature plus an explanation of why it is a strength. A bare "it was standardised" earns only 1 mark without saying what standardisation achieves.',
+    tip:{title:'Strength + explanation structure',text:'Always follow: Feature name → What the feature achieves → Why that is good for the study. Example: "Standardised instructions (feature) meant all students were told the same thing (achievement), reducing the chance of demand characteristics affecting results (benefit)." This is the 2-mark formula.'}
+  },
+  {
+    id:'10(b)(ii)', sec:'B', topic:'Evaluate a feature', max:2, correct:2,
+    context:'For the SAME feature as in 10(b)(i):',
+    question:'Explain how that feature could be a weakness of the study. Do not refer to sampling or ethics in your answer.',
+    note:'Must be the SAME feature as (b)(i). If different features used in (i) and (ii), only the better answer is credited.',
+    sidebar:{
+      q:'Q10(b)(ii) — Weakness of the same feature',
+      sections:[
+        {lbl:'Marking structure',style:'block',text:'1 mark: identification of the feature/weakness\n1 mark: explanation (generic or linked)'},
+        {lbl:'Creditworthy weaknesses',style:'green',text:'Operationalisation of IV: If the non-writing object is very different in size/texture to a pen, it may not be a fair comparison — the difference in attention could be due to the object\'s properties, not whether it is a writing instrument.\n\nOperationalisation of DV: A test score may not capture all aspects of attention — if the test is too easy or too hard, there may be a ceiling/floor effect.\n\nControls: Even with controls, students\' mood, hunger, or prior knowledge of the lesson topic may still vary.\n\nIM design: Different students may have different baseline attention — participant variables could explain any difference found.'},
+        {lbl:'Do NOT credit',style:'warn',text:'Ethics = 0\nSampling = 0\nMust be the SAME feature as (b)(i)'},
+      ]
+    },
+    explanation:'2 marks requires the weakness of the same feature identified in (b)(i), plus a linked explanation. If the student changes feature between (b)(i) and (b)(ii), the examiner marks both and awards the better one only.',
+    tip:{title:'Same feature as (b)(i)',text:'Q10(b)(i) and (b)(ii) must both address the SAME feature. If you write about "controls" as a strength in (i), you must also discuss "controls" as a weakness in (ii). Switching features = only one part is marked. The examiner will credit the higher-scoring answer.'}
+  },
+];
+
+// ── State ────────────────────────────────────────────────────────
+let mode='self', markerName='', candidateName='';
+let qs=[], cur=0, sel=null;
+let exact=0, close=0, off=0;
+let marksAwarded=[];
+
+function selectMode(m){
+  mode=m;
+  document.getElementById('modeSelf').classList.toggle('selected',m==='self');
+  document.getElementById('modePeer').classList.toggle('selected',m==='peer');
+  const cf=document.getElementById('candidateField');
+  const cl=document.querySelector('#candidateField label');
+  if(m==='self'){cf.style.display='none';}
+  else{cf.style.display='block';}
+}
+
+function startMarking(){
+  markerName=document.getElementById('markerName').value.trim()||'Marker';
+  candidateName=document.getElementById('candidateName').value.trim()||(mode==='self'?markerName:'Candidate');
+  qs=[...QS]; cur=0; sel=null; exact=0; close=0; off=0;
+  marksAwarded=new Array(qs.length).fill(null);
+  document.getElementById('introScreen').classList.add('hidden');
+  document.getElementById('quizScreen').classList.remove('hidden');
+  document.getElementById('scorePill').style.display='flex';
+  loadQ();
+}
+
+function loadQ(){
+  const q=qs[cur]; sel=null;
+  document.getElementById('qNum').textContent=q.id;
+  const sec=document.getElementById('qSec');
+  sec.textContent='Section '+q.sec;
+  sec.className='badge '+(q.sec==='A'?'b-sa':'b-sb');
+  document.getElementById('qTopic').textContent=q.topic;
+  document.getElementById('qMarks').textContent=q.max+' mark'+(q.max>1?'s':'');
+
+  const ctx=document.getElementById('qContext');
+  if(q.context){ctx.textContent=q.context;ctx.style.display='block';}
+  else{ctx.style.display='none';}
+
+  document.getElementById('qText').textContent=q.question;
+
+  const nt=document.getElementById('qNote');
+  if(q.note){nt.textContent=q.note;nt.style.display='block';}
+  else{nt.style.display='none';}
+
+  document.getElementById('justTxt').value='';
+  document.getElementById('feedback').style.display='none';
+  document.getElementById('checkBtn').style.display='block';
+  document.getElementById('checkBtn').disabled=true;
+
+  // Mark buttons
+  const btns=document.getElementById('mBtns');
+  btns.innerHTML='';
+  for(let i=0;i<=q.max;i++){
+    const b=document.createElement('button');
+    b.className='mb';b.textContent=i;
+    b.onclick=()=>pickMark(i,b);
+    btns.appendChild(b);
+  }
+  document.getElementById('mTotal').textContent='(out of '+q.max+')';
+
+  updateSidebar(q);
+  updateProg();
+  updateScore();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function updateSidebar(q){
+  document.getElementById('sbQ').textContent=q.sidebar.q;
+  const body=document.getElementById('sbBody');
+  body.innerHTML='';
+  q.sidebar.sections.forEach(s=>{
+    const wrap=document.createElement('div');
+    wrap.className='sb-sec';
+    const lbl=document.createElement('div');
+    lbl.className='sb-sec-lbl';lbl.textContent=s.lbl;
+    wrap.appendChild(lbl);
+    const block=document.createElement('div');
+    block.className=s.style==='warn'?'sb-warn':s.style==='green'?'sb-green':'sb-block';
+    block.textContent=s.text;
+    wrap.appendChild(block);
+    body.appendChild(wrap);
+  });
+  if(q.tip){
+    const tipWrap=document.createElement('div');
+    tipWrap.className='sb-sec';
+    const tipLbl=document.createElement('div');
+    tipLbl.className='sb-sec-lbl';tipLbl.textContent='Paper 2 tip';
+    tipWrap.appendChild(tipLbl);
+    const tipBlock=document.createElement('div');
+    tipBlock.className='sb-tip';
+    tipBlock.innerHTML='<strong>'+q.tip.title+'</strong><br><br>'+q.tip.text.replace(/\n/g,'<br>');
+    tipWrap.appendChild(tipBlock);
+    body.appendChild(tipWrap);
+  }
+  const meta=document.createElement('div');
+  meta.className='sb-meta';
+  meta.textContent='Section '+q.sec+' — '+q.topic+' | Max: '+q.max+' mark'+(q.max>1?'s':'');
+  body.appendChild(meta);
+}
+
+function pickMark(v,btn){
+  sel=v;
+  document.querySelectorAll('.mb').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('checkBtn').disabled=false;
+}
+
+function checkMark(){
+  const q=qs[cur];
+  const diff=Math.abs(sel-q.correct);
+  const isEx=diff===0,isCl=diff===1;
+  if(isEx)exact++;else if(isCl)close++;else off++;
+  marksAwarded[cur]=sel;
+  updateScore();
+
+  const fh=document.getElementById('fbHead');
+  fh.className='fb-header '+(isEx?'fb-exact':isCl?'fb-close':'fb-off');
+  document.getElementById('fbIcon').textContent=isEx?'✓':isCl?'≈':'✗';
+  document.getElementById('fbV').textContent=isEx?'Mark agreed':(isCl?'Close — within 1 mark':'Different from Cambridge');
+  document.getElementById('fbML').innerHTML='You awarded <strong>'+sel+'/'+q.max+'</strong> — Cambridge model: <strong>'+q.correct+'/'+q.max+'</strong>';
+  document.getElementById('fbExpl').textContent=q.explanation;
+  document.getElementById('feedback').style.display='block';
+  document.getElementById('checkBtn').style.display='none';
+  document.getElementById('nextBtn').textContent=cur===qs.length-1?'See results →':'Next question →';
+}
+
+function nextQ(){
+  cur++;
+  if(cur>=qs.length){showSummary();}
+  else{loadQ();}
+}
+
+function updateProg(){
+  document.getElementById('progBar').style.width=(cur/qs.length*100)+'%';
+}
+
+function updateScore(){
+  const t=exact+close+off;
+  document.getElementById('scoreDisplay').textContent=exact+' / '+t;
+}
+
+function showSummary(){
+  document.getElementById('quizScreen').classList.add('hidden');
+  document.getElementById('progBar').style.width='100%';
+
+  const totalAwarded=marksAwarded.reduce((a,v)=>a+(v||0),0);
+  const totalPossible=qs.reduce((a,q)=>a+q.max,0);
+
+  document.getElementById('sumNames').textContent=
+    mode==='peer'?'Marker: '+markerName+' — Paper: '+candidateName:'Marker: '+markerName;
+  document.getElementById('sumScore').textContent=totalAwarded+' / '+totalPossible;
+  document.getElementById('sumSub').textContent=
+    totalAwarded>=54?'Excellent performance — strong mark scheme knowledge across both sections.':
+    totalAwarded>=42?'Good performance. Review any questions where marks were lost.':
+    totalAwarded>=30?'Developing understanding. Focus on the question types where most marks were lost.':
+    'Significant gaps — work through the mark scheme in detail for each question type.';
+
+  document.getElementById('sgEx').textContent=exact;
+  document.getElementById('sgCl').textContent=close;
+  document.getElementById('sgOf').textContent=off;
+
+  const bkRows=document.getElementById('bkRows');
+  bkRows.innerHTML='';
+  qs.forEach((q,i)=>{
+    const awarded=marksAwarded[i]||0;
+    const pct=q.max>0?awarded/q.max:0;
+    const row=document.createElement('div');
+    row.className='bk-row';
+    const cl=pct===1?'full':pct>0?'part':'none';
+    row.innerHTML=`<div class="bk-q">${q.id}</div><div class="bk-bar-wrap"><div class="bk-bar ${cl}" style="width:${pct*100}%"></div></div><div class="bk-score">${awarded}/${q.max}</div>`;
+    bkRows.appendChild(row);
+  });
+
+  document.getElementById('summaryScreen').classList.remove('hidden');
+  document.getElementById('sbBody').innerHTML='<div style="color:var(--muted);font-size:13px;padding:20px 0;text-align:center">Marking complete.</div>';
+}
+
+function restart(){
+  document.getElementById('summaryScreen').classList.add('hidden');
+  document.getElementById('introScreen').classList.remove('hidden');
+  document.getElementById('scorePill').style.display='none';
+  document.getElementById('progBar').style.width='0%';
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sbOverlay').classList.toggle('open');
+}
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sbOverlay').classList.remove('open');
+}
+
+// Default mode
+selectMode('self');
+</script>
+</body>
+</html>
